@@ -3,6 +3,5 @@
 ## Exercises 1.1 - 1.14
 
 ### Practical
-- [] new note diagram
-- [] spa diagram
-- [] spa new note diagram
+- [x] 1.1
+- [x] 1.2
