@@ -20,11 +20,7 @@ const Total = (props) => {
     return sum;
   }, 0);
 
-  return (
-    <>
-      <p>Number of exercises: {summary}</p>
-    </>
-  );
+  return <p>Number of exercises: {summary}</p>;
 };
 
 const App = () => {
