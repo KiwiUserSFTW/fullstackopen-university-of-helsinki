@@ -29,18 +29,18 @@ const StatsFields = ({ feedbackStatisticMap }) =>
 
 const Statistics = ({ good, neutral, bad }) => {
   // is every options equal zero ? boolean
-  const everyOptinsIsZero = good === 0 && neutral === 0 && bad === 0;
+  const everyOptionsIsZero = good === 0 && neutral === 0 && bad === 0;
 
   // functions
   const summAllfeedBackOptions = () => good + neutral + bad;
 
   const calculateAvarageFeedbackOptions = () => {
-    if (everyOptinsIsZero) return 0;
+    if (everyOptionsIsZero) return 0;
     return (good - bad) / summAllfeedBackOptions();
   };
 
   const calculatePositiveFeedbackOptions = () => {
-    if (everyOptinsIsZero) return 0;
+    if (everyOptionsIsZero) return 0;
     return (good / summAllfeedBackOptions()) * 100;
   };
 
@@ -53,10 +53,19 @@ const Statistics = ({ good, neutral, bad }) => {
     { name: "positive", value: calculatePositiveFeedbackOptions() + " %" },
   ];
 
+  if (everyOptionsIsZero) {
+    return (
+      <div>
+        <h1>feedback statistic</h1>
+        <h2>No feedback given</h2>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <h1> feedback statistic </h1>
-      {<StatsFields feedbackStatisticMap={feedbackStatisticMap} />}
+      <h1>feedback statistic</h1>
+      <StatsFields feedbackStatisticMap={feedbackStatisticMap} />
     </div>
   );
 };
