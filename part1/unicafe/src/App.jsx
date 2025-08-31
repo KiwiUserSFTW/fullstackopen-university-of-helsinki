@@ -17,15 +17,42 @@ const Buttons = ({ feedbackOptionsMap }) =>
     );
   });
 
-const StatsLine = ({ name, value }) => (
-  <p>
-    {name}: {value}
-  </p>
+const FeedbackOptions = ({ setGood, setNeutral, setBad }) => {
+  const handleClick = (setValue) => () => setValue((prev) => prev + 1);
+
+  const feedbackOptionsMap = [
+    {
+      name: "good",
+      setValue: handleClick(setGood),
+    },
+    {
+      name: "neutral",
+      setValue: handleClick(setNeutral),
+    },
+    {
+      name: "bad",
+      setValue: handleClick(setBad),
+    },
+  ];
+
+  return (
+    <div>
+      <h1> give your feedback ! </h1>
+      {<Buttons feedbackOptionsMap={feedbackOptionsMap} />}
+    </div>
+  );
+};
+
+const StatisticLine = ({ name, value }) => (
+  <tr>
+    <td>{name}</td>
+    <td>{value}</td>
+  </tr>
 );
 
-const StatsLines = ({ feedbackStatisticMap }) =>
+const StatisticLines = ({ feedbackStatisticMap }) =>
   feedbackStatisticMap.map((stat) => (
-    <StatsLine key={stat.name} name={stat.name} value={stat.value} />
+    <StatisticLine key={stat.name} name={stat.name} value={stat.value} />
   ));
 
 const Statistics = ({ good, neutral, bad }) => {
@@ -66,33 +93,11 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <div>
       <h1>feedback statistic</h1>
-      <StatsLines feedbackStatisticMap={feedbackStatisticMap} />
-    </div>
-  );
-};
-
-const FeedbackOptions = ({ setGood, setNeutral, setBad }) => {
-  const handleClick = (setValue) => () => setValue((prev) => prev + 1);
-
-  const feedbackOptionsMap = [
-    {
-      name: "good",
-      setValue: handleClick(setGood),
-    },
-    {
-      name: "neutral",
-      setValue: handleClick(setNeutral),
-    },
-    {
-      name: "bad",
-      setValue: handleClick(setBad),
-    },
-  ];
-
-  return (
-    <div>
-      <h1> give your feedback ! </h1>
-      {<Buttons feedbackOptionsMap={feedbackOptionsMap} />}
+      <table>
+        <tbody>
+          <StatisticLines feedbackStatisticMap={feedbackStatisticMap} />
+        </tbody>
+      </table>
     </div>
   );
 };

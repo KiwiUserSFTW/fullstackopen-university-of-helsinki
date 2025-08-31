@@ -14,7 +14,12 @@
 - [x] 1.7
 - [x] 1.8
 - [x] 1.9 
-- [x] 1.10 
+- [x] 1.10
+- [x] 1.11*
+#### anecdotes*
+- [ ] 1.12*
+- [ ] 1.13*
+- [ ] 1.14*
 
 ## Sources
 ### [Course Part 1/b](https://fullstackopen.com/en/part1)
