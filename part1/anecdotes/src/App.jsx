@@ -1,7 +1,17 @@
+// react
 import { useState } from "react";
 
-const Anecdote = ({ anecdote }) => {
-  return <div> {anecdote}</div>;
+// styles
+import "./App.css";
+
+// components
+const Anecdote = ({ anecdote, votes = 0 }) => {
+  return (
+    <div className="anecdote">
+      <h3>{anecdote} </h3>
+      <p>has {votes} votes</p>
+    </div>
+  );
 };
 
 const App = () => {
@@ -21,6 +31,18 @@ const App = () => {
   };
 
   const [selected, setSelected] = useState(getRandomInt());
+  const [votes, setVotes] = useState({});
+
+  const handleNewVote = (id) => () => {
+    let newVotes = {};
+    if (votes[id] !== undefined) {
+      newVotes = { ...votes, [id]: votes[id] + 1 };
+    } else {
+      newVotes = { ...votes, [id]: 1 };
+    }
+
+    setVotes(newVotes);
+  };
 
   const handleNextAnecdote = () => {
     setSelected(getRandomInt());
@@ -28,9 +50,9 @@ const App = () => {
 
   return (
     <div>
-      <p> Anecdote: </p>
-      <Anecdote anecdote={anecdotes[selected]} />
+      <Anecdote anecdote={anecdotes[selected]} votes={votes[selected]} />
       <button onClick={handleNextAnecdote}> next anecdote </button>
+      <button onClick={handleNewVote(selected)}> vote </button>
     </div>
   );
 };
