@@ -1,17 +1,20 @@
 import { useState } from "react";
 
+// components
 const Button = ({ name, onClick }) => (
   <button onClick={onClick}> {name} </button>
 );
 
-const Buttons = ({ feedbackMap }) =>
-  feedbackMap.map((feedbackOption) => (
-    <Button
-      key={feedbackOption.name}
-      name={feedbackOption.name}
-      onClick={feedbackOption.setValue}
-    />
-  ));
+const Buttons = ({ feedbackOptionsMap }) =>
+  feedbackOptionsMap.map((feedbackOption) => {
+    return (
+      <Button
+        key={feedbackOption.name}
+        name={feedbackOption.name}
+        onClick={feedbackOption.setValue}
+      />
+    );
+  });
 
 const StatsField = ({ name, value }) => (
   <p>
@@ -19,13 +22,9 @@ const StatsField = ({ name, value }) => (
   </p>
 );
 
-const StatsFields = ({ feedbackMap }) =>
-  feedbackMap.map((feedbackOption) => (
-    <StatsField
-      key={feedbackOption.name}
-      name={feedbackOption.name}
-      value={feedbackOption.value}
-    />
+const StatsFields = ({ feedbackStatisticMap }) =>
+  feedbackStatisticMap.map((stat) => (
+    <StatsField key={stat.name} name={stat.name} value={stat.value} />
   ));
 
 const App = () => {
@@ -34,33 +33,54 @@ const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const handleClick = (value, setValue) => () => setValue(value + 1);
+  // is every options equal zero ? boolean
+  const everyOptinsIsZero = good === 0 && neutral === 0 && bad === 0;
 
-  const feedbackMap = [
+  const handleClick = (setValue) => () => setValue((prev) => prev + 1);
+
+  // functions
+  const summAllfeedBackOptions = () => good + neutral + bad;
+
+  const calculateAvarageFeedbackOptions = () => {
+    if (everyOptinsIsZero) return 0;
+    return (good - bad) / summAllfeedBackOptions();
+  };
+
+  const calculatePositiveFeedbackOptions = () => {
+    if (everyOptinsIsZero) return 0;
+    return good / summAllfeedBackOptions();
+  };
+
+  const feedbackOptionsMap = [
     {
       name: "good",
-      value: good,
-      setValue: handleClick(good, setGood),
+      setValue: handleClick(setGood),
     },
     {
       name: "neutral",
-      value: neutral,
-      setValue: handleClick(neutral, setNeutral),
+      setValue: handleClick(setNeutral),
     },
     {
       name: "bad",
-      value: bad,
-      setValue: handleClick(bad, setBad),
+      setValue: handleClick(setBad),
     },
+  ];
+
+  const feedbackStatisticMap = [
+    { name: "good", value: good },
+    { name: "neutral", value: neutral },
+    { name: "bad", value: bad },
+    { name: "all", value: summAllfeedBackOptions() },
+    { name: "average", value: calculateAvarageFeedbackOptions() },
+    { name: "positive", value: calculatePositiveFeedbackOptions() + " %" },
   ];
 
   return (
     <div>
       <h1> give your feedback ! </h1>
-      {<Buttons feedbackMap={feedbackMap} />}
-
+      {<Buttons feedbackOptionsMap={feedbackOptionsMap} />}
       <h1> feedback statistic </h1>
-      {<StatsFields feedbackMap={feedbackMap} />}
+      {<StatsFields feedbackStatisticMap={feedbackStatisticMap} />}
     </div>
   );
 };

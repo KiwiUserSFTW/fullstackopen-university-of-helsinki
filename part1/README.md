@@ -11,7 +11,7 @@
 - [x] 1.5
 #### unicafe
 - [x] 1.6
-- [ ] 1.7
+- [x] 1.7
 
 ## Sources
 ### [Course Part 1/b](https://fullstackopen.com/en/part1)
