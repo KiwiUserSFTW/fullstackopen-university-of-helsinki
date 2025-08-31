@@ -1,6 +1,9 @@
 // react
 import { useState } from "react";
 
+// styles
+import "./App.css";
+
 // components
 const Button = ({ name, onClick }) => (
   <button onClick={onClick}> {name} </button>
