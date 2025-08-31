@@ -1,3 +1,4 @@
+// react
 import { useState } from "react";
 
 // components
@@ -16,15 +17,15 @@ const Buttons = ({ feedbackOptionsMap }) =>
     );
   });
 
-const StatsField = ({ name, value }) => (
+const StatsLine = ({ name, value }) => (
   <p>
     {name}: {value}
   </p>
 );
 
-const StatsFields = ({ feedbackStatisticMap }) =>
+const StatsLines = ({ feedbackStatisticMap }) =>
   feedbackStatisticMap.map((stat) => (
-    <StatsField key={stat.name} name={stat.name} value={stat.value} />
+    <StatsLine key={stat.name} name={stat.name} value={stat.value} />
   ));
 
 const Statistics = ({ good, neutral, bad }) => {
@@ -65,7 +66,7 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <div>
       <h1>feedback statistic</h1>
-      <StatsFields feedbackStatisticMap={feedbackStatisticMap} />
+      <StatsLines feedbackStatisticMap={feedbackStatisticMap} />
     </div>
   );
 };

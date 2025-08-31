@@ -14,6 +14,7 @@
 - [x] 1.7
 - [x] 1.8
 - [x] 1.9 
+- [x] 1.10 
 
 ## Sources
 ### [Course Part 1/b](https://fullstackopen.com/en/part1)
