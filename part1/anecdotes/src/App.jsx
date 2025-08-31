@@ -5,10 +5,11 @@ import { useState } from "react";
 import "./App.css";
 
 // components
-const Anecdote = ({ anecdote, votes = 0 }) => {
+const Anecdote = ({ anecdote, votes = 0, title }) => {
   return (
     <div className="anecdote">
-      <h3>{anecdote} </h3>
+      <h1> {title} </h1>
+      <h2>{anecdote} </h2>
       <p>has {votes} votes</p>
     </div>
   );
@@ -33,6 +34,15 @@ const App = () => {
   const [selected, setSelected] = useState(getRandomInt());
   const [votes, setVotes] = useState({});
 
+  const votesIsEmpty = Object.keys(votes).length === 0;
+
+  const getMostVotedAnegdoteId = () => {
+    return Object.keys(votes).reduce((mostVotedId, id) => {
+      if (votes[id] > votes[mostVotedId]) return id;
+      return mostVotedId;
+    });
+  };
+
   const handleNewVote = (id) => () => {
     let newVotes = {};
     if (votes[id] !== undefined) {
@@ -50,9 +60,23 @@ const App = () => {
 
   return (
     <div>
-      <Anecdote anecdote={anecdotes[selected]} votes={votes[selected]} />
-      <button onClick={handleNextAnecdote}> next anecdote </button>
+      <Anecdote
+        anecdote={anecdotes[selected]}
+        votes={votes[selected]}
+        title={"Anecdote of the day"}
+      />
       <button onClick={handleNewVote(selected)}> vote </button>
+      <button onClick={handleNextAnecdote}> next anecdote </button>
+
+      {votesIsEmpty ? (
+        <h1> no votes yet </h1>
+      ) : (
+        <Anecdote
+          anecdote={anecdotes[getMostVotedAnegdoteId()]}
+          votes={votes[getMostVotedAnegdoteId()]}
+          title={"Anecdote with most votes"}
+        />
+      )}
     </div>
   );
 };

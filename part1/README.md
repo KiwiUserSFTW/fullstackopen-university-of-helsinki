@@ -19,7 +19,7 @@
 #### anecdotes*
 - [x] 1.12*
 - [x] 1.13*
-- [ ] 1.14*
+- [x] 1.14*
 
 ## Sources
 ### [Course Part 1/b](https://fullstackopen.com/en/part1)
