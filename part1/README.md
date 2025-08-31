@@ -22,5 +22,8 @@
 - [x] 1.14*
 
 ## Sources
+### [Course Part 1/a](https://fullstackopen.com/en/part1/introduction_to_react)
 ### [Course Part 1/b](https://fullstackopen.com/en/part1)
+### [Course Part 1/c](https://fullstackopen.com/en/part1/component_state_event_handlers)
+### [Course Part 1/d](https://fullstackopen.com/en/part1/a_more_complex_state_debugging_react_apps)
 [Javascript: course](https://fullstackopen.com/en/part1/java_script#object-methods-and-this)
