@@ -13,6 +13,8 @@
 - [x] 2.6
 - [x] 2.7
 - [x] 2.8
+- [x] 2.9*
+- [ ] 2.10
 
 ## Sources
 ### [Course Part 2/a](https://fullstackopen.com/en/part1/introduction_to_react)
