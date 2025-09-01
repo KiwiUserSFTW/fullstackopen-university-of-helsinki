@@ -1,5 +1,5 @@
 // compoentns
-import Part from "./part/Part";
+import Part from "./Part";
 
 const Content = (props) =>
   props.parts.map((part) => (
