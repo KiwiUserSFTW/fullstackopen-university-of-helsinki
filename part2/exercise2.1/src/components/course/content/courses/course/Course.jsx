@@ -1,7 +1,7 @@
 // components
-import Total from "./total/Total";
-import Header from "./header/Header";
-import Content from "./content/Content";
+import Total from "../../../total/Total";
+import Header from "../../../header/Header";
+import Content from "../../Content";
 
 const Course = ({ course }) => {
   return (

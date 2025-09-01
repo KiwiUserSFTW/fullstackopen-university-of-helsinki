@@ -4,7 +4,10 @@
 
 ### Practical
 - [x] 2.1
-- [ ] 
+- [x] 2.2
+- [x] 2.3*
+- [x] 2.4
+- [ ] 2.5
 
 ## Sources
 ### [Course Part 2/a](https://fullstackopen.com/en/part1/introduction_to_react)
