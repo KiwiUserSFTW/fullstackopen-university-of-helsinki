@@ -1,7 +1,18 @@
-const PhonebookForm = ({ newName, setNewName, persons, setPersons }) => {
-  const handleChange = (event) => {
+// react
+import { useState } from "react";
+
+const PhonebookForm = ({ persons, setPersons }) => {
+  const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
+
+  const handleNameChange = (event) => {
     console.log(event.target.value);
     setNewName(event.target.value);
+  };
+
+  const handleNumberChange = (event) => {
+    console.log(event.target.value);
+    setNewNumber(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -13,16 +24,21 @@ const PhonebookForm = ({ newName, setNewName, persons, setPersons }) => {
 
     const newPerson = {
       name: newName,
-      // id: String(persons.length + 1),
+      number: String(newNumber),
     };
+
     setPersons(persons.concat(newPerson));
     setNewName("");
+    setNewNumber("");
   };
 
   return (
     <form>
       <div>
-        name: <input value={newName} onChange={handleChange} />
+        name: <input value={newName} onChange={handleNameChange} />
+      </div>
+      <div>
+        number: <input type="tel" value={newNumber} onChange={handleNumberChange} />
       </div>
       <div>
         <button type="submit" onClick={handleSubmit}>

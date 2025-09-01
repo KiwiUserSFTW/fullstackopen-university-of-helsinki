@@ -11,7 +11,8 @@
 - [x] 2.5
 #### phonebook
 - [x] 2.6
-- [ ] 2.7
+- [x] 2.7
+- [x] 2.8
 
 ## Sources
 ### [Course Part 2/a](https://fullstackopen.com/en/part1/introduction_to_react)
