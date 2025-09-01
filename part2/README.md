@@ -14,11 +14,11 @@
 - [x] 2.7
 - [x] 2.8
 - [x] 2.9*
-- [ ] 2.10
+- [x] 2.10
 
 ## Sources
 ### [Course Part 2/a](https://fullstackopen.com/en/part1/introduction_to_react)
-### [Course Part 2/b]()
+### [Course Part 2/b](https://fullstackopen.com/en/part2/forms)
 ### [Course Part 2/c]()
 ### [Course Part 2/d]()
 ### [Course Part 2/e]()

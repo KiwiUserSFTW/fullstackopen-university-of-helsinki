@@ -2,8 +2,9 @@
 import { useState } from "react";
 
 // components
-import PhonebookForm from "./components/phonebookForm";
-import Numbers from "./components/Numbers";
+import PersonsForm from "./components/PersonForm";
+import Persons from "./components/Persons";
+import Input from "./components/Input";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -14,21 +15,12 @@ const App = () => {
   ]);
   const [search, setSearch] = useState("");
 
-  const handleSearchChange = (event) => {
-    console.log(event.target.value);
-    setSearch(event.target.value);
-  };
-
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter show with: <input value={search} onChange={handleSearchChange} />
-      </div>
-      <h2> add a new </h2>
-      <PhonebookForm persons={persons} setPersons={setPersons} />
-      <h2>Numbers</h2>
-      <Numbers persons={persons} search={search} />
+      <Input value={search} setValue={setSearch} title="filter show with: " />
+      <PersonsForm persons={persons} setPersons={setPersons} />
+      <Persons persons={persons} search={search} />
     </div>
   );
 };
