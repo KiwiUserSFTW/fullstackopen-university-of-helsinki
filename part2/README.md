@@ -16,9 +16,10 @@
 - [x] 2.9*
 - [x] 2.10
 
-#### phonebook using json server
+#### phonebook using json server c
 - [x] 2.11
 
+#### phonebook using json server d
 ## Sources
 ### [Course Part 2/a](https://fullstackopen.com/en/part1/introduction_to_react)
 ### [Course Part 2/b](https://fullstackopen.com/en/part2/forms)
