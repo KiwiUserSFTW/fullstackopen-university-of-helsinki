@@ -7,7 +7,7 @@ import Input from "./Input";
 // api
 import personsService from "../services/persons";
 
-const PersonsForm = ({ persons, setPersons }) => {
+const PersonsForm = ({ persons, setPersons, setMessage }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -34,6 +34,7 @@ const PersonsForm = ({ persons, setPersons }) => {
                 p.id === returnedPerson.id ? returnedPerson : p
               )
             );
+            setMessage(`${newName} number has been changed to ${newNumber}`);
             setNewName("");
             setNewNumber("");
           });
@@ -48,6 +49,7 @@ const PersonsForm = ({ persons, setPersons }) => {
 
     personsService.create(newPerson).then((returnedPerson) => {
       setPersons(persons.concat(returnedPerson));
+      setMessage(`Added ${newName}`);
       setNewName("");
       setNewNumber("");
     });
