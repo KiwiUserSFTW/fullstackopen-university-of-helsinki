@@ -15,20 +15,17 @@
 - [x] 2.8
 - [x] 2.9*
 - [x] 2.10
-
 #### phonebook using json server c
 - [x] 2.11
-
 #### phonebook using json server d
 - [x] 2.12
 - [x] 2.13
 - [x] 2.14
+- [x] 2.15
 
 ## Sources
 ### [Course Part 2/a](https://fullstackopen.com/en/part1/introduction_to_react)
 ### [Course Part 2/b](https://fullstackopen.com/en/part2/forms)
 ### [Course Part 2/c](https://fullstackopen.com/en/part2/getting_data_from_server)
-### [Course Part 2/d]()
-### [Course Part 2/e]()
-
-[Javascript: course]()
+### [Course Part 2/d](https://fullstackopen.com/en/part2/altering_data_in_server)
+### [Course Part 2/e](https://fullstackopen.com/en/part2/adding_styles_to_react_app)
