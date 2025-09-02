@@ -18,6 +18,7 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [search, setSearch] = useState("");
   const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState("message");
 
   useEffect(() => {
     personsService.getAll().then((response) => setPersons(response));
@@ -27,14 +28,21 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification value={message} setValue={setMessage} type="message" />
+      <Notification value={message} setValue={setMessage} type={messageType} />
       <Input value={search} setValue={setSearch} title="filter show with: " />
       <PersonsForm
         persons={persons}
         setPersons={setPersons}
         setMessage={setMessage}
+        setMessageType={setMessageType}
       />
-      <Persons persons={persons} setPersons={setPersons} search={search} />
+      <Persons
+        persons={persons}
+        setPersons={setPersons}
+        search={search}
+        setMessage={setMessage}
+        setMessageType={setMessageType}
+      />
     </div>
   );
 };

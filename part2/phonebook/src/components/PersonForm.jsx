@@ -7,7 +7,7 @@ import Input from "./Input";
 // api
 import personsService from "../services/persons";
 
-const PersonsForm = ({ persons, setPersons, setMessage }) => {
+const PersonsForm = ({ persons, setPersons, setMessage, setMessageType }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -34,9 +34,17 @@ const PersonsForm = ({ persons, setPersons, setMessage }) => {
                 p.id === returnedPerson.id ? returnedPerson : p
               )
             );
+            setMessageType("message");
             setMessage(`${newName} number has been changed to ${newNumber}`);
             setNewName("");
             setNewNumber("");
+          })
+          .catch(() => {
+            setMessageType("error");
+            setMessage(
+              `Information of ${newName} has already been removed from server`
+            );
+            setPersons(persons.filter((p) => p.id !== changedPerson.id));
           });
       }
       return;

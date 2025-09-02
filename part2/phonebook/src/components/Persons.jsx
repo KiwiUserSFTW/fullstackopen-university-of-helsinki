@@ -1,7 +1,13 @@
 // api
 import personsService from "../services/persons";
 
-const Persons = ({ persons, setPersons, search }) => {
+const Persons = ({
+  persons,
+  setPersons,
+  search,
+  setMessage,
+  setMessageType,
+}) => {
   const filteredPersons = () =>
     search == ""
       ? persons
@@ -17,10 +23,13 @@ const Persons = ({ persons, setPersons, search }) => {
       .then((deletedPerson) => {
         setPersons(persons.filter((p) => p.id !== deletedPerson.id));
       })
-      .catch((error) => {
-        alert(`the person '${personName}' doesn't exist on server`);
+      .catch(() => {
+        setMessageType("error");
+        setMessage(
+          `Information of ${personName} has been already removed from the server`
+        );
+
         setPersons(persons.filter((p) => p.id !== personId));
-        throw new Error(error);
       });
   };
 
