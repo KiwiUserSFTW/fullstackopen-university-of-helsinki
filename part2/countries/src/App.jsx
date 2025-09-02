@@ -31,7 +31,7 @@ const Countries = ({ search, countries }) => {
   useEffect(() => {
     const filteredCountries =
       search === ""
-        ? setFilteredCountries(countries)
+        ? countries
         : countries.filter(
             (c) =>
               c.name.common.toLowerCase().includes(search.toLowerCase()) ||

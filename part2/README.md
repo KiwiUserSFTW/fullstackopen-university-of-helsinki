@@ -24,7 +24,11 @@
 - [x] 2.15*
 #### phonebook using json server e
 - [x] 2.16
-- [ ] 2.17*
+- [x] 2.17*
+#### countries
+- [x] 2.18*
+- [ ] 2.19*
+- [ ] 2.20
 
 ## Sources
 ### [Course Part 2/a](https://fullstackopen.com/en/part1/introduction_to_react)
