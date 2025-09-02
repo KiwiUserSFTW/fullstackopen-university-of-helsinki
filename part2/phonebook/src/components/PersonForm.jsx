@@ -5,7 +5,7 @@ import { useState } from "react";
 import Input from "./Input";
 
 // api
-import personsServices from "../services/persons";
+import personsService from "../services/persons";
 
 const PersonsForm = ({ persons, setPersons }) => {
   const [newName, setNewName] = useState("");
@@ -27,7 +27,7 @@ const PersonsForm = ({ persons, setPersons }) => {
       number: String(newNumber),
     };
 
-    personsServices.create(newPerson).then((returnedPerson) => {
+    personsService.create(newPerson).then((returnedPerson) => {
       setPersons(persons.concat(returnedPerson));
       setNewName("");
       setNewNumber("");

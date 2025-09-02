@@ -1,11 +1,16 @@
 // api
 import axios from "axios";
 
+// functions
+const getData = (promiseAction) =>
+  promiseAction.then((response) => response.data);
 const baseUrl = "http://localhost:3001/persons";
 
-const getAll = () => axios.get(baseUrl).then((response) => response.data);
+const getAll = () => getData(axios.get(baseUrl));
 
-const create = (newPerson) =>
-  axios.post(baseUrl, newPerson).then((response) => response.data);
+const create = (newPerson) => getData(axios.post(baseUrl, newPerson));
 
-export default { getAll, create };
+const deletePerson = (personId) =>
+  getData(axios.delete(`${baseUrl}/${personId}`));
+
+export default { getAll, create, deletePerson };

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 // api
-import axios from "axios";
+import personsService from "./services/persons";
 
 // components
 import PersonsForm from "./components/PersonForm";
@@ -14,9 +14,7 @@ const App = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then((response) => setPersons(response.data));
+    personsService.getAll().then((response) => setPersons(response));
   }, []);
 
   if (persons.length === 0) return <> loading... </>;
@@ -25,7 +23,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Input value={search} setValue={setSearch} title="filter show with: " />
       <PersonsForm persons={persons} setPersons={setPersons} />
-      <Persons persons={persons} search={search} />
+      <Persons persons={persons} setPersons={setPersons} search={search} />
     </div>
   );
 };
