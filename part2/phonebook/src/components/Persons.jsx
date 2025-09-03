@@ -22,6 +22,10 @@ const Persons = ({
       .deletePerson(personId)
       .then((deletedPerson) => {
         setPersons(persons.filter((p) => p.id !== deletedPerson.id));
+         setMessageType("message");
+        setMessage(
+          `Information of ${personName} has been removed !`
+        );
       })
       .catch(() => {
         setMessageType("error");
