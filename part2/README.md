@@ -27,8 +27,8 @@
 - [x] 2.17*
 #### countries
 - [x] 2.18*
-- [ ] 2.19*
-- [ ] 2.20
+- [x] 2.19*
+- [x] 2.20
 
 ## Sources
 ### [Course Part 2/a](https://fullstackopen.com/en/part1/introduction_to_react)
@@ -36,3 +36,5 @@
 ### [Course Part 2/c](https://fullstackopen.com/en/part2/getting_data_from_server)
 ### [Course Part 2/d](https://fullstackopen.com/en/part2/altering_data_in_server)
 ### [Course Part 2/e](https://fullstackopen.com/en/part2/adding_styles_to_react_app)
+
+### [Env using with vite](https://vite.dev/guide/env-and-mode)
