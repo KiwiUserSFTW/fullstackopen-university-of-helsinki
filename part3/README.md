@@ -22,3 +22,6 @@
 
 ### [Date: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
 ### [Math random: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
+
+## Run
+you can use `requests` files if you use VScode and *Rest client* extension
