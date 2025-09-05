@@ -5,6 +5,17 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+// functions
+// randomizer for new id
+const getRandomId = (existingIds, maxId = 1000) => {
+  const id = String(Math.floor(Math.random() * maxId));
+
+  // check id for uniquelity
+  if (existingIds.includes(id)) return getRandomId(existingIds, maxId);
+  return id;
+};
+
+// data
 let persons = [
   {
     id: "1",
@@ -69,6 +80,29 @@ app.delete("/api/persons/:id", (request, response) => {
   persons = persons.filter((p) => p.id !== id);
 
   response.status(204).end();
+});
+
+// add new person
+app.post("/api/persons/", (request, response) => {
+  const existingIds = persons.map((p) => p.id);
+  const id = getRandomId(existingIds);
+
+  const body = request.body;
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: "missing content",
+    });
+  }
+
+  const person = {
+    id: id,
+    name: body.name,
+    number: body.number || "",
+  };
+  persons = persons.concat(person);
+
+  response.json(person);
 });
 
 const PORT = 3001;

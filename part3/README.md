@@ -8,7 +8,7 @@
 - [x] 3.2
 - [x] 3.3
 - [x] 3.4
-- [ ] 3.5
+- [x] 3.5
 - [ ] 3.6
 
 ## Sources
@@ -19,3 +19,4 @@
 ### [Course Part 2/e]
 
 ### [Date: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+### [Math random: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
