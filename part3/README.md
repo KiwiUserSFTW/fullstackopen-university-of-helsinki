@@ -4,9 +4,9 @@
 
 ### Practical
 #### phonebook-backend
-- [ ] 3.1
-- [ ] 3.2
-- [ ] 3.3
+- [x] 3.1
+- [x] 3.2
+- [x] 3.3
 - [ ] 3.4
 - [ ] 3.5
 - [ ] 3.6
@@ -17,3 +17,5 @@
 ### [Course Part 2/c]
 ### [Course Part 2/d]
 ### [Course Part 2/e]
+
+### [Date: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)

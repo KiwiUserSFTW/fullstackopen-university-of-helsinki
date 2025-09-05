@@ -32,9 +32,35 @@ app.get("/", (request, response) => {
   response.send("<h1> Persons page </h1>");
 });
 
+// get info page
+app.get("/info", (request, response) => {
+  const personsLength = persons.length;
+  const date = new Date();
+  const body = `
+  <div>
+  <h3> Phonebook has info for ${personsLength} people</h3>
+  <h3> ${date} </h3>
+  </div>
+  `;
+  response.send(body);
+});
+
 // get all persons
 app.get("/api/persons", (request, response) => {
   response.json(persons);
+});
+
+// get one person
+app.get("/api/persons/:id", (request, response) => {
+  const id = request.params.id;
+  const person = persons.find((p) => p.id === id);
+
+  if (person) {
+    response.json(person);
+  } else {
+    response.statusMessage = "This person doesn't exist";
+    response.status(404).end();
+  }
 });
 
 const PORT = 3001;
