@@ -4,10 +4,22 @@ const express = require("express");
 // middlewares
 const morgan = require("morgan");
 
+morgan.token("postbody", (request, response) => {
+  if (request.method === "POST") {
+    return JSON.stringify(request.body);
+  } else {
+    return " ";
+  }
+});
+
 // app
 const app = express();
 app.use(express.json());
-app.use(morgan("tiny"));
+app.use(
+  morgan(
+    ":method :url :status :res[content-length] - :response-time ms :postbody"
+  )
+);
 
 // functions
 // randomizer for new id
