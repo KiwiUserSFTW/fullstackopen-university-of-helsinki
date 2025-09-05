@@ -69,8 +69,9 @@ app.get("/api/persons/:id", (request, response) => {
   if (person) {
     response.json(person);
   } else {
-    response.statusMessage = "This person doesn't exist";
-    response.status(404).end();
+    response.status(404).json({
+      error: "person doesn't exist",
+    });
   }
 });
 
@@ -84,21 +85,26 @@ app.delete("/api/persons/:id", (request, response) => {
 
 // add new person
 app.post("/api/persons/", (request, response) => {
-  const existingIds = persons.map((p) => p.id);
-  const id = getRandomId(existingIds);
-
   const body = request.body;
 
-  if (!body.name) {
+  const existingName = persons.find((p) => p.name === body.name);
+
+  if (!body.name || !body.number) {
     return response.status(400).json({
-      error: "missing content",
+      error: "missing name or number",
+    });
+  } else if (existingName) {
+    return response.status(400).json({
+      error: "name must be unique",
     });
   }
+  const existingIds = persons.map((p) => p.id);
+  const id = getRandomId(existingIds);
 
   const person = {
     id: id,
     name: body.name,
-    number: body.number || "",
+    number: body.number,
   };
   persons = persons.concat(person);
 
