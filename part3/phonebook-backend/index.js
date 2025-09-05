@@ -1,9 +1,13 @@
 // express
 const express = require("express");
 
+// middlewares
+const morgan = require("morgan");
+
 // app
 const app = express();
 app.use(express.json());
+app.use(morgan("tiny"));
 
 // functions
 // randomizer for new id
