@@ -15,7 +15,7 @@
 - [x] 3.8*
 ## Sources
 ### [Course Part 3/a](https://fullstackopen.com/en/part3/node_js_and_express)
-### [Course Part 2/b]
+### [Course Part 2/b](https://fullstackopen.com/en/part3/deploying_app_to_internet)
 ### [Course Part 2/c]
 ### [Course Part 2/d]
 ### [Course Part 2/e]
