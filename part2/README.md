@@ -1,6 +1,6 @@
 # Part 2 - Rendering a collection
 
-## Exercises 1.1 - 1.14
+## Exercises 2.1 - 1.20
 
 ### Practical
 #### courseinfo part 2

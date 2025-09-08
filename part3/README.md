@@ -1,6 +1,6 @@
 # Part 2 - Rendering a collection
 
-## Exercises 1.1 - 1.14
+## Exercises 3.1 - 3.22
 
 ### Practical
 #### phonebook-backend
