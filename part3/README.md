@@ -16,16 +16,11 @@
 #### phonebook-backend deploy
 - [x] 3.9
 - [x] 3.10
-- [x] 3.11 
+- [x] 3.11
 ## Sources
 ### [Course Part 3/a](https://fullstackopen.com/en/part3/node_js_and_express)
 ### [Course Part 2/b](https://fullstackopen.com/en/part3/deploying_app_to_internet)
-### [Course Part 2/c]
-### [Course Part 2/d]
-### [Course Part 2/e]
+### [Course Part 2/c](https://fullstackopen.com/en/part3/saving_data_to_mongo_db)
+### [Course Part 2/d]()
 
-### [Date: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
-### [Math random: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
-
-## Run
-you can use `requests` files if you use VScode and *Rest client* extension
+link for backend stand in **ponebook-backend/README.md**
