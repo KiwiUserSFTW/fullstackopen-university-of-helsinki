@@ -1,4 +1,4 @@
-# Part 2 - Rendering a collection
+# Part 3 - Node.js and Express
 
 ## Exercises 3.1 - 3.22
 
