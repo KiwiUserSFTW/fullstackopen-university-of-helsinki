@@ -7,21 +7,22 @@ const Person = require("./models/person");
 // middlewares
 const morgan = require("morgan");
 
+// error handler
+const errorHandlers = {
+  CastError: (error, response) =>
+    response.status(400).json({ error: "malformated id" }),
+  ContentError: (error, response) =>
+    response.status(400).json({ error: error.message }),
+};
+
 const errorHandler = (error, request, response, next) => {
   console.error(error);
-
-  switch (error.name) {
-    case "CastError": {
-      return response.status(400).json({ error: "mailformated id" });
-    }
-    case "ContentError": {
-      return response.status(400).send({
-        error: error.message,
-      });
-    }
-    default:
-      next(error);
+  const handler = errorHandlers[error.name];
+  if (handler) {
+    return handler(error, response);
   }
+
+  next(error);
 };
 
 morgan.token("postbody", (request, response) => {
@@ -48,17 +49,19 @@ app.get("/", (request, response) => {
 
 // get info page
 app.get("/info", (request, response, next) => {
-  Person.find({}).then((persons) => {
-    const personsLength = persons.length;
-    const date = new Date();
-    const body = `
+  Person.find({})
+    .then((persons) => {
+      const personsLength = persons.length;
+      const date = new Date();
+      const body = `
     <div>
     <h3> Phonebook has info for ${personsLength} people</h3>
     <h3> ${date} </h3>
     </div>
     `;
-    response.send(body);
-  });
+      response.send(body);
+    })
+    .catch((error) => next(error));
 });
 
 // get all persons
@@ -74,30 +77,16 @@ app.get("/api/persons", (request, response, next) => {
 
 // get one person
 app.get("/api/persons/:id", (request, response, next) => {
-  const id = request.params.id;
-
-  Person.findById(id)
+  Person.findById(request.params.id)
     .then((person) => {
-      if (person) {
-        response.json(person);
-      } else {
+      if (!person) {
         response.status(404).end();
+      } else {
+        response.json(person);
       }
     })
     .catch((error) => {
       console.log(error);
-      next(error);
-    });
-});
-
-// delete one person
-app.delete("/api/persons/:id", (request, response, next) => {
-  const id = request.params.id;
-  Person.findByIdAndDelete(id)
-    .then(() => {
-      response.status(204).end();
-    })
-    .catch((error) => {
       next(error);
     });
 });
@@ -112,28 +101,41 @@ app.post("/api/persons/", (request, response, next) => {
     return next(error);
   }
 
-  Person.find({ name: request.body.name }).then((existingPersons) => {
-    console.log(existingPersons);
-    if (existingPersons.length >= 1) {
-      return response.status(400).json({
-        error: "name must be unique",
-      });
-    }
+  Person.find({ name: request.body.name })
+    .then((existingPersons) => {
+      console.log(existingPersons);
+      if (existingPersons.length >= 1) {
+        return response.status(400).json({
+          error: "name must be unique",
+        });
+      }
 
-    const person = new Person({
-      name: body.name,
-      number: body.number,
+      const person = new Person({
+        name: body.name,
+        number: body.number,
+      });
+
+      person
+        .save()
+        .then((person) => {
+          response.json(person);
+        })
+        .catch((error) => {
+          next(error);
+        });
+    })
+    .catch((error) => next(error));
+});
+
+// delete one person
+app.delete("/api/persons/:id", (request, response, next) => {
+  Person.findByIdAndDelete(request.params.id)
+    .then(() => {
+      response.status(204).end();
+    })
+    .catch((error) => {
+      next(error);
     });
-
-    person
-      .save()
-      .then((person) => {
-        response.json(person);
-      })
-      .catch((error) => {
-        next(error);
-      });
-  });
 });
 
 // update person
@@ -144,12 +146,13 @@ app.put("/api/persons/:id", (request, response, next) => {
         response.status(404).end();
       } else {
         person.number = request.body.number;
-        return person.save().then((person) => {
-          console.log(person);
-          response.json(person);
-        });
+        return person.save();
       }
     })
+    .then((person) => {
+      response.json(person);
+    })
+
     .catch((error) => {
       console.log(error);
       next(error);
