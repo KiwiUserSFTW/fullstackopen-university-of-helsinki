@@ -1,7 +1,7 @@
-POST https://phonebook-backend-late-dew-7266.fly.dev/api/persons
+GET http://localhost:3001/api/persons/1
 Content-Type: application/json
 
 {
-    "name":"Loren Lie",
-    "number": "32-12-12321"
+    "name":"Loren Lie"
 }
+# "number": "32-12-12321"

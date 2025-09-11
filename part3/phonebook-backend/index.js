@@ -1,11 +1,28 @@
 // express
 const express = require("express");
 
+// mongodb
+const Person = require("./models/person");
+
 // middlewares
 const morgan = require("morgan");
 
-// mongodb
-const Person = require("./models/person");
+const errorHandler = (error, request, response, next) => {
+  console.error(error);
+
+  switch (error.name) {
+    case "CastError": {
+      return response.status(400).json({ error: "mailformated id" });
+    }
+    case "ContentError": {
+      return response.status(400).send({
+        error: error.message,
+      });
+    }
+    default:
+      next(error);
+  }
+};
 
 morgan.token("postbody", (request, response) => {
   if (request.method === "POST") {
@@ -30,7 +47,7 @@ app.get("/", (request, response) => {
 });
 
 // get info page
-app.get("/info", (request, response) => {
+app.get("/info", (request, response, next) => {
   Person.find({}).then((persons) => {
     const personsLength = persons.length;
     const date = new Date();
@@ -45,47 +62,54 @@ app.get("/info", (request, response) => {
 });
 
 // get all persons
-app.get("/api/persons", (request, response) => {
-  Person.find({}).then((persons) => {
-    response.json(persons);
-  });
+app.get("/api/persons", (request, response, next) => {
+  Person.find({})
+    .then((persons) => {
+      response.json(persons);
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 // get one person
-app.get("/api/persons/:id", (request, response) => {
+app.get("/api/persons/:id", (request, response, next) => {
   const id = request.params.id;
 
   Person.findById(id)
     .then((person) => {
-      response.json(person);
+      if (note) {
+        response.json(note);
+      } else {
+        response.status(404).end();
+      }
     })
     .catch((error) => {
-      response.status(404).json({
-        error: "person doesn't exist",
-      });
+      console.log(error);
+      next(error);
     });
 });
 
 // delete one person
-app.delete("/api/persons/:id", (request, response) => {
+app.delete("/api/persons/:id", (request, response, next) => {
   const id = request.params.id;
   Person.findByIdAndDelete(id)
     .then(() => {
       response.status(204).end();
     })
     .catch((error) => {
-      console.log(error);
+      next(error);
     });
 });
 
 // add new person
-app.post("/api/persons/", (request, response) => {
+app.post("/api/persons/", (request, response, next) => {
   const body = request.body;
 
   if (!body.name || !body.number) {
-    return response.status(400).json({
-      error: "missing name or number",
-    });
+    const error = new Error("missing name or number");
+    error.name = "ContentError";
+    return next(error);
   }
 
   Person.find({ name: request.body.name }).then((existingPersons) => {
@@ -101,11 +125,19 @@ app.post("/api/persons/", (request, response) => {
       number: body.number,
     });
 
-    person.save().then((person) => {
-      response.json(person);
-    });
+    person
+      .save()
+      .then((person) => {
+        response.json(person);
+      })
+      .catch((error) => {
+        next(error);
+      });
   });
 });
+
+// error handler middleware
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
