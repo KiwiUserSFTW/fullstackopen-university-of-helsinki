@@ -78,8 +78,8 @@ app.get("/api/persons/:id", (request, response, next) => {
 
   Person.findById(id)
     .then((person) => {
-      if (note) {
-        response.json(note);
+      if (person) {
+        response.json(person);
       } else {
         response.status(404).end();
       }
@@ -134,6 +134,26 @@ app.post("/api/persons/", (request, response, next) => {
         next(error);
       });
   });
+});
+
+// update person
+app.put("/api/persons/:id", (request, response, next) => {
+  Person.findById(request.params.id)
+    .then((person) => {
+      if (!person) {
+        response.status(404).end();
+      } else {
+        person.number = request.body.number;
+        return person.save().then((person) => {
+          console.log(person);
+          response.json(person);
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      next(error);
+    });
 });
 
 // error handler middleware
