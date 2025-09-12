@@ -38,12 +38,10 @@ const PersonsForm = ({ persons, setPersons, setMessage, setMessageType }) => {
           setNewNumber("");
         })
         .catch((error) => {
-          setMessageType("error");
-          setMessage(error.response.data.error);
-
+          handleMessage("error", error.response.data.error);
           if (error.response.status === 500) {
-            setMessageType("error");
-            setMessage(
+            handleMessage(
+              "error",
               `Information of ${newName} has already been removed from server`
             );
             setPersons(persons.filter((p) => p.id !== changedPerson.id));
@@ -62,15 +60,13 @@ const PersonsForm = ({ persons, setPersons, setMessage, setMessageType }) => {
       .create(newPerson)
       .then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
-        setMessageType("message");
-        setMessage(`Added ${newName}`);
+        handleMessage("message", `Added ${newName}`);
         setNewName("");
         setNewNumber("");
       })
       .catch((error) => {
-        setMessageType("error");
         console.log(error);
-        setMessage(error.response.data.error);
+        handleMessage("error", error.response.data.error);
       });
   };
 
