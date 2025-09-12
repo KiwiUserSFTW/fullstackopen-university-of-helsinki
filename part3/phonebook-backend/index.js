@@ -11,7 +11,7 @@ const morgan = require("morgan");
 const errorHandlers = {
   CastError: (error, response) =>
     response.status(400).json({ error: "malformated id" }),
-  ContentError: (error, response) =>
+  ValidationError: (error, response) =>
     response.status(400).json({ error: error.message }),
 };
 
@@ -97,7 +97,7 @@ app.post("/api/persons/", (request, response, next) => {
 
   if (!body.name || !body.number) {
     const error = new Error("missing name or number");
-    error.name = "ContentError";
+    error.name = "ValidationError";
     return next(error);
   }
 
@@ -140,23 +140,15 @@ app.delete("/api/persons/:id", (request, response, next) => {
 
 // update person
 app.put("/api/persons/:id", (request, response, next) => {
-  Person.findById(request.params.id)
-    .then((person) => {
-      if (!person) {
-        response.status(404).end();
-      } else {
-        person.number = request.body.number;
-        return person.save();
-      }
+  Person.findByIdAndUpdate(
+    request.params.id,
+    { number: request.body.number },
+    { new: true, runValidators: true }
+  )
+    .then((updatedPerson) => {
+      !updatedPerson ? response.status.end(404) : response.json(updatedPerson);
     })
-    .then((person) => {
-      response.json(person);
-    })
-
-    .catch((error) => {
-      console.log(error);
-      next(error);
-    });
+    .catch((error) => next(error));
 });
 
 // error handler middleware

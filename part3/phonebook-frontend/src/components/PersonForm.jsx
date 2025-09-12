@@ -11,56 +11,89 @@ const PersonsForm = ({ persons, setPersons, setMessage, setMessageType }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (newName === "") {
-      alert("set new name please");
-      return;
-    }
+  const handleMessage = (type, message) => {
+    setMessageType(type);
+    setMessage(message);
+  };
+  const updatePerson = (existingPerson) => {
+    if (
+      window.confirm(
+        `${newName} is already added to phonebook, replace the old number with a new one ?`
+      )
+    ) {
+      const changedPerson = { ...existingPerson, number: newNumber };
+      personsService
+        .change(changedPerson.id, changedPerson)
+        .then((returnedPerson) => {
+          setPersons(
+            persons.map((p) =>
+              p.id === returnedPerson.id ? returnedPerson : p
+            )
+          );
+          handleMessage(
+            "message",
+            `${newName} number has been changed to ${newNumber}`
+          );
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => {
+          setMessageType("error");
+          setMessage(error.response.data.error);
 
-    const existingPerson = persons.find((person) => person.name === newName);
-    if (existingPerson !== undefined) {
-      if (
-        window.confirm(
-          `${newName} is already added to phonebook, replace the old number with a new one ?`
-        )
-      ) {
-        const changedPerson = { ...existingPerson, number: newNumber };
-        personsService
-          .change(changedPerson.id, changedPerson)
-          .then((returnedPerson) => {
-            setPersons(
-              persons.map((p) =>
-                p.id === returnedPerson.id ? returnedPerson : p
-              )
-            );
-            setMessageType("message");
-            setMessage(`${newName} number has been changed to ${newNumber}`);
-            setNewName("");
-            setNewNumber("");
-          })
-          .catch(() => {
+          if (error.response.status === 500) {
             setMessageType("error");
             setMessage(
               `Information of ${newName} has already been removed from server`
             );
             setPersons(persons.filter((p) => p.id !== changedPerson.id));
-          });
-      }
-      return;
+          }
+        });
     }
+  };
 
+  const addNewPerson = () => {
     const newPerson = {
       name: newName,
       number: String(newNumber),
     };
 
-    personsService.create(newPerson).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      setMessage(`Added ${newName}`);
-      setNewName("");
-      setNewNumber("");
-    });
+    personsService
+      .create(newPerson)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setMessageType("message");
+        setMessage(`Added ${newName}`);
+        setNewName("");
+        setNewNumber("");
+      })
+      .catch((error) => {
+        setMessageType("error");
+        console.log(error);
+        setMessage(error.response.data.error);
+      });
+  };
+
+  const validate = () => {
+    if (newName === "") {
+      alert("set new name please");
+      return false;
+    }
+    return true;
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const validated = validate();
+
+    if (!validated) return;
+
+    const existingPerson = persons.find((person) => person.name === newName);
+    if (existingPerson !== undefined) {
+      updatePerson(existingPerson);
+      return;
+    }
+
+    addNewPerson();
   };
 
   return (
