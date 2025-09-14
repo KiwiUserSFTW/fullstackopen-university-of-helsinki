@@ -24,8 +24,13 @@ const personSchema = new mongoose.Schema({
   },
   number: {
     type: String,
-    minLength: 5,
     required: true,
+    minLength: 8,
+    validate: {
+      validator: (number) => /^\d{2,3}-\d+$/.test(number),
+      message: (props) =>
+        `${props.number} isn't right number format use XX-XXXXXXX or XXX-XXXXXXXX`,
+    },
   },
 });
 

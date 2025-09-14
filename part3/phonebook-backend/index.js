@@ -86,7 +86,6 @@ app.get("/api/persons/:id", (request, response, next) => {
       }
     })
     .catch((error) => {
-      console.log(error);
       next(error);
     });
 });
@@ -95,15 +94,8 @@ app.get("/api/persons/:id", (request, response, next) => {
 app.post("/api/persons/", (request, response, next) => {
   const body = request.body;
 
-  if (!body.name || !body.number) {
-    const error = new Error("missing name or number");
-    error.name = "ValidationError";
-    return next(error);
-  }
-
   Person.find({ name: request.body.name })
     .then((existingPersons) => {
-      console.log(existingPersons);
       if (existingPersons.length >= 1) {
         return response.status(400).json({
           error: "name must be unique",
