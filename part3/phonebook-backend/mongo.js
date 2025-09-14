@@ -20,7 +20,7 @@ const Person = mongoose.model("Person", personSchema);
 
 if (process.argv.length >= 4) {
   if (process.argv.length !== 5) {
-    console.log(`add number as argument`);
+    console.log("add number as argument");
     mongoose.connection.close();
     process.exit(1);
   }
