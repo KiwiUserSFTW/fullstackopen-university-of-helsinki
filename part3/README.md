@@ -26,6 +26,7 @@
 - [x] 3.16
 - [x] 3.17*
 - [x] 3.18*
+#### phonebook-backend validation and deploy
 - [x] 3.19*
 - [x] 3.20*
 #### phonebook-backend eslint
