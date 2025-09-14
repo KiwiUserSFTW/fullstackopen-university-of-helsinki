@@ -25,12 +25,16 @@
 - [x] 3.15
 - [x] 3.16
 - [x] 3.17*
-- [ ] 3.18*
-  
+- [x] 3.18*
+- [x] 3.19*
+- [x] 3.20*
+#### phonebook-backend eslint
+- [x] 3.21
+
 ## Sources
 ### [Course Part 3/a](https://fullstackopen.com/en/part3/node_js_and_express)
 ### [Course Part 2/b](https://fullstackopen.com/en/part3/deploying_app_to_internet)
 ### [Course Part 2/c](https://fullstackopen.com/en/part3/saving_data_to_mongo_db)
-### [Course Part 2/d]()
+### [Course Part 2/d](https://fullstackopen.com/en/part3/validation_and_es_lint)
 
 link for backend stand in **ponebook-backend/README.md**
