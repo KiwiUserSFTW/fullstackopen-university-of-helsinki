@@ -31,6 +31,7 @@
 - [x] 3.20*
 #### phonebook-backend eslint
 - [x] 3.21
+- [x] 3.22
 
 ## Sources
 ### [Course Part 3/a](https://fullstackopen.com/en/part3/node_js_and_express)
