@@ -23,7 +23,6 @@ const favoriteBlog = (blogs) => {
     if (blog.likes >= favoriteBlog.likes) favoriteBlog = blog;
   }
 
-  console.log(blogs);
   return favoriteBlog;
 };
 
