@@ -73,6 +73,26 @@ describe("api", () => {
 
     assert.strictEqual(createdBlog.likes, 0);
   });
+  test("response status 400 if title or url missing", async () => {
+    const invalidBlogs = [
+      {
+        // wihout url
+        title: "testBlog",
+        author: "Edsger W. Dijkstra",
+        likes: 1,
+      },
+      {
+        // without title
+        author: "Edsger W. Dijkstra",
+        url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+        likes: 1,
+      },
+    ];
+
+    for (let blog of invalidBlogs) {
+      await api.post("/api/blogs").send(blog).expect(400);
+    }
+  });
 });
 
 after(async () => {
