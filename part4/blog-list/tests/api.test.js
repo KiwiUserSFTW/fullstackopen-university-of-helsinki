@@ -3,6 +3,9 @@ const { test, describe, beforeEach, after } = require("node:test");
 const assert = require("node:assert");
 const supertest = require("supertest");
 
+// helper
+const helper = require("../utils/test_helper");
+
 // component
 const app = require("../app");
 
@@ -50,12 +53,25 @@ describe("api", () => {
 
     await api.post("/api/blogs").send(newBlog).expect(201);
 
-    const blogsResponse = await api.get("/api/blogs").expect(200);
-    const blogsBody = blogsResponse.body;
-    const createdBlog = blogsBody.find((b) => b.title === newBlog.title);
+    const blogsFromDb = await helper.blogsInDb();
+    const createdBlog = blogsFromDb.find((b) => b.title === newBlog.title);
 
-    assert.strictEqual(blogsBody.length, blogs.length + 1);
+    assert.strictEqual(blogsFromDb.length, blogs.length + 1);
     assert.ok(createdBlog);
+  });
+  test("default likes 0 if property missing", async () => {
+    const newBlog = {
+      title: "testBlog",
+      author: "Edsger W. Dijkstra",
+      url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+    };
+
+    await api.post("/api/blogs").send(newBlog).expect(201);
+
+    const blogsFromDb = await helper.blogsInDb();
+    const createdBlog = blogsFromDb.find((b) => b.title === newBlog.title);
+
+    assert.strictEqual(createdBlog.likes, 0);
   });
 });
 
