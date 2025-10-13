@@ -114,6 +114,39 @@ describe("api", () => {
       assert.ok(!deletedBlog);
     });
   });
+  describe("changing blogs", () => {
+    test("blogs changes saved in db", async () => {
+      const blogForChanging = await helper.lastBlogInDb();
+      const blogWithChanges = {
+        ...blogForChanging,
+        likes: 10,
+        title: "Type peaces",
+      };
+
+      const returnedBlog = await api
+        .put(`/api/blogs/${blogForChanging.id}`)
+        .send(blogWithChanges)
+        .expect(200);
+
+      assert.deepStrictEqual(blogWithChanges, returnedBlog.body);
+    });
+    test("respone 404 for not existing id", async () => {
+      const blogForChanging = await helper.lastBlogInDb();
+      const blogWithChanges = {
+        ...blogForChanging,
+        likes: 10,
+        title: "Type peaces",
+      };
+      const notExistingId = await helper.notExistingId();
+
+      const response = await api
+        .put(`/api/blogs/${notExistingId}`)
+        .send(blogWithChanges)
+        .expect(404);
+
+      assert.deepStrictEqual(response.body.error, "blog not found");
+    });
+  });
 });
 
 after(async () => {
