@@ -4,7 +4,10 @@ const app = express();
 
 // db
 const connectBlogDb = require("./db/connectBlogDb");
+
+// routers
 const blogsRouter = require("./controllers/blogs");
+const usersRouter = require("./controllers/users");
 
 // middlewares
 const { errorHandler } = require("./utils/middleware");
@@ -18,7 +21,7 @@ app.get("/", (request, response) => {
 });
 
 app.use("/api/blogs", blogsRouter);
-
+app.use("/api/users", usersRouter);
 app.use(errorHandler);
 
 module.exports = app;
