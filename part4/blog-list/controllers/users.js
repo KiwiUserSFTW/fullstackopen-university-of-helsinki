@@ -7,21 +7,38 @@ usersRouter.get("/", async (request, response) => {
   response.json(users);
 });
 
-usersRouter.post("/", async (request, response) => {
-  const { username, name, password } = request.body;
+const passwordCheck = (password) => {
+  if (!password) return "password should be given";
+  if (password.length < 3) return "password should be at least 3 symbols";
+  return true;
+};
 
-  const saltRounds = 10;
-  const passwordHash = await bcrypt.hash(password, saltRounds);
+usersRouter.post("/", async (request, response, next) => {
+  try {
+    const { username, name, password } = request.body;
 
-  const user = new User({
-    name,
-    username,
-    passwordHash,
-  });
+    const passwordCorrect = passwordCheck(password);
 
-  const savedUser = await user.save();
+    if (passwordCorrect !== true) {
+      response.status(400).json({ error: passwordCorrect });
+      return;
+    }
 
-  response.status(201).send(savedUser);
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+
+    const user = new User({
+      name,
+      username,
+      passwordHash,
+    });
+
+    const savedUser = await user.save();
+
+    response.status(201).send(savedUser);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = usersRouter;

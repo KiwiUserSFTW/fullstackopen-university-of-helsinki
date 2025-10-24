@@ -4,16 +4,16 @@ const assert = require("node:assert");
 const supertest = require("supertest");
 
 // helper
-const helper = require("../utils/test_helper");
+const helper = require("../../utils/test_helper");
 
 // component
-const app = require("../app");
+const app = require("../../app");
 
 // models
-const Blog = require("../models/blog");
+const Blog = require("../../models/blog");
 
 // mockdata
-const { blogs } = require("./mockdata/blogsmockdata");
+const { blogs } = require("../mockdata/blogsmockdata");
 
 // api
 const { default: mongoose } = require("mongoose");
@@ -26,7 +26,7 @@ beforeEach(async () => {
   await Blog.insertMany(blogs);
 });
 
-describe("api", () => {
+describe("blogs api", () => {
   describe("getting correct data", () => {
     test("get return correct data", async () => {
       const blogsResponse = await api
