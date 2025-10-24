@@ -1,4 +1,4 @@
-# Part 3 - Node.js and Express
+# Part 4 - Node.js and Express
 
 ## Exercises 3.1 - 3.22
 
@@ -19,3 +19,6 @@
 - [x] 4.12*
 - [x] 4.13
 - [x] 4.14
+- [x] 4.15
+- [x] 4.16*
+- [x] 4.17

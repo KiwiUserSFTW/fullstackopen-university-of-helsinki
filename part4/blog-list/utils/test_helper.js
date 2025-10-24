@@ -29,9 +29,15 @@ const usersInDb = async () => {
   const users = await User.find({});
   return users.map((u) => u.toJSON());
 };
+
+const userInDb = async () => {
+  return await User.findOne();
+};
+
 module.exports = {
   blogsInDb,
   usersInDb,
   lastBlogInDb,
   notExistingId,
+  userInDb,
 };

@@ -5,12 +5,14 @@ const supertest = require("supertest");
 
 // helper
 const helper = require("../../utils/test_helper");
+const bcrypt = require("bcrypt");
 
 // component
 const app = require("../../app");
 
 // models
 const Blog = require("../../models/blog");
+const User = require("../../models/user");
 
 // mockdata
 const { blogs } = require("../mockdata/blogsmockdata");
@@ -61,6 +63,30 @@ describe("blogs api", () => {
 
       assert.strictEqual(blogsFromDb.length, blogs.length + 1);
       assert.ok(createdBlog);
+    });
+    test("created blog saved to user", async () => {
+      await User.deleteMany({});
+
+      const passwordHash = await bcrypt.hash("sekret", 10);
+      const user = new User({ username: "somename", passwordHash });
+
+      await user.save();
+
+      const newBlog = {
+        title: "testBlog",
+        author: "Edsger W. Dijkstra",
+        url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+        userId: user._id,
+      };
+
+      await api
+        .post("/api/blogs")
+        .send(newBlog)
+        .expect(201)
+        .expect("Content-Type", /application\/json/);
+
+      const savedUser = await User.findById(user._id);
+      assert.strictEqual(savedUser.blogs.length, 1);
     });
     test("default likes 0 if property missing", async () => {
       const newBlog = {

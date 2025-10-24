@@ -6,3 +6,11 @@ Content-Type: application/json
   "username": "Sasha Boyko",
   "password": "salami"
 }
+
+# {
+#   "title": "Tardigrada",
+#   "author": "Jimmy",
+#   "url": "yoios.com",
+#   "likes": 10,
+#   "userId": "68fa3d7381295f1b0e243a3f"
+# }

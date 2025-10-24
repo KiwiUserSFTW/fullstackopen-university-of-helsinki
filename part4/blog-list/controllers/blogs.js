@@ -1,13 +1,31 @@
 const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
+const User = require("../models/user");
 
-blogsRouter.get("/", async (request, response) => {
-  response.json(await Blog.find({}));
+blogsRouter.get("/", async (request, response, next) => {
+  try {
+    const blogs = await Blog.find({}).populate("user");
+    response.json(blogs);
+  } catch (error) {
+    next(error);
+  }
 });
 
 blogsRouter.post("/", async (request, response, next) => {
   try {
-    const blog = new Blog(request.body);
+    const { userId, ...newBlogFields } = request.body;
+
+    const user = (await User.findById(userId)) || (await User.findOne({}));
+
+    if (!user) {
+      response.status(400).json({ error: "user not exist" });
+    }
+
+    const blog = new Blog({ ...newBlogFields, user: user._id });
+
+    user.blogs = [...user.blogs, blog._id];
+    user.save();
+
     response.status(201).json(await blog.save());
   } catch (error) {
     next(error);
