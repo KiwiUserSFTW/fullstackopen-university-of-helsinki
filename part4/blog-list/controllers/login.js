@@ -16,7 +16,15 @@ loginRouter.post("/", async (request, response, next) => {
       });
     }
 
-    const token = jws.sign(password, process.env.SECRET);
+    const userForToken = {
+      username: user.username,
+      id: user._id,
+    };
+
+    const token = jws.sign(userForToken, process.env.SECRET, {
+      expiresIn: 60 * 60,
+    });
+
     response
       .status(201)
       .json({ token, username: user.username, name: user.name });
