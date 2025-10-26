@@ -24,6 +24,7 @@ const api = supertest(app);
 // db preset
 beforeEach(async () => {
   await Blog.deleteMany({});
+  await User.deleteMany({});
   await Blog.insertMany(blogs);
 });
 
@@ -64,8 +65,6 @@ describe("blogs api", () => {
     //   assert.ok(createdBlog);
     // });
     test("created blog saved to user", async () => {
-      await User.deleteMany({});
-
       const newBlog = {
         title: "testBlog",
         author: "Edsger W. Dijkstra",
@@ -121,19 +120,41 @@ describe("blogs api", () => {
   });
   describe("deleting blogs", () => {
     test("blogs length reduced by 1", async () => {
-      const blogForDeleting = await helper.lastBlogInDb();
-      await api.delete(`/api/blogs/${blogForDeleting.id}`).expect(204);
+      const { blog, token } = await helper.getBlogWithUser(); // users increased by 1
+
+      await api
+        .delete(`/api/blogs/${blog.id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .expect(204);
       const blogsFromDb = await helper.blogsInDb();
-      assert.strictEqual(blogsFromDb.length, blogs.length - 1);
+      assert.strictEqual(blogsFromDb.length, blogs.length);
     });
     test("blog not exist after deleting", async () => {
-      const blogForDeleting = await helper.lastBlogInDb();
-      await api.delete(`/api/blogs/${blogForDeleting.id}`).expect(204);
+      const { blog, token } = await helper.getBlogWithUser(); // users increased by 1
+
+      await api
+        .delete(`/api/blogs/${blog.id}`)
+        .expect(204)
+        .set("Authorization", `Bearer ${token}`);
 
       const blogsFromDb = await helper.blogsInDb();
-      const deletedBlog = blogsFromDb.find((b) => b.id === blogForDeleting.id);
+      const deletedBlog = blogsFromDb.find((b) => b.id === blog.id);
 
       assert.ok(!deletedBlog);
+    });
+    test("fail with invalid token", async () => {
+      await User.deleteMany({});
+      const { blog } = await helper.getBlogWithUser(); // users increased by 1
+
+      const response = await api
+        .delete(`/api/blogs/${blog._id}`)
+        .set("Authorization", "Bearer invalidToken")
+        .expect(401)
+        .expect("Content-Type", /application\/json/);
+
+      const blogsFromDb = await helper.blogsInDb();
+      assert.strictEqual(blogsFromDb.length, blogs.length + 1);
+      assert.strict(response.body.error, "invalid token");
     });
   });
   describe("changing blogs", () => {

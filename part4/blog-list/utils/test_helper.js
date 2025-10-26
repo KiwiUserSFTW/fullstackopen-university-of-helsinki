@@ -45,12 +45,12 @@ const getUserWithToken = async () => {
     password: await bcrypt.hash(password, 10),
   };
 
-  const getUser = async () => {
+  const getUser = async (newUser) => {
     const user = new User(newUser);
     return await user.save();
   };
 
-  const user = await getUser();
+  const user = await getUser(newUser);
 
   const userForToken = {
     username: user.username,
@@ -63,6 +63,31 @@ const getUserWithToken = async () => {
   };
 };
 
+const getBlogWithUser = async () => {
+  const { user, token } = await getUserWithToken();
+
+  const newBlog = {
+    title: "Shells",
+    author: "Waves",
+    url: "ocean.com",
+    likes: 0,
+    user: user._id,
+  };
+
+  const blog = new Blog(newBlog);
+  const savedBlog = await blog.save();
+
+  // save blog to user
+  user.blogs.push(newBlog._id);
+  await user.save();
+
+  return {
+    user: user,
+    blog: savedBlog,
+    token: token,
+  };
+};
+
 module.exports = {
   blogsInDb,
   usersInDb,
@@ -70,4 +95,5 @@ module.exports = {
   notExistingId,
   userInDb,
   getUserWithToken,
+  getBlogWithUser,
 };
