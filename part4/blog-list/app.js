@@ -11,10 +11,10 @@ const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 
 // middlewares
-const { errorHandler } = require("./utils/middleware");
+const { errorHandler, tokenExtractor } = require("./utils/middleware");
 
 app.use(express.json());
-
+app.use(tokenExtractor);
 connectBlogDb();
 
 app.get("/", (request, response) => {

@@ -65,11 +65,13 @@ describe("blogs api", () => {
     // });
     test("created blog saved to user", async () => {
       await User.deleteMany({});
+
       const newBlog = {
         title: "testBlog",
         author: "Edsger W. Dijkstra",
         url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
       };
+
       const { user, token } = await helper.getUserWithToken();
 
       await api
