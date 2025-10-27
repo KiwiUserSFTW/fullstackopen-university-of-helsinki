@@ -34,17 +34,22 @@ blogsRouter.post("/", userExtractor, async (request, response, next) => {
   }
 });
 
-blogsRouter.put("/:id", async (request, response, next) => {
+blogsRouter.put("/:id", userExtractor, async (request, response, next) => {
+  const updatedObjId = request.params.id || null;
+
   try {
+    const blog = await Blog.findById(updatedObjId);
+    if (!blog) return response.status(404).json({ error: "blog not found" });
+
+    if (blog.user.toString() !== request.user.id.toString()) {
+      return response.status(401).json({ error: "unauthorized token" });
+    }
+
     const updatedBlog = await Blog.findByIdAndUpdate(
       request.params.id,
       request.body,
       { new: true, runValidators: true }
     );
-
-    if (!updatedBlog) {
-      return response.status(404).json({ error: "blog not found" });
-    }
 
     response.json(updatedBlog);
   } catch (error) {

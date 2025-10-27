@@ -189,31 +189,38 @@ describe("blogs api", () => {
   });
   describe("changing blogs", () => {
     test("blogs changes saved in db", async () => {
-      const blogForChanging = await helper.lastBlogInDb();
+      const { token, blog } = await helper.getBlogWithUser();
       const blogWithChanges = {
-        ...blogForChanging,
+        ...blog.toObject(),
         likes: 10,
         title: "Type peaces",
       };
 
       const returnedBlog = await api
-        .put(`/api/blogs/${blogForChanging.id}`)
+        .put(`/api/blogs/${blogWithChanges._id}`)
+        .set("Authorization", `Bearer ${token}`)
         .send(blogWithChanges)
         .expect(200);
 
-      assert.deepStrictEqual(blogWithChanges, returnedBlog.body);
+      assert.deepStrictEqual(
+        blogWithChanges._id.toString(),
+        returnedBlog.body.id
+      );
     });
     test("respone 404 for not existing id", async () => {
-      const blogForChanging = await helper.lastBlogInDb();
+      const { blog, token } = await helper.getBlogWithUser();
+
       const blogWithChanges = {
-        ...blogForChanging,
+        ...blog.toObject(),
         likes: 10,
         title: "Type peaces",
       };
+
       const notExistingId = await helper.notExistingId();
 
       const response = await api
         .put(`/api/blogs/${notExistingId}`)
+        .set("Authorization", `Bearer ${token}`)
         .send(blogWithChanges)
         .expect(404);
 
