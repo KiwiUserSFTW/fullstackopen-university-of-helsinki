@@ -48,22 +48,28 @@ describe("blogs api", () => {
     });
   });
   describe("adding new blog", () => {
-    // test("post add new blog", async () => {
-    //   const newBlog = {
-    //     title: "testBlog",
-    //     author: "Edsger W. Dijkstra",
-    //     url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
-    //     likes: 1,
-    //   };
+    test("post add new blog", async () => {
+      const { token } = await helper.getUserWithToken();
 
-    //   await api.post("/api/blogs").send(newBlog).expect(201);
+      const newBlog = {
+        title: "testBlog",
+        author: "Edsger W. Dijkstra",
+        url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+        likes: 1,
+      };
 
-    //   const blogsFromDb = await helper.blogsInDb();
-    //   const createdBlog = blogsFromDb.find((b) => b.title === newBlog.title);
+      await api
+        .post("/api/blogs")
+        .set("Authorization", `Bearer ${token}`)
+        .send(newBlog)
+        .expect(201);
 
-    //   assert.strictEqual(blogsFromDb.length, blogs.length + 1);
-    //   assert.ok(createdBlog);
-    // });
+      const blogsFromDb = await helper.blogsInDb();
+      const createdBlog = blogsFromDb.find((b) => b.title === newBlog.title);
+
+      assert.strictEqual(blogsFromDb.length, blogs.length + 1);
+      assert.ok(createdBlog);
+    });
     test("created blog saved to user", async () => {
       const newBlog = {
         title: "testBlog",
@@ -83,40 +89,64 @@ describe("blogs api", () => {
       const savedUser = await User.findById(user._id);
       assert.strictEqual(savedUser.blogs.length, 1);
     });
-    // test("default likes 0 if property missing", async () => {
-    //   const newBlog = {
-    //     title: "testBlog",
-    //     author: "Edsger W. Dijkstra",
-    //     url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
-    //   };
+    test("default likes 0 if property missing", async () => {
+      const { token } = await helper.getUserWithToken();
 
-    //   await api.post("/api/blogs").send(newBlog).expect(201);
+      const newBlog = {
+        title: "testBlog",
+        author: "Edsger W. Dijkstra",
+        url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+      };
 
-    //   const blogsFromDb = await helper.blogsInDb();
-    //   const createdBlog = blogsFromDb.find((b) => b.title === newBlog.title);
+      await api
+        .post("/api/blogs")
+        .set("Authorization", `Bearer ${token}`)
+        .send(newBlog)
+        .expect(201);
 
-    //   assert.strictEqual(createdBlog.likes, 0);
-    // });
-    // test("response status 400 if title or url missing", async () => {
-    //   const invalidBlogs = [
-    //     {
-    //       // wihout url
-    //       title: "testBlog",
-    //       author: "Edsger W. Dijkstra",
-    //       likes: 1,
-    //     },
-    //     {
-    //       // without title
-    //       author: "Edsger W. Dijkstra",
-    //       url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
-    //       likes: 1,
-    //     },
-    //   ];
+      const blogsFromDb = await helper.blogsInDb();
+      const createdBlog = blogsFromDb.find((b) => b.title === newBlog.title);
 
-    //   for (let blog of invalidBlogs) {
-    //     await api.post("/api/blogs").send(blog).expect(400);
-    //   }
-    // });
+      assert.strictEqual(createdBlog.likes, 0);
+    });
+    test("response status 400 if title or url missing", async () => {
+      const { token } = await helper.getUserWithToken();
+
+      const invalidBlogs = [
+        {
+          // wihout url
+          title: "testBlog",
+          author: "Edsger W. Dijkstra",
+          likes: 1,
+        },
+        {
+          // without title
+          author: "Edsger W. Dijkstra",
+          url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+          likes: 1,
+        },
+      ];
+
+      for (let blog of invalidBlogs) {
+        await api
+          .post("/api/blogs")
+          .set("Authorization", `Bearer ${token}`)
+          .send(blog)
+          .expect(400);
+      }
+    });
+    test("fail without token", async () => {
+      const newBlog = {
+        title: "testBlog",
+        author: "Edsger W. Dijkstra",
+        url: "https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf",
+        likes: 1,
+      };
+
+      const response = await api.post("/api/blogs").send(newBlog).expect(401);
+
+      assert.strictEqual(response.body.error, "unauthorized");
+    });
   });
   describe("deleting blogs", () => {
     test("blogs length reduced by 1", async () => {
