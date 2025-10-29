@@ -6,7 +6,6 @@ import blogService from "../services/blogs";
 // components
 import BlogList from "./BlogList";
 import LoginForm from "./LoginForm";
-import User from "./User";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -24,7 +23,7 @@ const Blogs = () => {
   return (
     <div>
       <LoginForm user={user} setUser={setUser} />
-      <BlogList user={user} blogs={blogs} />
+      <BlogList user={user} setUser={setUser} blogs={blogs} />
     </div>
   );
 };

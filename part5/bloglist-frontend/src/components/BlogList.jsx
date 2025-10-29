@@ -1,11 +1,13 @@
+// components
 import Blog from "./Blog";
-import User from "./User"
-const BlogList = ({ blogs, user }) => {
+import User from "./User";
+
+const BlogList = ({ blogs, user, setUser }) => {
   if (!user) return null;
   return (
     <div>
       <h2>blogs</h2>
-      <User user={user} />
+      <User user={user} setUser={setUser} />
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
