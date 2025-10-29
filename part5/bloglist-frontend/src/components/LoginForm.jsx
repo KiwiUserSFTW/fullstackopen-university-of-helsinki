@@ -2,6 +2,7 @@ import { useState } from "react";
 
 // api
 import { login } from "../services/login";
+import blogsService from "../services/blogs";
 
 const LoginForm = ({ user, setUser }) => {
   const [username, setUsername] = useState("");
@@ -18,6 +19,7 @@ const LoginForm = ({ user, setUser }) => {
 
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
       setUser(user);
+      blogsService.setToken(user.token);
     } catch (error) {
       console.error("worng credentials", error);
     }

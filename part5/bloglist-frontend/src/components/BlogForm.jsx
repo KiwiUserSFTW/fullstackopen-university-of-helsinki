@@ -1,0 +1,71 @@
+import { useState } from "react";
+
+// api
+import blogService from "../services/blogs";
+
+const BlogForm = ({ setBlogs }) => {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [url, setUrl] = useState("");
+
+  const formValidate = () => {
+    if (!title || !author || !url) {
+      console.error("fill all fields");
+      return false;
+    }
+
+    return true;
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formValidate()) {
+      try {
+        const createdBlog = await blogService.create({ title, author, url });
+        setBlogs((blogs) => [...blogs, createdBlog]);
+        console.log("submited");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h1> create new </h1>
+      <div>
+        <label>
+          title
+          <input
+            type="text"
+            value={title}
+            onChange={({ target }) => setTitle(target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          author
+          <input
+            type="text"
+            value={author}
+            onChange={({ target }) => setAuthor(target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          url
+          <input
+            type="text"
+            value={url}
+            onChange={({ target }) => setUrl(target.value)}
+          />
+        </label>
+      </div>
+      <button type="submit"> submit </button>
+    </form>
+  );
+};
+
+export default BlogForm;

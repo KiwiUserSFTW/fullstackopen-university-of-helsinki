@@ -5,7 +5,7 @@ const User = ({ user, setUser }) => {
   };
   return (
     <div>
-      <p1> {user.name} logged in</p1>
+      <p> {user.name} logged in</p>
       <button onClick={handleLogout}> log out </button>
     </div>
   );

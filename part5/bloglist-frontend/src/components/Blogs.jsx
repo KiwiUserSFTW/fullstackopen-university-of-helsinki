@@ -16,14 +16,21 @@ const Blogs = () => {
 
     const localLoggedUser = window.localStorage.getItem("loggedUser");
     if (localLoggedUser) {
-      setUser(JSON.parse(localLoggedUser));
+      const user = JSON.parse(localLoggedUser);
+      setUser(user);
+      blogService.setToken(user.token);
     }
   }, []);
 
   return (
     <div>
       <LoginForm user={user} setUser={setUser} />
-      <BlogList user={user} setUser={setUser} blogs={blogs} />
+      <BlogList
+        user={user}
+        setUser={setUser}
+        blogs={blogs}
+        setBlogs={setBlogs}
+      />
     </div>
   );
 };

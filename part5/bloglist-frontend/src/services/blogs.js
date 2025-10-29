@@ -4,7 +4,7 @@ const baseUrl = "/api/blogs";
 let token = null;
 
 const setToken = (value) => {
-  token = value;
+  token = `Bearer ${value}`;
 };
 
 const getAll = async () => {
@@ -12,4 +12,13 @@ const getAll = async () => {
   return response.data;
 };
 
-export default { getAll, setToken };
+const create = async (newBlog) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  console.log(config.headers)
+  const response = await axios.post(baseUrl, newBlog, config);
+  return response.data;
+};
+
+export default { getAll, setToken, create };
