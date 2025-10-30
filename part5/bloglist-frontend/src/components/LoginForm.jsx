@@ -3,10 +3,12 @@ import { useState } from "react";
 // api
 import { login } from "../services/login";
 import blogsService from "../services/blogs";
+import Notifier from "./Notifier/Notifier";
 
 const LoginForm = ({ user, setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [notification, setNotification] = useState("");
 
   if (user) return null;
   const handleLogin = async (event) => {
@@ -19,15 +21,23 @@ const LoginForm = ({ user, setUser }) => {
 
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
       setUser(user);
+      setNotification({
+        value: "loging succesfull",
+        type: "notification",
+      });
       blogsService.setToken(user.token);
-    } catch (error) {
-      console.error("worng credentials", error);
+    } catch {
+      setNotification({
+        value: "wrog credentials",
+        type: "error",
+      });
     }
   };
 
   return (
     <form onSubmit={handleLogin}>
       <h1> log in to application</h1>
+      <Notifier notification={notification} setNotification={setNotification} />
       <div>
         <label>
           username

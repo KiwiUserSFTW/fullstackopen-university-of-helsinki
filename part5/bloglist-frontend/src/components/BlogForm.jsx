@@ -3,14 +3,20 @@ import { useState } from "react";
 // api
 import blogService from "../services/blogs";
 
-const BlogForm = ({ setBlogs }) => {
+const BlogForm = ({ setBlogs, setNotification }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
 
+  const clearFields = () => {
+    setTitle("");
+    setAuthor("");
+    setUrl("");
+  };
+
   const formValidate = () => {
     if (!title || !author || !url) {
-      console.error("fill all fields");
+      setNotification({ value: "fill all fields", type: "error" });
       return false;
     }
 
@@ -22,10 +28,17 @@ const BlogForm = ({ setBlogs }) => {
     if (formValidate()) {
       try {
         const createdBlog = await blogService.create({ title, author, url });
+        clearFields();
         setBlogs((blogs) => [...blogs, createdBlog]);
-        console.log("submited");
+        setNotification({
+          value: "blog created succesfull",
+          type: "notification",
+        });
       } catch (error) {
-        console.error(error);
+        setNotification({
+          value: `blog creation failed, error: ${error}`,
+          type: "error",
+        });
       }
     }
   };

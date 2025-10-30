@@ -1,7 +1,11 @@
-const User = ({ user, setUser }) => {
+const User = ({ user, setUser, setNotification }) => {
   const handleLogout = () => {
     setUser(null);
     window.localStorage.removeItem("loggedUser");
+    setNotification({
+      value: "you have been logout succesfull",
+      type: "notification",
+    });
   };
   return (
     <div>
