@@ -3,7 +3,7 @@ import { useState } from "react";
 // api
 import blogService from "../services/blogs";
 
-const BlogForm = ({ setBlogs, setNotification }) => {
+const BlogForm = ({ setBlogs, setNotification, handleClose }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -29,6 +29,7 @@ const BlogForm = ({ setBlogs, setNotification }) => {
       try {
         const createdBlog = await blogService.create({ title, author, url });
         clearFields();
+        handleClose();
         setBlogs((blogs) => [...blogs, createdBlog]);
         setNotification({
           value: "blog created succesfull",
