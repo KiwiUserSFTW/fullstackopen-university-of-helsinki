@@ -20,20 +20,38 @@ const Blog = ({ blog, setBlogs, setNotification }) => {
     url: blog.url,
   });
 
-  const handleBlogUpdate = (responsedBlog) => {
-    setBlogs((prev) =>
-      prev.map((b) =>
-        b.id === responsedBlog.id ? { ...b, likes: responsedBlog.likes } : b
-      )
+  const handleDelete = async () => {
+    const deleteConfirm = window.confirm(
+      `Are you sure in deleting blog added by ${blog.user.username}`
     );
-  };
 
+    if (!deleteConfirm) return;
+
+    try {
+      await blogsService.deleteOne(blog.id);
+      setNotification({
+        value: "blog deleted succesfully",
+        type: "notification",
+      });
+      setBlogs((prev) => prev.filter((b) => b.id !== blog.id));
+    } catch (error) {
+      console.error("deleting blog error", error);
+      setNotification({
+        value: "you can delete only blogs which you have created",
+        type: "error",
+      });
+    }
+  };
   const handleLike = async () => {
     try {
       const updatedBlog = { ...formatedBlog(), likes: blog.likes + 1 };
       const responsedBlog = await blogsService.update(updatedBlog, blog.id);
 
-      handleBlogUpdate(responsedBlog);
+      setBlogs((prev) =>
+        prev.map((b) =>
+          b.id === responsedBlog.id ? { ...b, likes: responsedBlog.likes } : b
+        )
+      );
     } catch (error) {
       console.error("like adding error", error);
       setNotification({
@@ -61,6 +79,9 @@ const Blog = ({ blog, setBlogs, setNotification }) => {
             Likes: {blog.likes} <button onClick={handleLike}> like </button>
           </span>
         </div>
+        <button className={"delete"} onClick={handleDelete}>
+          delete
+        </button>
       </Togglable>
     </div>
   );

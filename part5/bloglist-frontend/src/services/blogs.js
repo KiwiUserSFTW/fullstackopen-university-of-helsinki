@@ -28,4 +28,15 @@ const update = async (updatedBlog, id) => {
     throw error;
   }
 };
-export default { getAll, setToken, create, update };
+
+const deleteOne = async (id) => {
+  try {
+    const response = await axios.delete(`${baseUrl}/${id}`, config());
+    return response.data;
+  } catch (error) {
+    console.error("deleting failed:", error.response.data);
+    throw error;
+  }
+};
+
+export default { getAll, setToken, create, update, deleteOne };
