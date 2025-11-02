@@ -3,6 +3,8 @@ const baseUrl = "/api/blogs";
 
 let token = null;
 
+const config = () => ({ headers: { Authorization: token } });
+
 const setToken = (value) => {
   token = `Bearer ${value}`;
 };
@@ -13,12 +15,17 @@ const getAll = async () => {
 };
 
 const create = async (newBlog) => {
-  const config = {
-    headers: { Authorization: token },
-  };
-  console.log(config.headers)
-  const response = await axios.post(baseUrl, newBlog, config);
+  const response = await axios.post(baseUrl, newBlog, config());
   return response.data;
 };
 
-export default { getAll, setToken, create };
+const update = async (updatedBlog, id) => {
+  try {
+    const response = await axios.put(`${baseUrl}/${id}`, updatedBlog, config());
+    return response.data;
+  } catch (error) {
+    console.error("update failed:", error.response.data);
+    throw error;
+  }
+};
+export default { getAll, setToken, create, update };

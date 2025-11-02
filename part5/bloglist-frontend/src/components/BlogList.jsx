@@ -16,7 +16,7 @@ const BlogList = ({ blogs, setBlogs, user, setUser }) => {
     if (formVisible) return null;
     return (
       <button className="labelButton" onClick={() => setVisible(true)}>
-        create new
+        create new blog
       </button>
     );
   };
@@ -35,7 +35,7 @@ const BlogList = ({ blogs, setBlogs, user, setUser }) => {
       </Togglable>
       <User user={user} setUser={setUser} setNotification={setNotification} />
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} setBlogs={setBlogs} setNotification={setNotification} />
       ))}
     </div>
   );

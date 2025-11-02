@@ -24,7 +24,7 @@ const BlogForm = ({ setBlogs, setNotification, onClose }) => {
   };
 
   const handleClose = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     clearFields();
     onClose();
   };
@@ -36,7 +36,7 @@ const BlogForm = ({ setBlogs, setNotification, onClose }) => {
       try {
         const createdBlog = await blogService.create({ title, author, url });
         clearFields();
-        handleClose(e);
+        handleClose();
         setBlogs((blogs) => [...blogs, createdBlog]);
         setNotification({
           value: "blog created succesfull",
