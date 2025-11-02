@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 // components
-import Blog from "./Blog";
+import Blog from "./Blog/Blog";
 import User from "./User";
 import BlogForm from "./BlogForm";
 import Notifier from "./Notifier/Notifier";
@@ -9,22 +9,28 @@ import Togglable from "./Togglable";
 
 const BlogList = ({ blogs, setBlogs, user, setUser }) => {
   const [notification, setNotification] = useState({});
-  const toggleLableRef = useRef(null);
-
-  const closeBlogForm = () => {
-    toggleLableRef.current.handleToggle();
-  };
+  const [formVisible, setVisible] = useState(false);
 
   if (!user) return null;
+  const createButtonRender = () => {
+    if (formVisible) return null;
+    return (
+      <button className="labelButton" onClick={() => setVisible(true)}>
+        create new
+      </button>
+    );
+  };
+
   return (
     <div>
       <h2>blogs</h2>
       <Notifier notification={notification} setNotification={setNotification} />
-      <Togglable buttonLabel={"create new blog"} ref={toggleLableRef}>
+      {createButtonRender()}
+      <Togglable visible={formVisible}>
         <BlogForm
           setBlogs={setBlogs}
           setNotification={setNotification}
-          handleClose={closeBlogForm}
+          onClose={() => setVisible(false)}
         />
       </Togglable>
       <User user={user} setUser={setUser} setNotification={setNotification} />

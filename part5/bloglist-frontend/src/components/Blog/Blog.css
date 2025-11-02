@@ -1,0 +1,14 @@
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.blog {
+  margin: 1vw;
+  padding: 1vw;
+  border: 1px solid darkcyan;
+
+  button {
+    margin-left: 10px;
+  }
+}

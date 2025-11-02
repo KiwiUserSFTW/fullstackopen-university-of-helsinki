@@ -3,7 +3,7 @@ import { useState } from "react";
 // api
 import blogService from "../services/blogs";
 
-const BlogForm = ({ setBlogs, setNotification, handleClose }) => {
+const BlogForm = ({ setBlogs, setNotification, onClose }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -22,6 +22,13 @@ const BlogForm = ({ setBlogs, setNotification, handleClose }) => {
 
     return true;
   };
+
+  const handleClose = (e) => {
+    e.preventDefault();
+    clearFields();
+    onClose();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,7 +36,7 @@ const BlogForm = ({ setBlogs, setNotification, handleClose }) => {
       try {
         const createdBlog = await blogService.create({ title, author, url });
         clearFields();
-        handleClose();
+        handleClose(e);
         setBlogs((blogs) => [...blogs, createdBlog]);
         setNotification({
           value: "blog created succesfull",
@@ -78,6 +85,7 @@ const BlogForm = ({ setBlogs, setNotification, handleClose }) => {
         </label>
       </div>
       <button type="submit"> submit </button>
+      <button onClick={handleClose}> cancel </button>
     </form>
   );
 };
