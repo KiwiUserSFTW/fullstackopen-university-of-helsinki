@@ -65,7 +65,7 @@ const Blog = ({ blog, setBlogs, setNotification }) => {
   return (
     <div className="blog">
       <div>
-        {blog.title}
+        {` ${blog.title} ${blog.author}`}
         {detailsVisible ? (
           <button onClick={() => setDetailsVisible(false)}> hide </button>
         ) : (
@@ -74,10 +74,11 @@ const Blog = ({ blog, setBlogs, setNotification }) => {
       </div>
       <Togglable visible={detailsVisible}>
         <div className="details">
-          <span>Author: {blog.author}</span>
-          <span>
-            Likes: {blog.likes} <button onClick={handleLike}> like </button>
-          </span>
+          <p>
+            <span>Likes: {blog.likes}</span>
+            <button onClick={handleLike}> like </button>
+          </p>
+          <span>Url: {blog.url}</span>
         </div>
         <button className={"delete"} onClick={handleDelete}>
           delete
