@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // api
-import blogService from "../services/blogs";
+import blogService from "../../../services/blogs";
 
 const BlogForm = ({ setBlogs, setNotification, onClose }) => {
   const [title, setTitle] = useState("");

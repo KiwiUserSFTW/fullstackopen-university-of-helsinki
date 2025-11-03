@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
 // api
-import blogService from "../services/blogs";
+import blogService from "../../services/blogs";
 
 // components
-import BlogList from "./BlogList";
-import LoginForm from "./LoginForm";
+import BlogList from "./BlogList/BlogList";
+import LoginForm from "../LoginForm/LoginForm";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);

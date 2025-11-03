@@ -2,10 +2,10 @@ import { useState } from "react";
 
 // components
 import Blog from "./Blog/Blog";
-import User from "./User";
-import BlogForm from "./BlogForm";
-import Notifier from "./Notifier/Notifier";
-import Togglable from "./Togglable";
+import User from "./User/User";
+import BlogForm from "../BlogForm/BlogForm";
+import Notifier from "../../general/Notifier/Notifier";
+import Togglable from "../../general/Togglable.jsx/Togglable";
 
 const BlogList = ({ blogs, setBlogs, user, setUser }) => {
   const [notification, setNotification] = useState({});

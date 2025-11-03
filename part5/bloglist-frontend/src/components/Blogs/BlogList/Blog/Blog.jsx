@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 // components
-import Togglable from "../Togglable";
+import Togglable from "../../../general/Togglable.jsx/Togglable";
 
 // style
 import "./Blog.css";
 
 //api
-import blogsService from "../../services/blogs";
+import blogsService from "../../../../services/blogs";
 
 const Blog = ({ blog, setBlogs, setNotification }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);

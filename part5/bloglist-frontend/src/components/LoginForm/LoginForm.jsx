@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 // api
-import { login } from "../services/login";
-import blogsService from "../services/blogs";
-import Notifier from "./Notifier/Notifier";
+import { login } from "../../services/login";
+import blogsService from "../../services/blogs";
+import Notifier from "../general/Notifier/Notifier";
 
 const LoginForm = ({ user, setUser }) => {
   const [username, setUsername] = useState("");
