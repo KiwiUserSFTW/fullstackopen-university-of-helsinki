@@ -58,7 +58,7 @@ describe("Blog tests", () => {
   });
   test("check the like button clicked twice", async () => {
     /*
-        note for exercise 4.15
+        note for exercise 5.15
         i have mocked the services module because, in my implementation
         the Blog component contains the update function inside itself.
         when the handleLike function runs inside Blog, it calls setBlogs
@@ -68,22 +68,19 @@ describe("Blog tests", () => {
         */
     vi.mock("../../../../services/blogs", () => ({
       default: {
-        update: vi.fn().mockResolvedValue({ id: "abc123", likes: 1 }),
+        update: vi
+          .fn()
+          .mockResolvedValue({ title: "test", author: "test", url: "test" }),
         deleteOne: vi.fn(),
       },
     }));
 
     const mockHandler = vi.fn();
-    const mockNotificationHendler = vi.fn();
 
     const user = userEvent.setup();
 
     render(
-      <Blog
-        blog={blog}
-        setBlogs={mockHandler}
-        setNotification={mockNotificationHendler}
-      />
+      <Blog blog={blog} setBlogs={mockHandler} setNotification={() => {}} />
     );
 
     const showButton = screen.getByText("show");
