@@ -14,6 +14,10 @@ const LoginForm = ({ user, setUser }) => {
   const handleLogin = async (event) => {
     event.preventDefault();
     if (!password || !username) {
+      setNotification({
+        value: "user or password missing",
+        type: "error",
+      });
       return console.error("password or username is missing");
     }
     try {
@@ -28,7 +32,7 @@ const LoginForm = ({ user, setUser }) => {
       blogsService.setToken(user.token);
     } catch {
       setNotification({
-        value: "wrog credentials",
+        value: "wrong credentials",
         type: "error",
       });
     }

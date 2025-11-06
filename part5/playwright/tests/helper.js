@@ -1,22 +1,29 @@
 export const url = "http://localhost:5173/";
 
-export const resetBlogs = async ({ request }) => {
-  await request.post(apiUrl + "testing");
+export const resetDb = async (request) => {
+  await request.post(url + "api/testing/reset");
 };
 
-export const createUser = async ({ request }) => {
+export const createUser = async (request) => {
   const userData = {
     name: "Joe",
-    username: "Joe Dopi",
+    username: "Sea Delpin",
     password: "secret",
   };
 
-  await request.post(apiUrl + "users", {
+  await request.post(url + "api/users", {
     data: userData,
   });
 
   return {
     username: userData.username,
     password: userData.password,
+    name: userData.name,
   };
+};
+
+export const login = async (page, user) => {
+  await page.getByLabel("username").fill(user.username);
+  await page.getByLabel("password").fill(user.password);
+  await page.getByRole("button", { name: "login" }).click();
 };
