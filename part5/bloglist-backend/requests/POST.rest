@@ -1,0 +1,16 @@
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "Alex",
+  "username": "Sasha Boyko",
+  "password": "salami"
+}
+
+# {
+#   "title": "Tardigrada",
+#   "author": "Jimmy",
+#   "url": "yoios.com",
+#   "likes": 10,
+#   "userId": "68fa3d7381295f1b0e243a3f"
+# }
