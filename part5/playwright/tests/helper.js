@@ -22,6 +22,18 @@ export const createUser = async (request) => {
   };
 };
 
+export const createBlog = async (page, newBlog) => {
+  try {
+    // apply the form
+    await page.getByRole("button", { name: "create new blog" }).click();
+    await page.getByLabel("title").fill(newBlog.title);
+    await page.getByLabel("author").fill(newBlog.author);
+    await page.getByLabel("url").fill(newBlog.url);
+    await page.getByRole("button", { name: "submit" }).click();
+  } catch (error) {
+    console.error("creating new blog error");
+  }
+};
 export const login = async (page, user) => {
   await page.getByLabel("username").fill(user.username);
   await page.getByLabel("password").fill(user.password);

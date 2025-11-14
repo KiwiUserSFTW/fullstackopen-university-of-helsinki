@@ -1,6 +1,6 @@
 // @ts-check
 import { test as base, expect } from "@playwright/test";
-import { createUser, login, resetDb, url } from "./helper";
+import { createBlog, createUser, login, resetDb, url } from "./helper";
 
 const test = base.extend({
   page: async ({ page }, use) => {
@@ -35,6 +35,24 @@ test.describe("Blog list", () => {
         await login(page, user);
       });
 
+      test.only("blog can be liked", async ({ page }) => {
+        const newBlog = {
+          title: "Sea waves is dangesr for little crabs",
+          author: "Smart fish",
+          url: "ocean.com",
+        };
+
+        // crating blog using user actions
+        await createBlog(page, newBlog);
+
+        const blog = await page
+          .locator(".blog")
+          .filter({ hasText: newBlog.title });
+
+        await blog.getByRole("button", { name: "show" }).click();
+        await blog.getByRole("button", { name: "like" }).click();
+        await expect(page.getByText(`Likes: 0`)).toBeVisible();
+      });
       test("a new blog can be created", async ({ page }) => {
         const newBlog = {
           title: "Sea waves is dangesr for little crabs",
@@ -42,14 +60,10 @@ test.describe("Blog list", () => {
           url: "ocean.com",
         };
 
-        // filling the form
-        await page.getByRole("button", { name: "create new blog" }).click();
-        await page.getByLabel("title").fill(newBlog.title);
-        await page.getByLabel("author").fill(newBlog.author);
-        await page.getByLabel("url").fill(newBlog.url);
+        // crating blog using user actions
+        await createBlog(page, newBlog);
 
         // assert
-        await page.getByRole("button", { name: "submit" }).click();
         await expect(page.locator(".notification")).toContainText(
           "blog created succesfull"
         );
