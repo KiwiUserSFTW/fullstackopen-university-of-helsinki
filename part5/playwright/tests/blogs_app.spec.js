@@ -35,9 +35,29 @@ test.describe("Blog list", () => {
         await login(page, user);
       });
 
+      test("a new blog can be created", async ({ page }) => {
+        const newBlog = {
+          title: "Sea waves is dangesr for little crabs",
+          author: "Smart fish",
+          url: "ocean.com",
+        };
 
+        // filling the form
+        await page.getByRole("button", { name: "create new blog" }).click();
+        await page.getByLabel("title").fill(newBlog.title);
+        await page.getByLabel("author").fill(newBlog.author);
+        await page.getByLabel("url").fill(newBlog.url);
+
+        // assert
+        await page.getByRole("button", { name: "submit" }).click();
+        await expect(page.locator(".notification")).toContainText(
+          "blog created succesfull"
+        );
+        await expect(
+          page.getByText(`${newBlog.title} ${newBlog.author}`, { exact: false })
+        ).toBeVisible();
+      });
     });
-
 
     test.describe("Login", () => {
       test("'succeeds with correct credentials'", async ({ page }) => {
