@@ -29,44 +29,56 @@ test.describe("Blog list", () => {
       user = await createUser(request);
     });
 
-    test.describe("When logged in", () => {
+    test.describe("When logged in and one blog exist", () => {
+      const newBlog = {
+        title: "Sea waves is dangesr for little crabs",
+        author: "Smart fish",
+        url: "ocean.com",
+      };
+
       test.beforeEach(async ({ page }) => {
         // login using form
         await login(page, user);
-      });
-
-      test("blog can be liked", async ({ page }) => {
-        const newBlog = {
-          title: "Sea waves is dangesr for little crabs",
-          author: "Smart fish",
-          url: "ocean.com",
-        };
 
         // creating blog using user actions
         await createBlog(page, newBlog);
-
-        const blog = page.locator(".blog").filter({ hasText: newBlog.title });
-
-        await blog.getByRole("button", { name: "show" }).click();
-        await blog.getByRole("button", { name: "like" }).click();
-        await expect(blog.getByText("Likes: 1 like")).toBeVisible();
       });
-      test("a new blog can be created", async ({ page }) => {
-        const newBlog = {
-          title: "Sea waves is dangesr for little crabs",
-          author: "Smart fish",
-          url: "ocean.com",
-        };
 
-        // crating blog using user actions
-        await createBlog(page, newBlog);
-        // assert
+      test("a new blog can be created", async ({ page }) => {
+        // blog exist on page
         await expect(page.locator(".notification")).toContainText(
           "blog created succesfull"
         );
         await expect(
           page.getByText(`${newBlog.title} ${newBlog.author}`, { exact: false })
         ).toBeVisible();
+      });
+
+      test("blog can be liked", async ({ page }) => {
+        // find blog
+        const blog = page.locator(".blog").filter({ hasText: newBlog.title });
+
+        await blog.getByRole("button", { name: "show" }).click();
+        await blog.getByRole("button", { name: "like" }).click();
+        await expect(blog.getByText("Likes: 1 like")).toBeVisible();
+      });
+
+      test("created blog can be deleted", async ({ page }) => {
+        const blog = page.locator(".blog").filter({ hasText: newBlog.title });
+
+        // exist before deleting
+        await expect(
+          blog.getByText(`${newBlog.title} ${newBlog.author}`, { exact: false })
+        ).toBeVisible();
+
+        await blog.getByRole("button", { name: "show" }).click();
+        page.on("dialog", (dialog) => dialog.accept());
+        await blog.getByRole("button", { name: "delete" }).click();
+
+        // not exist after deleting
+        await expect(
+          blog.getByText(`${newBlog.title} ${newBlog.author}`, { exact: false })
+        ).not.toBeVisible();
       });
     });
 
