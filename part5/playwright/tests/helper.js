@@ -4,13 +4,14 @@ export const resetDb = async (request) => {
   await request.post(url + "api/testing/reset");
 };
 
-export const createUser = async (request) => {
-  const userData = {
+export const createUser = async (
+  request,
+  userData = {
     name: "Joe",
     username: "Sea Delpin",
     password: "secret",
-  };
-
+  }
+) => {
   await request.post(url + "api/users", {
     data: userData,
   });
