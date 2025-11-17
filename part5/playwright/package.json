@@ -7,7 +7,8 @@
     "test": "playwright test",
     "test:chromium": "playwright test --project=chromium",
     "test:report": "playwright show-report",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "start:app": "concurrently -n BACKEND,FRONTEND -c cyan,magenta \"npm --prefix ../bloglist-backend run start:test\" \"npm --prefix ../bloglist-frontend run dev\""
   },
   "keywords": [],
   "author": "",
@@ -15,5 +16,8 @@
   "devDependencies": {
     "@playwright/test": "^1.56.1",
     "@types/node": "^24.10.0"
+  },
+  "dependencies": {
+    "concurrently": "^9.2.1"
   }
 }

@@ -35,23 +35,21 @@ test.describe("Blog list", () => {
         await login(page, user);
       });
 
-      test.only("blog can be liked", async ({ page }) => {
+      test("blog can be liked", async ({ page }) => {
         const newBlog = {
           title: "Sea waves is dangesr for little crabs",
           author: "Smart fish",
           url: "ocean.com",
         };
 
-        // crating blog using user actions
+        // creating blog using user actions
         await createBlog(page, newBlog);
 
-        const blog = await page
-          .locator(".blog")
-          .filter({ hasText: newBlog.title });
+        const blog = page.locator(".blog").filter({ hasText: newBlog.title });
 
         await blog.getByRole("button", { name: "show" }).click();
         await blog.getByRole("button", { name: "like" }).click();
-        await expect(page.getByText(`Likes: 0`)).toBeVisible();
+        await expect(blog.getByText("Likes: 1 like")).toBeVisible();
       });
       test("a new blog can be created", async ({ page }) => {
         const newBlog = {
@@ -62,7 +60,6 @@ test.describe("Blog list", () => {
 
         // crating blog using user actions
         await createBlog(page, newBlog);
-
         // assert
         await expect(page.locator(".notification")).toContainText(
           "blog created succesfull"
