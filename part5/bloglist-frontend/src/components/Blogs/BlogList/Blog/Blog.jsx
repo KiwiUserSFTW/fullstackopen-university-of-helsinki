@@ -9,7 +9,7 @@ import "./Blog.css";
 //api
 import blogsService from "../../../../services/blogs";
 
-const Blog = ({ blog, setBlogs, setNotification }) => {
+const Blog = ({ blog, user, setBlogs, setNotification }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
 
   const formatedBlog = () => ({
@@ -80,7 +80,12 @@ const Blog = ({ blog, setBlogs, setNotification }) => {
           </p>
           <span>Url: {blog.url}</span>
         </div>
-        <button className={"delete"} onClick={handleDelete}>
+        <button
+          className={`delete ${
+            user.username !== blog.user.username ? "hide" : ""
+          }`}
+          onClick={handleDelete}
+        >
           delete
         </button>
       </Togglable>

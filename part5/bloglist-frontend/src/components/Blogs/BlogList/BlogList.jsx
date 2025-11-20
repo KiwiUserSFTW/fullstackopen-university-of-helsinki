@@ -41,6 +41,7 @@ const BlogList = ({ blogs, setBlogs, user, setUser }) => {
           <Blog
             key={blog.id}
             blog={blog}
+            user={user}
             setBlogs={setBlogs}
             setNotification={setNotification}
           />

@@ -24,11 +24,15 @@ blogsRouter.post("/", userExtractor, async (request, response, next) => {
 
     const blog = new Blog({ ...request.body, user: user._id });
     const savedBlog = await blog.save();
+    const blogWithUser = await savedBlog.populate("user", {
+      username: 1,
+      name: 1,
+    });
 
     user.blogs = [...user.blogs, savedBlog._id];
     await user.save();
 
-    response.status(201).json(savedBlog);
+    response.status(201).json(blogWithUser);
   } catch (error) {
     next(error);
   }
