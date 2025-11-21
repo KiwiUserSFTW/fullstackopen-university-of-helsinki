@@ -24,7 +24,7 @@ describe("Blog tests", () => {
   });
   // details are likes and urls
   test("blogs displayed author and title but without details", () => {
-    render(<Blog blog={blog} />);
+    render(<Blog blog={blog} user={blog.user} />);
 
     const titleAndAuthor = screen.getByText(`${blog.title} ${blog.author}`);
     const url = screen.getByText(blog.url, { exact: false });
@@ -37,7 +37,7 @@ describe("Blog tests", () => {
     expect(titleAndAuthor).toBeDefined();
   });
   test("details are shown when the button 'show' has been clicked", async () => {
-    render(<Blog blog={blog} />);
+    render(<Blog blog={blog} user={blog.user} />);
 
     const url = screen.getByText(blog.url, { exact: false });
     const likes = screen.getByText(blog.likes.toString(), { exact: false });
@@ -80,7 +80,12 @@ describe("Blog tests", () => {
     const user = userEvent.setup();
 
     render(
-      <Blog blog={blog} setBlogs={mockHandler} setNotification={() => {}} />
+      <Blog
+        blog={blog}
+        user={blog.user}
+        setBlogs={mockHandler}
+        setNotification={() => {}}
+      />
     );
 
     const showButton = screen.getByText("show");

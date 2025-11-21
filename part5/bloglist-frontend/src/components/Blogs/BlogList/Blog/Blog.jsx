@@ -78,7 +78,9 @@ const Blog = ({ blog, user, setBlogs, setNotification }) => {
             <span>Likes: {blog.likes}</span>
             <button onClick={handleLike}> like </button>
           </p>
-          <span>Url: {blog.url}</span>
+          <span>
+            Url: <a href={blog.url}>{blog.url}</a>
+          </span>
         </div>
         <button
           className={`delete ${
