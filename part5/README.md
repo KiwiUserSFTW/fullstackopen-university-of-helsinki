@@ -2,7 +2,6 @@
 ## Exercises 5.1 - 5.23
 
 ### Practical
-#### blog-list-backend
 - [x] 5.1
 - [x] 5.2
 - [x] 5.3
