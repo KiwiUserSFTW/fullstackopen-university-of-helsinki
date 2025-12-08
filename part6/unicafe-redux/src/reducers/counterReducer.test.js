@@ -33,33 +33,33 @@ describe("unicafe reducer", () => {
     });
   });
 
-  test("good is incremented", () => {
+  test("ok is incremented", () => {
     const action = {
-      type: "GOOD",
+      type: "OK",
     };
     const state = initialState;
 
     deepFreeze(state);
     const newState = counterReducer(state, action);
     expect(newState).toEqual({
-      good: 1,
-      ok: 0,
+      good: 0,
+      ok: 1,
       bad: 0,
     });
   });
 
-  test("good is incremented", () => {
+  test("bad is incremented", () => {
     const action = {
-      type: "GOOD",
+      type: "BAD",
     };
     const state = initialState;
 
     deepFreeze(state);
     const newState = counterReducer(state, action);
     expect(newState).toEqual({
-      good: 1,
+      good: 0,
       ok: 0,
-      bad: 0,
+      bad: 1,
     });
   });
 
