@@ -1,11 +1,6 @@
-import Anecdotes from "./components/Anecdotes";
+import Anecdotes from "./components/Anecdotes/Anecdotes";
 
 const App = () => {
-
-  const vote = (id) => {
-    console.log("vote", id);
-  };
-
   return <Anecdotes />;
 };
 
