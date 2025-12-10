@@ -9,15 +9,17 @@ const AnecdotesList = () => {
     dispatch(vote(id));
   };
 
-  return anecdotes.map((anecdote) => (
-    <div key={anecdote.id}>
-      <div>{anecdote.content}</div>
-      <div>
-        has {anecdote.votes}
-        <button onClick={() => handleVote(anecdote.id)}>vote</button>
+  return anecdotes
+    .sort((a, b) => b.votes - a.votes)
+    .map((anecdote) => (
+      <div className="anecdote" key={anecdote.id}>
+        <div className="anecdote-content">{anecdote.content}</div>
+        <div>
+          has {anecdote.votes}
+          <button onClick={() => handleVote(anecdote.id)}>vote</button>
+        </div>
       </div>
-    </div>
-  ));
+    ));
 };
 
 export default AnecdotesList;

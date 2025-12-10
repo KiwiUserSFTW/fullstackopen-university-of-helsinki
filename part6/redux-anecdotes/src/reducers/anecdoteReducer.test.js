@@ -1,7 +1,7 @@
-import anecdoteReducer, { addAnecdote } from "./anecdoteReducer";
-import { vote } from "./anecdoteReducer";
 import deepFreeze from "deep-freeze";
-import { describe, expect, test } from "vitest";
+
+// reducers
+import anecdoteReducer, { addAnecdote, vote } from "./anecdoteReducer";
 
 describe("anecdote reducer", () => {
   test("anecdote can be voted", () => {
@@ -28,6 +28,7 @@ describe("anecdote reducer", () => {
     // immutability check
     deepFreeze(state);
 
+    // anecdote has been saved
     expect(newState.length).toEqual(state.length + 1);
     expect(newState[newState.length - 1].content).toEqual(newAnecdoteContent);
   });
