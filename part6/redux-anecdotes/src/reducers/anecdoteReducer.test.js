@@ -8,10 +8,10 @@ describe("anecdote reducer", () => {
     const state = anecdoteReducer(undefined, "NO_ACTION");
     const anecdoteId = state[state.length - 1].id;
 
+    const newState = anecdoteReducer(undefined, vote(anecdoteId));
+
     // immutability check
     deepFreeze(state);
-
-    const newState = anecdoteReducer(undefined, vote(anecdoteId));
 
     expect(newState[newState.length - 1].votes).toEqual(1);
   });
