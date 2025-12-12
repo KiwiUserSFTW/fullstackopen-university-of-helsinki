@@ -10,7 +10,7 @@ import { Provider } from "react-redux";
 import anecdoteReducer from "../../reducers/anecdoteReducer";
 
 // component
-import AnecdotesList from "./AnecdotesList";
+import AnecdoteList from "./AnecdoteList";
 
 describe("anecdotes list render", () => {
   const store = createStore(anecdoteReducer);
@@ -18,7 +18,7 @@ describe("anecdotes list render", () => {
   test("anecdotes sorted by votes", async () => {
     render(
       <Provider store={store}>
-        <AnecdotesList />
+        <AnecdoteList />
       </Provider>
     );
     const [firstObj, secondObj] = store.getState();

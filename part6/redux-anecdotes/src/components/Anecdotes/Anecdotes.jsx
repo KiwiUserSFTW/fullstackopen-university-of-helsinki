@@ -1,12 +1,13 @@
-import AnecdotesList from "./AnecdotesList";
-import NewAnecdoteForm from "./NewAnecdoteForm";
+import AnecdoteList from "./AnecdoteList";
+import AnecdoteForm from "./AnecdoteForm";
 
+// i prefer using separate component as a page
 const Anecdotes = () => {
   return (
     <div>
       <h2>Anecdotes</h2>
-      <AnecdotesList />
-      <NewAnecdoteForm />
+      <AnecdoteList />
+      <AnecdoteForm />
     </div>
   );
 };
