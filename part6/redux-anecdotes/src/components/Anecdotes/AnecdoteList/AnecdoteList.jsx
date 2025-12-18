@@ -13,7 +13,7 @@ const AnecdoteList = () => {
 
   const filteredAnecdotes = () =>
     filter === ""
-      ? anecdotes
+      ? anecdotes.slice()
       : anecdotes.filter((anecdote) => anecdote.content.includes(filter));
 
   return filteredAnecdotes()

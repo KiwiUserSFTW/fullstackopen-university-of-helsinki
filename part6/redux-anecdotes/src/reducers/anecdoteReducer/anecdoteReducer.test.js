@@ -1,17 +1,12 @@
-import deepFreeze from "deep-freeze";
-
 // reducers
 import anecdoteReducer, { addAnecdote, vote } from "./anecdoteReducer";
 
 describe("anecdote reducer", () => {
-  test("anecdote can be voted", () => {
+  test("anecdote can be voted with action anecdote/vote", () => {
     const state = anecdoteReducer(undefined, "NO_ACTION");
     const anecdoteId = state[state.length - 1].id;
 
-    const newState = anecdoteReducer(undefined, vote(anecdoteId));
-
-    // immutability check
-    deepFreeze(state);
+    const newState = anecdoteReducer(state, vote(anecdoteId));
 
     expect(newState[newState.length - 1].votes).toEqual(1);
   });
@@ -24,9 +19,6 @@ describe("anecdote reducer", () => {
       undefined,
       addAnecdote(newAnecdoteContent)
     );
-
-    // immutability check
-    deepFreeze(state);
 
     // anecdote has been saved
     expect(newState.length).toEqual(state.length + 1);

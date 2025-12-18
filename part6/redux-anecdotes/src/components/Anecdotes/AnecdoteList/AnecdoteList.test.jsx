@@ -5,8 +5,8 @@ import { render, within, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 // redux
-import { combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
 
 // reducers
 import anecdoteReducer from "../../../reducers/anecdoteReducer/anecdoteReducer";
@@ -18,12 +18,12 @@ import Filter from "../Filter/Filter";
 
 describe("anecdotes list render", () => {
   test("anecdotes sorted by votes", async () => {
-    const store = createStore(
-      combineReducers({
+    const store = configureStore({
+      reducer: {
         anecdotes: anecdoteReducer,
         filter: filterReducer,
-      })
-    );
+      },
+    });
     render(
       <Provider store={store}>
         <AnecdoteList />
@@ -75,16 +75,16 @@ describe("anecdotes list render", () => {
           "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
       },
     ];
-    const store = createStore(
-      combineReducers({
+    const store = configureStore({
+      reducer: {
         anecdotes: anecdoteReducer,
         filter: filterReducer,
-      }),
-      {
+      },
+      preloadedState: {
         anecdotes: initialAnecdotesState,
         filter: "",
-      }
-    );
+      },
+    });
 
     render(
       <Provider store={store}>
