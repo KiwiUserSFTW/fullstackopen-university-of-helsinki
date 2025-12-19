@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addAnecdote } from "../../reducers/anecdoteReducer/anecdoteReducer";
+import { showNotification } from "../../reducers/notificationReducer/notificationHelper";
 
 const NewAnecdoteForm = () => {
   const [anecdoteValue, setAnecdoteValue] = useState("");
@@ -10,6 +11,10 @@ const NewAnecdoteForm = () => {
     e.preventDefault();
     dispatch(addAnecdote(anecdoteValue));
     setAnecdoteValue("");
+    showNotification(
+      dispatch,
+      `anecdote - ${anecdoteValue} has been created !`
+    );
   };
 
   return (

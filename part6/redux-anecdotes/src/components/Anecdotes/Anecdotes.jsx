@@ -1,4 +1,4 @@
-import AnecdoteList from "./AnecdoteList";
+import AnecdoteList from "./AnecdoteList/AnecdoteList";
 import AnecdoteForm from "./AnecdoteForm";
 
 // i prefer using separate component as a page
