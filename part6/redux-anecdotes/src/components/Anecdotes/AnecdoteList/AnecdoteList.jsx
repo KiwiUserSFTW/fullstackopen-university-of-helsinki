@@ -10,7 +10,6 @@ const AnecdoteList = () => {
   const handleVote = (id) => {
     dispatch(vote(id));
   };
-
   const filteredAnecdotes = () =>
     filter === ""
       ? anecdotes.slice()
