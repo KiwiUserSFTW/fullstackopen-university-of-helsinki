@@ -1,15 +1,24 @@
+// react & redux
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+
+// reducer
 import { addAnecdote } from "../../reducers/anecdoteReducer/anecdoteReducer";
 import { showNotification } from "../../reducers/notificationReducer/notificationHelper";
+
+// services
+import anecdoteService from "../../services/anecdote";
 
 const NewAnecdoteForm = () => {
   const [anecdoteValue, setAnecdoteValue] = useState("");
   const dispatch = useDispatch();
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    dispatch(addAnecdote(anecdoteValue));
+
+    const anecdote = await anecdoteService.createAnecdote(anecdoteValue);
+    dispatch(addAnecdote(anecdote));
+
     setAnecdoteValue("");
     showNotification(
       dispatch,

@@ -1,6 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
-import { vote } from "../../../reducers/anecdoteReducer/anecdoteReducer";
 import { showNotification } from "../../../reducers/notificationReducer/notificationHelper";
+
+// reducer
+import { vote } from "../../../reducers/anecdoteReducer/anecdoteReducer";
+
+// service
+import anecdoteService from "../../../services/anecdote";
 
 const AnecdoteList = () => {
   const anecdotes = useSelector((state) => state.anecdotes);
@@ -8,10 +13,16 @@ const AnecdoteList = () => {
 
   const dispatch = useDispatch();
 
-  const handleVote = (id, content) => {
-    dispatch(vote(id));
+  const handleVote = async (id, content, votes) => {
+    const updatedAnecdote = await anecdoteService.updateAnecdote({
+      id,
+      votes: Number(votes) + 1,
+    });
+
+    dispatch(vote({ id: updatedAnecdote.id, votes: updatedAnecdote.votes }));
     showNotification(dispatch, `You voted ${content}`);
   };
+
   const filteredAnecdotes = () =>
     filter === ""
       ? anecdotes.slice()
@@ -24,7 +35,11 @@ const AnecdoteList = () => {
         <div className="anecdote-content">{anecdote.content}</div>
         <div>
           has {anecdote.votes}
-          <button onClick={() => handleVote(anecdote.id, anecdote.content)}>
+          <button
+            onClick={() =>
+              handleVote(anecdote.id, anecdote.content, anecdote.votes)
+            }
+          >
             vote
           </button>
         </div>
