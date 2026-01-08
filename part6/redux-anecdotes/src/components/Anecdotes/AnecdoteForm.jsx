@@ -3,11 +3,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 // reducer
-import { addAnecdote } from "../../reducers/anecdoteReducer/anecdoteReducer";
+import { appendAnecdote } from "../../reducers/anecdoteReducer/anecdoteReducer";
 import { showNotification } from "../../reducers/notificationReducer/notificationHelper";
-
-// services
-import anecdoteService from "../../services/anecdote";
 
 const NewAnecdoteForm = () => {
   const [anecdoteValue, setAnecdoteValue] = useState("");
@@ -16,8 +13,7 @@ const NewAnecdoteForm = () => {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    const anecdote = await anecdoteService.createAnecdote(anecdoteValue);
-    dispatch(addAnecdote(anecdote));
+    dispatch(appendAnecdote(anecdoteValue));
 
     setAnecdoteValue("");
     showNotification(
