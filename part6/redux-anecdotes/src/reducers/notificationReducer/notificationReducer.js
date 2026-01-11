@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = "notification initial massage";
+const initialState = "";
 
 const notificationSlice = createSlice({
   name: "notification",
@@ -9,12 +9,31 @@ const notificationSlice = createSlice({
     setNotification(state, action) {
       return action.payload;
     },
-    removeNotificatoin() {
+    removeNotification() {
       return "";
     },
   },
 });
 
-export const { setNotification, removeNotificatoin } =
-  notificationSlice.actions;
+const { setNotification, removeNotification } = notificationSlice.actions;
+
+// showNotification thunk
+let timeoutId = null;
+
+export const showNotification = (message, delay = 5) => {
+  return (dispatch) => {
+    dispatch(setNotification(message));
+
+    // if it was initiated more than once
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      dispatch(removeNotification());
+      timeoutId = null;
+    }, delay * 1000);
+  };
+};
+
 export default notificationSlice.reducer;
