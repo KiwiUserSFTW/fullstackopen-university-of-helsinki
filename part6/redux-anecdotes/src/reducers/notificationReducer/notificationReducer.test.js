@@ -1,23 +1,30 @@
-// reducers
-import notificationReducer, {
-  removeNotificatoin,
-  setNotification,
-} from "./notificationReducer";
+// reducer
+import notificationReducer from "./notificationReducer";
+
+// action types
+const notificationActionTypes = {
+  setNotification: "notification/setNotification",
+  removeNotification: "notification/removeNotification",
+};
 
 describe("notification reducer", () => {
   test("notification can be changed with action notification/setNotification", () => {
-    const value = "new value";
-    const newState = notificationReducer(undefined, setNotification(value));
+    const action = {
+      type: notificationActionTypes.setNotification,
+      payload: "new value",
+    };
+    const newState = notificationReducer(undefined, action);
 
-    expect(newState).toEqual(value);
+    expect(newState).toEqual(action.payload);
   });
   test("notification can be cleared with action notification/removeNotification", () => {
-    const value = "new value";
-    const stateAtStart = notificationReducer(undefined, setNotification(value));
-    const stateAfterRemoving = notificationReducer(
-      stateAtStart,
-      removeNotificatoin
-    );
+    const stateAtStart = notificationReducer(undefined, {
+      type: notificationActionTypes.setNotification,
+      payload: "new value",
+    });
+    const stateAfterRemoving = notificationReducer(stateAtStart, {
+      type: notificationActionTypes.removeNotification,
+    });
     expect(stateAfterRemoving).toEqual("");
   });
 });
