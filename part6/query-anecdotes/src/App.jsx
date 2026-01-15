@@ -6,10 +6,11 @@ import Notification from './components/Notification'
 import { useGetAnecdotes } from './hooks/anecdoteHooks'
 
 const App = () => {
+  const anecdotesResponse = useGetAnecdotes()
+
   const handleVote = (anecdote) => {
     console.log('vote')
   }
-  const anecdotesResponse = useGetAnecdotes()
 
   if (anecdotesResponse.isLoading) {
     return <div> Loading data... </div>

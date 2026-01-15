@@ -1,9 +1,15 @@
+import { useCreateAnecdoteMutation } from '../hooks/anecdoteHooks'
+
 const AnecdoteForm = () => {
+  const createAnecdoteMutation = useCreateAnecdoteMutation()
+
   const onCreate = (event) => {
     event.preventDefault()
     const content = event.target.anecdote.value
+
+    createAnecdoteMutation.mutate({ content })
+
     event.target.anecdote.value = ''
-    console.log('new anecdote')
   }
 
   return (
