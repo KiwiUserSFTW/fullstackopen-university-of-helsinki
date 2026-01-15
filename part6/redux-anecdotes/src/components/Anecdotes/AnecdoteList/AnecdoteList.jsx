@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { showNotification } from "../../../reducers/notificationReducer/notificationHelper";
+import { showNotification } from "../../../reducers/notificationReducer/notificationReducer";
 
 // reducer
 import { appendVote } from "../../../reducers/anecdoteReducer/anecdoteReducer";
@@ -12,7 +12,7 @@ const AnecdoteList = () => {
 
   const handleVote = async (id, content, votes) => {
     dispatch(appendVote({ id, votes }));
-    showNotification(dispatch, `You voted ${content}`);
+    dispatch(showNotification(`You voted ${content}`, 5));
   };
 
   const filteredAnecdotes = () =>
