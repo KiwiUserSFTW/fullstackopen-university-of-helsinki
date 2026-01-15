@@ -1,13 +1,23 @@
+// hooks
 import { useCreateAnecdoteMutation } from '../hooks/anecdoteHooks'
+import { useNotification } from '../hooks/useNotification'
 
 const AnecdoteForm = () => {
   const createAnecdoteMutation = useCreateAnecdoteMutation()
+  const { setNotification } = useNotification()
 
   const onCreate = (event) => {
     event.preventDefault()
     const content = event.target.anecdote.value
 
-    createAnecdoteMutation.mutate({ content })
+    createAnecdoteMutation.mutate(
+      { content },
+      {
+        onError: () => {
+          setNotification('some message')
+        },
+      },
+    )
 
     event.target.anecdote.value = ''
   }
