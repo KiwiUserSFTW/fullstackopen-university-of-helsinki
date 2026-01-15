@@ -3,13 +3,14 @@ import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
 
 // hooks
-import { useGetAnecdotes } from './hooks/anecdoteHooks'
+import { useGetAnecdotes, useVoteAnecdoteMutation } from './hooks/anecdoteHooks'
 
 const App = () => {
   const anecdotesResponse = useGetAnecdotes()
+  const voteAnecdoteMutation = useVoteAnecdoteMutation()
 
   const handleVote = (anecdote) => {
-    console.log('vote')
+    voteAnecdoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 })
   }
 
   if (anecdotesResponse.isLoading) {
