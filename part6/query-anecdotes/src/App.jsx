@@ -4,13 +4,24 @@ import Notification from './components/Notification'
 
 // hooks
 import { useGetAnecdotes, useVoteAnecdoteMutation } from './hooks/anecdoteHooks'
+import { useNotification } from './hooks/useNotification'
 
 const App = () => {
   const anecdotesResponse = useGetAnecdotes()
   const voteAnecdoteMutation = useVoteAnecdoteMutation()
-
+  const { setNotification } = useNotification()
   const handleVote = (anecdote) => {
-    voteAnecdoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 })
+    voteAnecdoteMutation.mutate(
+      { ...anecdote, votes: anecdote.votes + 1 },
+      {
+        onSuccess: () => {
+          setNotification(`you have voted for - ${anecdote.content} `)
+        },
+          onError: () => {
+          setNotification(`you can't vote yet, causing by server problems `)
+        },
+      },
+    )
   }
 
   if (anecdotesResponse.isLoading) {

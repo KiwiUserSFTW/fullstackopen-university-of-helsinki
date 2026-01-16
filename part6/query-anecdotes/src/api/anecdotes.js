@@ -12,7 +12,7 @@ export const createAnecdote = async (anecdote) => {
   const response = await fetch(baseUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(anecdote),
+    body: JSON.stringify({ ...anecdote, votes: 0 }),
   })
 
   if (!response.ok) {

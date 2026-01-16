@@ -14,7 +14,10 @@ const AnecdoteForm = () => {
       { content },
       {
         onError: () => {
-          setNotification('some message')
+          setNotification('anecdote should be at least 5 symbols')
+        },
+        onSuccess: () => {
+          setNotification(`you have created a new anecdote - ${content} `)
         },
       },
     )
