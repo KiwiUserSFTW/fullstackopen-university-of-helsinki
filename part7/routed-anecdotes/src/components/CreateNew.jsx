@@ -1,25 +1,38 @@
-import { useState } from "react";
+// react & router
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const CreateNew = (props) => {
+// context
+import AnecdoteContext from "../context/anecdotesContext";
+import NotificationContext from "../context/notificationContext";
+
+// actions
+import { createAnecdote } from "../reducers/anecdotesReducer";
+
+const CreateNew = () => {
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
   const [info, setInfo] = useState("");
 
-  /*
-  const addNew = (anecdote) => {
-    anecdote.id = Math.round(Math.random() * 10000);
-    setAnecdotes(anecdotes.concat(anecdote));
-  };
-  */
+  const { anecdotesDispatch } = useContext(AnecdoteContext);
+  const { setNotification } = useContext(NotificationContext);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.addNew({
-      content,
-      author,
-      info,
+
+    const randomId = Math.round(Math.random() * 10000);
+    const newAnecdote = {
+      content: content,
+      author: author,
+      info: info,
       votes: 0,
-    });
+      id: randomId,
+    };
+    anecdotesDispatch(createAnecdote(newAnecdote));
+    setNotification(`new anecdote ${content} created`);
+    navigate("/anecdotes");
   };
 
   return (

@@ -5,6 +5,7 @@ import { useContext, useEffect } from "react";
 import Footer from "./components/Footer";
 import Router from "./router";
 import Menu from "./components/Menu";
+import Notification from "./components/Notification";
 
 // context
 import AnecdotesContext from "./context/anecdotesContext";
@@ -13,7 +14,6 @@ import AnecdotesContext from "./context/anecdotesContext";
 import { setAnecdotes } from "./reducers/anecdotesReducer";
 
 const App = () => {
-  // const [notification, setNotification] = useState("");
   const { anecdotesDispatch } = useContext(AnecdotesContext);
 
   useEffect(() => {
@@ -39,6 +39,7 @@ const App = () => {
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
+      <Notification />
       <Router />
       <Footer />
     </div>
