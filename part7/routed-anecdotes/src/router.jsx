@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 // components
 import CreateNew from "./components/CreateNew";
@@ -8,7 +8,9 @@ import Anecdotes from "./components/Anecdotes/Anecdotes";
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<Anecdotes />} />
+      <Route path="/" element={<Navigate replace to="/anecdotes" />} />
+      <Route path="/anecdotes" element={<Anecdotes />} />
+      <Route path="/anecdotes/:id" element={<Anecdotes />} />
       <Route path="/create" element={<CreateNew />} />
       <Route path="/about" element={<About />} />
     </Routes>

@@ -6,7 +6,7 @@ const Menu = () => {
   };
 
   const routes = [
-    { label: "anecdotes", to: "/" },
+    { label: "anecdotes", to: "/anecdotes" },
     { label: "create", to: "/create" },
     { label: "about", to: "/about" },
   ];
