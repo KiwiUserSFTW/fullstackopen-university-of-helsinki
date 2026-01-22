@@ -9,10 +9,13 @@ import NotificationContext from "../context/notificationContext";
 // actions
 import { createAnecdote } from "../reducers/anecdotesReducer";
 
+// hooks
+import { useTextField } from "../hooks";
+
 const CreateNew = () => {
-  const [content, setContent] = useState("");
-  const [author, setAuthor] = useState("");
-  const [info, setInfo] = useState("");
+  const content = useTextField();
+  const author = useTextField();
+  const info = useTextField();
 
   const { anecdotesDispatch } = useContext(AnecdoteContext);
   const { setNotification } = useContext(NotificationContext);
@@ -24,9 +27,9 @@ const CreateNew = () => {
 
     const randomId = Math.round(Math.random() * 10000);
     const newAnecdote = {
-      content: content,
-      author: author,
-      info: info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0,
       id: randomId,
     };
@@ -40,28 +43,16 @@ const CreateNew = () => {
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          content
-          <input
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          content:
+          <input {...content} />
         </div>
         <div>
           author
-          <input
-            name="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
+          <input {...author} />
         </div>
         <div>
           url for more info
-          <input
-            name="info"
-            value={info}
-            onChange={(e) => setInfo(e.target.value)}
-          />
+          <input {...info} />
         </div>
         <button>create</button>
       </form>
