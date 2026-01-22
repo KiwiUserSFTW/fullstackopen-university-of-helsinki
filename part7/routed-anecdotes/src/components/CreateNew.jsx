@@ -10,15 +10,33 @@ import NotificationContext from "../context/notificationContext";
 import { createAnecdote } from "../reducers/anecdotesReducer";
 
 // hooks
-import { useTextField } from "../hooks";
+import { useField } from "../hooks";
 
 const CreateNew = () => {
-  const content = useTextField();
-  const author = useTextField();
-  const info = useTextField();
+  const [content, resetContent] = useField("text");
+  const [author, resetAuthor] = useField("text");
+  const [info, resetInfo] = useField("text");
 
   const { anecdotesDispatch } = useContext(AnecdoteContext);
   const { setNotification } = useContext(NotificationContext);
+
+  const formFields = [
+    {
+      title: "author",
+      reset: resetAuthor,
+      input: { ...author },
+    },
+    {
+      title: "content",
+      reset: resetContent,
+      input: { ...content },
+    },
+    {
+      title: "url for more info",
+      reset: resetInfo,
+      input: { ...info },
+    },
+  ];
 
   const navigate = useNavigate();
 
@@ -38,23 +56,26 @@ const CreateNew = () => {
     navigate("/anecdotes");
   };
 
+  const handleReset = (e) => {
+    e.preventDefault();
+
+    formFields.forEach((field) => {
+      field.reset();
+    });
+  };
+
   return (
     <div>
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          content:
-          <input {...content} />
-        </div>
-        <div>
-          author
-          <input {...author} />
-        </div>
-        <div>
-          url for more info
-          <input {...info} />
-        </div>
+        {formFields.map((field) => (
+          <div key={field.title}>
+            {field.title} :
+            <input {...field.input} />
+          </div>
+        ))}
         <button>create</button>
+        <button onClick={handleReset}>reset</button>
       </form>
     </div>
   );
