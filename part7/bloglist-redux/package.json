@@ -8,13 +8,12 @@
     "test": "vitest run",
     "build": "vite build",
     "lint": "eslint .",
-    "server": "node server.js",
+    "server": "cd ../bloglist-backend && npm start",
     "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.9.0",
     "jsdom": "^27.1.0",
-    "json-server": "^1.0.0-beta.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "vitest": "^4.0.6"
