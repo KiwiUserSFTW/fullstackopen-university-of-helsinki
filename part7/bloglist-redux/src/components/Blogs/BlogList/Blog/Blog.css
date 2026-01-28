@@ -1,0 +1,23 @@
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.blog {
+  margin: 1vw;
+  padding: 1vw;
+  border: 1px solid darkcyan;
+
+  button {
+    margin-left: 10px;
+  }
+}
+
+.delete {
+  background-color: rgb(80, 127, 184);
+  border-radius: 30px;
+}
+
+.hide {
+  display: none;
+}
