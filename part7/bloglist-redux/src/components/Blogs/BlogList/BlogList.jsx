@@ -7,8 +7,12 @@ import BlogForm from "../BlogForm/BlogForm";
 import Notifier from "../../general/Notifier/Notifier";
 import Togglable from "../../general/Togglable.jsx/Togglable";
 
-const BlogList = ({ blogs, setBlogs, user, setUser }) => {
+import { useSelector } from "react-redux";
+
+const BlogList = ({ user, setUser }) => {
   const [formVisible, setVisible] = useState(false);
+
+  const blogs = useSelector((state) => state.blogs);
 
   if (!user) return null;
   const createButtonRender = () => {
@@ -26,19 +30,14 @@ const BlogList = ({ blogs, setBlogs, user, setUser }) => {
       <Notifier />
       {createButtonRender()}
       <Togglable visible={formVisible}>
-        <BlogForm setBlogs={setBlogs} onClose={() => setVisible(false)} />
+        <BlogForm onClose={() => setVisible(false)} />
       </Togglable>
       <User user={user} setUser={setUser} />
       {blogs
         .slice()
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            user={user}
-            setBlogs={setBlogs}
-          />
+          <Blog key={blog.id} blog={blog} user={user} />
         ))}
     </div>
   );

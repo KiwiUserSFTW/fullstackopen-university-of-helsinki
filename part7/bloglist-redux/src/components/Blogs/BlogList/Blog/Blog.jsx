@@ -6,19 +6,17 @@ import Togglable from "../../../general/Togglable.jsx/Togglable";
 // style
 import "./Blog.css";
 
-// api
-import blogsService from "../../../../services/blogs";
-
 // hooks
 import { useShowNotification } from "../../../../hooks/useNotification";
 
 import { messageTypes } from "../../../../reducers/notificationReducer";
 
-const Blog = ({ blog, user, setBlogs }) => {
+const Blog = ({ blog, user }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
 
   const setNotification = useShowNotification();
 
+  /*
   const formatedBlog = () => ({
     user: blog.user.id,
     likes: blog.likes,
@@ -26,6 +24,7 @@ const Blog = ({ blog, user, setBlogs }) => {
     title: blog.title,
     url: blog.url,
   });
+  */
 
   const handleDelete = async () => {
     const deleteConfirm = window.confirm(
@@ -35,12 +34,14 @@ const Blog = ({ blog, user, setBlogs }) => {
     if (!deleteConfirm) return;
 
     try {
+      /*
       await blogsService.deleteOne(blog.id);
       setNotification({
         message: "blog deleted succesfully",
         type: messageTypes.INFO,
       });
-      setBlogs((prev) => prev.filter((b) => b.id !== blog.id));
+      */
+      alert(" DELETE FUNC");
     } catch (error) {
       console.error("deleting blog error", error);
       setNotification({
@@ -51,6 +52,7 @@ const Blog = ({ blog, user, setBlogs }) => {
   };
   const handleLike = async () => {
     try {
+      /* 
       const updatedBlog = { ...formatedBlog(), likes: blog.likes + 1 };
       const responsedBlog = await blogsService.update(updatedBlog, blog.id);
 
@@ -59,6 +61,8 @@ const Blog = ({ blog, user, setBlogs }) => {
           b.id === responsedBlog.id ? { ...b, likes: responsedBlog.likes } : b,
         ),
       );
+      */
+      alert("LIKE FUNC");
       setNotification({
         message: `${blog.title} liked`,
         type: messageTypes.INFO,
