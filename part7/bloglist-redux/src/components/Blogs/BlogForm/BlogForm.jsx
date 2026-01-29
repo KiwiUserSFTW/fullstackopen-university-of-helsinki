@@ -3,10 +3,17 @@ import { useState } from "react";
 // api
 import blogService from "../../../services/blogs";
 
-const BlogForm = ({ setBlogs, setNotification, onClose }) => {
+// hooks
+import { useShowNotification } from "../../../hooks/useNotification";
+
+import { messageTypes } from "../../../reducers/notificationReducer";
+
+const BlogForm = ({ setBlogs, onClose }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
+
+  const setNotification = useShowNotification();
 
   const clearFields = () => {
     setTitle("");
@@ -16,7 +23,7 @@ const BlogForm = ({ setBlogs, setNotification, onClose }) => {
 
   const formValidate = () => {
     if (!title || !author || !url) {
-      setNotification({ value: "fill all fields", type: "error" });
+      setNotification({ message: "fill all fields", type: messageTypes.ERROR });
       return false;
     }
 
@@ -39,13 +46,13 @@ const BlogForm = ({ setBlogs, setNotification, onClose }) => {
         handleClose();
         setBlogs((blogs) => [...blogs, createdBlog]);
         setNotification({
-          value: "blog created succesfull",
-          type: "notification",
+          message: "blog created succesfull",
+          type: messageTypes.INFO,
         });
       } catch (error) {
         setNotification({
-          value: `blog creation failed, error: ${error}`,
-          type: "error",
+          message: `blog creation failed, error: ${error}`,
+          type: messageTypes.ERROR,
         });
       }
     }

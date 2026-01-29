@@ -8,7 +8,6 @@ import Notifier from "../../general/Notifier/Notifier";
 import Togglable from "../../general/Togglable.jsx/Togglable";
 
 const BlogList = ({ blogs, setBlogs, user, setUser }) => {
-  const [notification, setNotification] = useState({});
   const [formVisible, setVisible] = useState(false);
 
   if (!user) return null;
@@ -24,16 +23,12 @@ const BlogList = ({ blogs, setBlogs, user, setUser }) => {
   return (
     <div>
       <h2>blogs</h2>
-      <Notifier notification={notification} setNotification={setNotification} />
+      <Notifier />
       {createButtonRender()}
       <Togglable visible={formVisible}>
-        <BlogForm
-          setBlogs={setBlogs}
-          setNotification={setNotification}
-          onClose={() => setVisible(false)}
-        />
+        <BlogForm setBlogs={setBlogs} onClose={() => setVisible(false)} />
       </Togglable>
-      <User user={user} setUser={setUser} setNotification={setNotification} />
+      <User user={user} setUser={setUser} />
       {blogs
         .slice()
         .sort((a, b) => b.likes - a.likes)
@@ -43,7 +38,6 @@ const BlogList = ({ blogs, setBlogs, user, setUser }) => {
             blog={blog}
             user={user}
             setBlogs={setBlogs}
-            setNotification={setNotification}
           />
         ))}
     </div>

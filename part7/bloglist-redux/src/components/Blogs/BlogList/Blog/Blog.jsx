@@ -6,11 +6,18 @@ import Togglable from "../../../general/Togglable.jsx/Togglable";
 // style
 import "./Blog.css";
 
-//api
+// api
 import blogsService from "../../../../services/blogs";
 
-const Blog = ({ blog, user, setBlogs, setNotification }) => {
+// hooks
+import { useShowNotification } from "../../../../hooks/useNotification";
+
+import { messageTypes } from "../../../../reducers/notificationReducer";
+
+const Blog = ({ blog, user, setBlogs }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
+
+  const setNotification = useShowNotification();
 
   const formatedBlog = () => ({
     user: blog.user.id,
@@ -22,7 +29,7 @@ const Blog = ({ blog, user, setBlogs, setNotification }) => {
 
   const handleDelete = async () => {
     const deleteConfirm = window.confirm(
-      `Are you sure in deleting blog added by ${blog.user.username}`
+      `Are you sure in deleting blog added by ${blog.user.username}`,
     );
 
     if (!deleteConfirm) return;
@@ -30,15 +37,15 @@ const Blog = ({ blog, user, setBlogs, setNotification }) => {
     try {
       await blogsService.deleteOne(blog.id);
       setNotification({
-        value: "blog deleted succesfully",
-        type: "notification",
+        message: "blog deleted succesfully",
+        type: messageTypes.INFO,
       });
       setBlogs((prev) => prev.filter((b) => b.id !== blog.id));
     } catch (error) {
       console.error("deleting blog error", error);
       setNotification({
-        value: "you can delete only blogs which you have created",
-        type: "error",
+        message: "you can delete only blogs which you have created",
+        type: messageTypes.ERROR,
       });
     }
   };
@@ -49,15 +56,19 @@ const Blog = ({ blog, user, setBlogs, setNotification }) => {
 
       setBlogs((prev) =>
         prev.map((b) =>
-          b.id === responsedBlog.id ? { ...b, likes: responsedBlog.likes } : b
-        )
+          b.id === responsedBlog.id ? { ...b, likes: responsedBlog.likes } : b,
+        ),
       );
+      setNotification({
+        message: `${blog.title} liked`,
+        type: messageTypes.INFO,
+      });
     } catch (error) {
       console.error("like adding error", error);
       setNotification({
-        value:
+        message:
           "you can like only blogs which you have created, the endpoint for increasing likes only is not yet implemented",
-        type: "error",
+        type: messageTypes.ERROR,
       });
     }
   };

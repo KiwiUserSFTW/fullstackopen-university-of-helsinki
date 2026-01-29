@@ -1,30 +1,21 @@
-import { useEffect } from "react";
+// styles
 import "./Notifier.css";
 
-const messageTypes = {
-  ERROR: "error",
-  NOTIFICATION: "notification",
-};
+// hooks
+import { useSelector } from "react-redux";
 
-const Notifier = ({ notification, setNotification }) => {
-  const { value = null, type = null } = notification;
+import { messageTypes } from "../../../reducers/notificationReducer";
 
-  useEffect(() => {
-    if (value) {
-      setTimeout(() => {
-        setNotification({});
-      }, 5000);
-    }
-  }, [value, setNotification]);
-
-  if (!value) return null;
+const Notifier = () => {
+  const { message, type } = useSelector((state) => state.notification);
+  if (message == "") return null;
 
   const styles = () => {
-    const notification = "notification";
+    const info = "info";
     const error = "error";
-    return type === messageTypes.ERROR ? error : notification;
+    return type === messageTypes.ERROR ? error : info;
   };
-  return <div className={`message ${styles()}`}>{value}</div>;
+  return <div className={`message ${styles()}`}>{message}</div>;
 };
 
 export default Notifier;

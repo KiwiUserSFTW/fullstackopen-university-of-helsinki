@@ -1,10 +1,17 @@
-const User = ({ user, setUser, setNotification }) => {
+// hooks
+import { useShowNotification } from "../../../../hooks/useNotification";
+
+import { messageTypes } from "../../../../reducers/notificationReducer";
+
+const User = ({ user, setUser }) => {
+  const setNotification = useShowNotification();
+
   const handleLogout = () => {
     setUser(null);
     window.localStorage.removeItem("loggedUser");
     setNotification({
-      value: "you have been logout succesfull",
-      type: "notification",
+      message: "you have been logout succesfull",
+      type: messageTypes.INFO,
     });
   };
   return (
