@@ -8,23 +8,16 @@ import "./Blog.css";
 
 // hooks
 import { useShowNotification } from "../../../../hooks/useNotification";
+import { useDeleteBlog, useLikeBlog } from "../../../../hooks/useBlogs";
 
 import { messageTypes } from "../../../../reducers/notificationReducer";
 
 const Blog = ({ blog, user }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
 
+  const likeBlog = useLikeBlog();
+  const deleteBlog = useDeleteBlog();
   const setNotification = useShowNotification();
-
-  /*
-  const formatedBlog = () => ({
-    user: blog.user.id,
-    likes: blog.likes,
-    author: blog.author,
-    title: blog.title,
-    url: blog.url,
-  });
-  */
 
   const handleDelete = async () => {
     const deleteConfirm = window.confirm(
@@ -34,16 +27,15 @@ const Blog = ({ blog, user }) => {
     if (!deleteConfirm) return;
 
     try {
-      /*
-      await blogsService.deleteOne(blog.id);
+      deleteBlog(blog.id);
+
       setNotification({
         message: "blog deleted succesfully",
         type: messageTypes.INFO,
       });
-      */
-      alert(" DELETE FUNC");
     } catch (error) {
       console.error("deleting blog error", error);
+
       setNotification({
         message: "you can delete only blogs which you have created",
         type: messageTypes.ERROR,
@@ -52,17 +44,7 @@ const Blog = ({ blog, user }) => {
   };
   const handleLike = async () => {
     try {
-      /* 
-      const updatedBlog = { ...formatedBlog(), likes: blog.likes + 1 };
-      const responsedBlog = await blogsService.update(updatedBlog, blog.id);
-
-      setBlogs((prev) =>
-        prev.map((b) =>
-          b.id === responsedBlog.id ? { ...b, likes: responsedBlog.likes } : b,
-        ),
-      );
-      */
-      alert("LIKE FUNC");
+      likeBlog(blog.id);
       setNotification({
         message: `${blog.title} liked`,
         type: messageTypes.INFO,

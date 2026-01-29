@@ -29,14 +29,22 @@ const update = async (updatedBlog, id) => {
   }
 };
 
+const like = async (id) => {
+  try {
+    await axios.put(`${baseUrl}/like/${id}`, null, config());
+  } catch (error) {
+    console.error("liking blog failed:", error.response.data);
+    throw error;
+  }
+};
+
 const deleteOne = async (id) => {
   try {
-    const response = await axios.delete(`${baseUrl}/${id}`, config());
-    return response.data;
+    await axios.delete(`${baseUrl}/${id}`, config());
   } catch (error) {
     console.error("deleting failed:", error.response.data);
     throw error;
   }
 };
 
-export default { getAll, setToken, create, update, deleteOne };
+export default { getAll, setToken, create, update, deleteOne, like };
