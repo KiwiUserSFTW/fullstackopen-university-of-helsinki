@@ -1,14 +1,18 @@
 // hooks
+import { useSelector } from "react-redux";
 import { useShowNotification } from "../../../../hooks/useNotification";
+import { useLogoutUser } from "../../../../hooks/useUser";
 
 import { messageTypes } from "../../../../reducers/notificationReducer";
 
-const User = ({ user, setUser }) => {
+const User = () => {
   const setNotification = useShowNotification();
 
+  const user = useSelector((state) => state.user);
+  const logout = useLogoutUser();
+
   const handleLogout = () => {
-    setUser(null);
-    window.localStorage.removeItem("loggedUser");
+    logout();
     setNotification({
       message: "you have been logout succesfull",
       type: messageTypes.INFO,

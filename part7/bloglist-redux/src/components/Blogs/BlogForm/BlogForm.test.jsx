@@ -31,7 +31,7 @@ describe("BlogForm tests", () => {
         setBlogs={mockHandler}
         setNotification={() => {}}
         onClose={() => {}}
-      />
+      />,
     );
 
     // fields

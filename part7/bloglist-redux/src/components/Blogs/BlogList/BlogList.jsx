@@ -1,4 +1,6 @@
+// react & redux
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 // components
 import Blog from "./Blog/Blog";
@@ -7,12 +9,11 @@ import BlogForm from "../BlogForm/BlogForm";
 import Notifier from "../../general/Notifier/Notifier";
 import Togglable from "../../general/Togglable.jsx/Togglable";
 
-import { useSelector } from "react-redux";
-
-const BlogList = ({ user, setUser }) => {
+const BlogList = () => {
   const [formVisible, setVisible] = useState(false);
 
   const blogs = useSelector((state) => state.blogs);
+  const user = useSelector((state) => state.user);
 
   if (!user) return null;
   const createButtonRender = () => {
@@ -32,7 +33,7 @@ const BlogList = ({ user, setUser }) => {
       <Togglable visible={formVisible}>
         <BlogForm onClose={() => setVisible(false)} />
       </Togglable>
-      <User user={user} setUser={setUser} />
+      <User />
       {blogs
         .slice()
         .sort((a, b) => b.likes - a.likes)

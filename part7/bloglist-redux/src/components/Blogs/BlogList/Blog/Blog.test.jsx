@@ -85,7 +85,7 @@ describe("Blog tests", () => {
         user={blog.user}
         setBlogs={mockHandler}
         setNotification={() => {}}
-      />
+      />,
     );
 
     const showButton = screen.getByText("show");

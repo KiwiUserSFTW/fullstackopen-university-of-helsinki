@@ -1,9 +1,6 @@
 // react
 import { useState } from "react";
-
-// api
-import { login } from "../../services/login";
-import blogsService from "../../services/blogs";
+import { useSelector } from "react-redux";
 
 // hooks
 import { useShowNotification } from "../../hooks/useNotification";
@@ -12,12 +9,16 @@ import { useShowNotification } from "../../hooks/useNotification";
 import Notifier from "../general/Notifier/Notifier";
 
 import { messageTypes } from "../../reducers/notificationReducer";
+import { useLoginUser } from "../../hooks/useUser";
 
-const LoginForm = ({ user, setUser }) => {
+const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const setNotification = useShowNotification();
+  const login = useLoginUser();
+
+  const user = useSelector((state) => state.user);
 
   if (user) return null;
 
@@ -34,16 +35,11 @@ const LoginForm = ({ user, setUser }) => {
     }
 
     try {
-      const user = await login({ username, password });
-
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
-      setUser(user);
+      login(username, password);
       setNotification({
         message: "loging succesfull",
         type: messageTypes.INFO,
       });
-      
-      blogsService.setToken(user.token);
     } catch {
       setNotification({
         message: "wrong credentials",
