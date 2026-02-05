@@ -10,6 +10,7 @@ import { login } from "../services/login";
 
 export const useGetUser = () => {
   const { user } = useContext(UserContext);
+  
   return user;
 };
 
