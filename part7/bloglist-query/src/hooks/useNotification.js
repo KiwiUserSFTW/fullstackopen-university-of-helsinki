@@ -11,6 +11,5 @@ export const useShowNotification = () => {
 
 export const useNotification = () => {
   const { notification } = useContext(NotificationContext);
-  console.log(notification, " NOTIFICATION 123123 ");
   return notification;
 };

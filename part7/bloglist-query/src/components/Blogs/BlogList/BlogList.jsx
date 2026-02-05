@@ -1,4 +1,4 @@
-// react & redux
+// react
 import { useState } from "react";
 
 // components
@@ -8,13 +8,18 @@ import BlogForm from "../BlogForm/BlogForm";
 import Notifier from "../../general/Notifier/Notifier";
 import Togglable from "../../general/Togglable.jsx/Togglable";
 
+// hooks
+import { useGetBlogs } from "../../../hooks/useBlogs";
+import { useGetUser } from "../../../hooks/useUser";
+
 const BlogList = () => {
   const [formVisible, setVisible] = useState(false);
 
-  const blogs = [];
-  const user = null;
+  const blogs = useGetBlogs();
+  const user = useGetUser();
 
   if (!user) return null;
+
   const createButtonRender = () => {
     if (formVisible) return null;
     return (
@@ -33,12 +38,14 @@ const BlogList = () => {
         <BlogForm onClose={() => setVisible(false)} />
       </Togglable>
       <User />
-      {blogs
-        .slice()
-        .sort((a, b) => b.likes - a.likes)
-        .map((blog) => (
-          <Blog key={blog.id} blog={blog} user={user} />
-        ))}
+      {blogs ? (
+        blogs
+          .slice()
+          .sort((a, b) => b.likes - a.likes)
+          .map((blog) => <Blog key={blog.id} blog={blog} user={user} />)
+      ) : (
+        <> loading... </>
+      )}
     </div>
   );
 };

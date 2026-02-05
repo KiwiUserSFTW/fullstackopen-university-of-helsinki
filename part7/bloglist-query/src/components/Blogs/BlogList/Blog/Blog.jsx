@@ -52,8 +52,7 @@ const Blog = ({ blog, user }) => {
     } catch (error) {
       console.error("like adding error", error);
       setNotification({
-        message:
-          "you can like only blogs which you have created, the endpoint for increasing likes only is not yet implemented",
+        message: "like adding error",
         type: messageTypes.ERROR,
       });
     }

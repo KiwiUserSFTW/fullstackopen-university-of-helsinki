@@ -7,9 +7,7 @@ import { useNotification } from "../../../hooks/useNotification";
 
 const Notifier = () => {
   const { message, type } = useNotification();
-  const notificatoin = useNotification();
-  console.log(notificatoin, "NOTIFIATION ")
-  console.log(message, type, "one");
+
   if (message == "") return null;
 
   const styles = () => {

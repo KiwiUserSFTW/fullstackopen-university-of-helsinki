@@ -8,18 +8,18 @@ import { useShowNotification } from "../../hooks/useNotification";
 import Notifier from "../general/Notifier/Notifier";
 
 import { messageTypes } from "../../reducers/notificationReducer";
-import { useLoginUser } from "../../hooks/useUser";
+import { useGetUser, useLoginUser } from "../../hooks/useUser";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const user  = useGetUser();
+
   const setNotification = useShowNotification();
   const login = useLoginUser();
 
-  // const user = true
-
-  // if (user) return null;
+  if (user) return null;
 
   const handleLogin = async (event) => {
     event.preventDefault();
