@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 // components
 import Blog from "./Blog/Blog";
-import User from "./User/User";
 import BlogForm from "../BlogForm/BlogForm";
 import Notifier from "../../general/Notifier/Notifier";
 import Togglable from "../../general/Togglable.jsx/Togglable";
@@ -32,7 +31,6 @@ const BlogList = () => {
       <Togglable visible={formVisible}>
         <BlogForm onClose={() => setVisible(false)} />
       </Togglable>
-      <User />
       {blogs
         .slice()
         .sort((a, b) => b.likes - a.likes)

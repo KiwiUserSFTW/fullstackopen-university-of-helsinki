@@ -1,11 +1,11 @@
 // hooks
 import { useSelector } from "react-redux";
-import { useShowNotification } from "../../../../hooks/useNotification";
-import { useLogoutUser } from "../../../../hooks/useUser";
+import { useShowNotification } from "../../../hooks/useNotification";
+import { useLogoutUser } from "../../../hooks/useUser";
 
-import { messageTypes } from "../../../../reducers/notificationReducer";
+import { messageTypes } from "../../../reducers/notificationReducer";
 
-const User = () => {
+const UserStatus = () => {
   const setNotification = useShowNotification();
 
   const user = useSelector((state) => state.user);
@@ -19,11 +19,11 @@ const User = () => {
     });
   };
   return (
-    <div>
+    <div style={{ margin: "10px 0 10px 0" }}>
       <p> {user.name} logged in</p>
       <button onClick={handleLogout}> log out </button>
     </div>
   );
 };
 
-export default User;
+export default UserStatus;
