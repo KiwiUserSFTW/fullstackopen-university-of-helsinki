@@ -19,9 +19,7 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(user)
-
-  return user !== null ? <Blogs /> : <LoginForm />;
+  return user === null ? <LoginForm /> : <Blogs />;
 };
 
 export default App;

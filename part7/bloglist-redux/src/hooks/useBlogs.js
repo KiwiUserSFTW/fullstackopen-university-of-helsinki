@@ -1,4 +1,6 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
 import {
   createBlog,
   deleteBlog,
@@ -6,10 +8,18 @@ import {
   setupBlogs,
 } from "../reducers/blogsReducer";
 
-export const useSetupBlogs = () => {
+export const useGetBlogs = () => {
+  const blogs = useSelector((state) => state.blogs);
+
   const dispatch = useDispatch();
 
-  return () => dispatch(setupBlogs());
+  useEffect(() => {
+    if (!blogs) {
+      dispatch(setupBlogs());
+    }
+  }, [blogs, dispatch]);
+
+  return blogs;
 };
 
 export const useCreateBlog = () => {

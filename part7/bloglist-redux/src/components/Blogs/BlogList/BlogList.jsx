@@ -8,13 +8,18 @@ import BlogForm from "../BlogForm/BlogForm";
 import Notifier from "../../general/Notifier/Notifier";
 import Togglable from "../../general/Togglable.jsx/Togglable";
 
+// hooks
+import { useGetBlogs } from "../../../hooks/useBlogs";
+
 const BlogList = () => {
   const [formVisible, setVisible] = useState(false);
 
-  const blogs = useSelector((state) => state.blogs);
+  const blogs = useGetBlogs();
   const user = useSelector((state) => state.user);
 
   if (!user) return null;
+  if (!blogs) return <> loading ...</>;
+
   const createButtonRender = () => {
     if (formVisible) return null;
     return (
