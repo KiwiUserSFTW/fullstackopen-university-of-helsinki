@@ -1,3 +1,6 @@
+// react & router
+import { Link } from "react-router-dom";
+
 // hooks
 import { useGetUsers } from "../../hooks/useUsers";
 
@@ -19,7 +22,9 @@ const UsersView = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td>{user.name}</td>
+              <td>
+                <Link to={user.id}>{user.name}</Link>
+              </td>
               <td>{user.blogs.length}</td>
             </tr>
           ))}
