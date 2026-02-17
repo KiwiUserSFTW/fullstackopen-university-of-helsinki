@@ -52,7 +52,7 @@ blogsRouter.put("/:id", userExtractor, async (request, response, next) => {
     const updatedBlog = await Blog.findByIdAndUpdate(
       request.params.id,
       request.body,
-      { new: true, runValidators: true },
+      { new: true, runValidators: true }
     );
 
     response.json(updatedBlog);
@@ -94,6 +94,23 @@ blogsRouter.put("/like/:id", userExtractor, async (request, response, next) => {
     blog.save();
 
     response.status(200).end();
+  } catch (error) {
+    next(error);
+  }
+});
+
+blogsRouter.post("/:id/comments", async (request, response, next) => {
+  const objId = request.params.id || null;
+
+  const { comment } = request.body;
+  try {
+    const blog = await Blog.findById(objId);
+    if (!blog) return response.status(404).json({ error: "blog not found" });
+
+    blog.comments = blog.comments.concat(comment);
+    const updatedBlog = await blog.save();
+
+    response.status(200).json(updatedBlog);
   } catch (error) {
     next(error);
   }
