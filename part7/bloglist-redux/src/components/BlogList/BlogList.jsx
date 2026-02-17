@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 
 // components
 import Blog from "./Blog/Blog";
-import BlogForm from "../BlogForm/BlogForm";
-import Notifier from "../../general/Notifier/Notifier";
-import Togglable from "../../general/Togglable.jsx/Togglable";
+import BlogForm from "./BlogForm/BlogForm";
+import Notifier from "../general/Notifier/Notifier";
+import Togglable from "../general/Togglable.jsx/Togglable";
 
 // hooks
-import { useGetBlogs } from "../../../hooks/useBlogs";
+import { useGetBlogs } from "../../hooks/useBlogs";
 
 const BlogList = () => {
   const [formVisible, setVisible] = useState(false);
@@ -32,6 +32,7 @@ const BlogList = () => {
   return (
     <div>
       <Notifier />
+      <h2>blogs app</h2>
       {createButtonRender()}
       <Togglable visible={formVisible}>
         <BlogForm onClose={() => setVisible(false)} />

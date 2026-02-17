@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 // components
-import BlogList from "./components/Blogs/BlogList/BlogList";
+import BlogList from "./components/BlogList/BlogList";
 import UsersView from "./components/UsersView/UsersView";
 import UserView from "./components/UserView/UserView";
 import BlogView from "./components/BlogView/BlogView";

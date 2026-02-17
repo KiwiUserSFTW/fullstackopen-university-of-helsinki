@@ -1,10 +1,11 @@
 // react & redux
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 // components
-import Blogs from "./components/Blogs/Blogs";
 import LoginForm from "./components/LoginForm/LoginForm";
+import Router from "./router";
+import NavHeader from "./components/NavHeader/NavHeader";
 
 // hooks
 import { useCheckLoginInLocalStorage } from "./hooks/useUser";
@@ -19,7 +20,14 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return user === null ? <LoginForm /> : <Blogs />;
+  return user === null ? (
+    <LoginForm />
+  ) : (
+    <div>
+      <NavHeader />
+      <Router />
+    </div>
+  );
 };
 
 export default App;
