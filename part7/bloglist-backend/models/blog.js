@@ -1,6 +1,21 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+// coment schema for blogs
+const commentSchema = new mongoose.Schema({
+  comment: {
+    type: String,
+    required: true,
+  },
+});
+
+commentSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    ret.id = ret._id.toString();
+    delete ret._id;
+  },
+});
+
 const blogSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -11,11 +26,7 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  comments: [
-    {
-      type: String,
-    },
-  ],
+  comments: [commentSchema],
   likes: {
     type: Number,
     default: 0,
@@ -30,7 +41,15 @@ blogSchema.set("toJSON", {
   transform: (doc, ret) => {
     ret.id = ret._id.toString();
     delete ret._id;
+    blogSchema.set("toJSON", {
+      transform: (doc, ret) => {
+        ret.id = ret._id.toString();
+        delete ret._id;
+        return ret;
+      },
+    });
     return ret;
   },
 });
+
 module.exports = mongoose.model("Blog", blogSchema);

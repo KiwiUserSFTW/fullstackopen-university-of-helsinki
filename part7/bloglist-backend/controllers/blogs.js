@@ -107,7 +107,7 @@ blogsRouter.post("/:id/comments", async (request, response, next) => {
     const blog = await Blog.findById(objId);
     if (!blog) return response.status(404).json({ error: "blog not found" });
 
-    blog.comments = blog.comments.concat(comment);
+    blog.comments = blog.comments.concat({ comment });
     const updatedBlog = await blog.save();
 
     response.status(200).json(updatedBlog);
