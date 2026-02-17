@@ -6,6 +6,7 @@ import {
   deleteBlog,
   likeBlog,
   setupBlogs,
+  addComment,
 } from "../reducers/blogsReducer";
 
 export const useGetBlogs = () => {
@@ -38,4 +39,10 @@ export const useLikeBlog = () => {
   const dispatch = useDispatch();
 
   return (id) => dispatch(likeBlog(id));
+};
+
+export const useAddComment = () => {
+  const dispatch = useDispatch();
+
+  return (id, comment) => dispatch(addComment(id, comment));
 };

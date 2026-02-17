@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Router from "./router";
 import NavHeader from "./components/NavHeader/NavHeader";
+import Notifier from "./components/general/Notifier/Notifier";
 
 // hooks
 import { useCheckLoginInLocalStorage } from "./hooks/useUser";
@@ -16,7 +17,6 @@ const App = () => {
   const checkUserInStorage = useCheckLoginInLocalStorage();
   useEffect(() => {
     checkUserInStorage();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -25,6 +25,7 @@ const App = () => {
   ) : (
     <div>
       <NavHeader />
+      <Notifier />
       <Router />
     </div>
   );

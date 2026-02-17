@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 // components
 import Blog from "./Blog/Blog";
 import BlogForm from "./BlogForm/BlogForm";
-import Notifier from "../general/Notifier/Notifier";
 import Togglable from "../general/Togglable.jsx/Togglable";
 
 // hooks
@@ -31,7 +30,6 @@ const BlogList = () => {
 
   return (
     <div>
-      <Notifier />
       <h2>blogs app</h2>
       {createButtonRender()}
       <Togglable visible={formVisible}>

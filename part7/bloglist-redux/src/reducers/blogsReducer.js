@@ -24,10 +24,15 @@ const blogsReducer = createSlice({
         blog.id === id ? { ...blog, likes: blog.likes + 1 } : blog,
       );
     },
+    addCommentToBlog(state, action) {
+      const newBlog = action.payload;
+      return state.map((blog) => (blog.id === newBlog.id ? newBlog : blog));
+    },
   },
 });
 
-const { setBlogs, addBlog, removeBlog, addLikeToBlog } = blogsReducer.actions;
+const { setBlogs, addBlog, removeBlog, addLikeToBlog, addCommentToBlog } =
+  blogsReducer.actions;
 
 export const setupBlogs = () => {
   return async (dispatch) => {
@@ -69,6 +74,17 @@ export const likeBlog = (id) => {
       dispatch(addLikeToBlog(id));
     } catch (error) {
       throw new Error("liking blog failed, error - ", error);
+    }
+  };
+};
+
+export const addComment = (id, comment) => {
+  return async (dispatch) => {
+    try {
+      const newBlog = await blogService.addComment(id, comment);
+      dispatch(addCommentToBlog(newBlog));
+    } catch (error) {
+      throw new Error("adding comment to blog failed, error - ", error);
     }
   };
 };

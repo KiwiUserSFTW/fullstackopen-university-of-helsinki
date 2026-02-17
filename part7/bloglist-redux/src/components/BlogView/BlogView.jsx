@@ -11,6 +11,9 @@ import { useShowNotification } from "../../hooks/useNotification";
 // types
 import { messageTypes } from "../../reducers/notificationReducer";
 
+// components
+import CommentList from "./CommentsList/CommentList";
+
 const BlogView = () => {
   const { id } = useParams();
 
@@ -51,6 +54,8 @@ const BlogView = () => {
         </div>
         <div>added by {blog.user.username}</div>
       </div>
+
+      <CommentList id={id} />
     </div>
   );
 };

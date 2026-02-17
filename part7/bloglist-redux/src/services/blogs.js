@@ -38,6 +38,16 @@ const like = async (id) => {
   }
 };
 
+const addComment = async (id, comment) => {
+  try {
+    const response = await axios.post(`${baseUrl}/${id}/comments`, { comment });
+    return response.data;
+  } catch (error) {
+    console.error("add comment failed:", error.response.data);
+    throw error;
+  }
+};
+
 const deleteOne = async (id) => {
   try {
     await axios.delete(`${baseUrl}/${id}`, config());
@@ -47,4 +57,12 @@ const deleteOne = async (id) => {
   }
 };
 
-export default { getAll, setToken, create, update, deleteOne, like };
+export default {
+  getAll,
+  setToken,
+  create,
+  update,
+  deleteOne,
+  like,
+  addComment,
+};

@@ -1,5 +1,7 @@
+// react router
+import { Link, useParams } from "react-router-dom";
+
 // hooks
-import { useParams } from "react-router-dom";
 import { useGetUsers } from "../../hooks/useUsers";
 
 const UserView = () => {
@@ -21,7 +23,9 @@ const UserView = () => {
       {blogsEmpty ? (
         <ul>
           {user.blogs.map((blog) => (
-            <li key={blog.id}> {blog.title} </li>
+            <li key={blog.id}>
+              <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+            </li>
           ))}
         </ul>
       ) : (
