@@ -47,4 +47,22 @@ const deleteOne = async (id) => {
   }
 };
 
-export default { getAll, setToken, create, update, deleteOne, like };
+const addComment = async ({ id, comment }) => {
+  try {
+    const response = await axios.post(`${baseUrl}/${id}/comments`, { comment });
+    return response.data;
+  } catch (error) {
+    console.error("add comment failed:", error.response.data);
+    throw error;
+  }
+};
+
+export default {
+  getAll,
+  setToken,
+  create,
+  update,
+  deleteOne,
+  like,
+  addComment,
+};

@@ -3,7 +3,6 @@ import { useState } from "react";
 
 // components
 import Blog from "./Blog/Blog";
-import User from "./User/User";
 import BlogForm from "./BlogForm/BlogForm";
 import Togglable from "../general/Togglable.jsx/Togglable";
 
@@ -30,12 +29,10 @@ const BlogList = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
       {createButtonRender()}
       <Togglable visible={formVisible}>
         <BlogForm onClose={() => setVisible(false)} />
       </Togglable>
-      <User />
       {blogs ? (
         blogs
           .slice()

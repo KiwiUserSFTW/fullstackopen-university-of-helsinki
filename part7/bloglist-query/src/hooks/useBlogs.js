@@ -1,5 +1,4 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-
 // api
 import blogsService from "../services/blogs";
 
@@ -29,6 +28,17 @@ export const useDeleteBlog = () => {
   });
 
   return (id) => mutation.mutate(id);
+};
+
+export const useAddComment = () => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: blogsService.addComment,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["blogs"] }),
+  });
+
+  return (id, comment) => mutation.mutate({ id, comment });
 };
 
 export const useLikeBlog = () => {

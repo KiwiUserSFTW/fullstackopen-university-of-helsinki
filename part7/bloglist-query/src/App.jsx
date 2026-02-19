@@ -8,7 +8,7 @@ import { useCheckLoginInLocalStorage, useGetUser } from "./hooks/useUser";
 // components
 import Notifier from "./components/general/Notifier/Notifier";
 import LoginForm from "./components/LoginForm/LoginForm";
-
+import NavHeader from "./components/NavHeader/NavHeader";
 const App = () => {
   const user = useGetUser();
   const checkUserInStorage = useCheckLoginInLocalStorage();
@@ -23,6 +23,8 @@ const App = () => {
     <LoginForm />
   ) : (
     <div>
+      <NavHeader />
+      <h2>blogs app</h2>
       <Notifier />
       <Router />
     </div>

@@ -30,7 +30,6 @@ const BlogList = () => {
 
   return (
     <div>
-      <h2>blogs app</h2>
       {createButtonRender()}
       <Togglable visible={formVisible}>
         <BlogForm onClose={() => setVisible(false)} />

@@ -25,6 +25,7 @@ const App = () => {
   ) : (
     <div>
       <NavHeader />
+      <h2>blogs app</h2>
       <Notifier />
       <Router />
     </div>
