@@ -83,7 +83,7 @@ blogsRouter.delete("/:id", userExtractor, async (request, response, next) => {
   }
 });
 
-blogsRouter.put("/like/:id", userExtractor, async (request, response, next) => {
+blogsRouter.post("/:id/like", userExtractor, async (request, response, next) => {
   const updatedObjId = request.params.id || null;
 
   try {

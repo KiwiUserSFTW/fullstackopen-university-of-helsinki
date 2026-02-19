@@ -31,7 +31,7 @@ const update = async (updatedBlog, id) => {
 
 const like = async (id) => {
   try {
-    await axios.put(`${baseUrl}/like/${id}`, null, config());
+    await axios.post(`${baseUrl}/${id}/like`, null, config());
   } catch (error) {
     console.error("liking blog failed:", error.response.data);
     throw error;
