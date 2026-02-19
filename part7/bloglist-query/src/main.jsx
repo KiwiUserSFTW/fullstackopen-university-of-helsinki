@@ -1,5 +1,6 @@
-// react
+// react & router
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 
 // query
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -14,11 +15,13 @@ import { UserContextProvider } from "./context/userContext";
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <QueryClientProvider client={queryClient}>
-    <NotificationContextProvider>
-      <UserContextProvider>
-        <App />
-      </UserContextProvider>
-    </NotificationContextProvider>
-  </QueryClientProvider>,
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <NotificationContextProvider>
+        <UserContextProvider>
+          <App />
+        </UserContextProvider>
+      </NotificationContextProvider>
+    </QueryClientProvider>
+  </BrowserRouter>,
 );

@@ -4,13 +4,12 @@ import { useState } from "react";
 // components
 import Blog from "./Blog/Blog";
 import User from "./User/User";
-import BlogForm from "../BlogForm/BlogForm";
-import Notifier from "../../general/Notifier/Notifier";
-import Togglable from "../../general/Togglable.jsx/Togglable";
+import BlogForm from "./BlogForm/BlogForm";
+import Togglable from "../general/Togglable.jsx/Togglable";
 
 // hooks
-import { useGetBlogs } from "../../../hooks/useBlogs";
-import { useGetUser } from "../../../hooks/useUser";
+import { useGetBlogs } from "../../hooks/useBlogs";
+import { useGetUser } from "../../hooks/useUser";
 
 const BlogList = () => {
   const [formVisible, setVisible] = useState(false);
@@ -32,7 +31,6 @@ const BlogList = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <Notifier />
       {createButtonRender()}
       <Togglable visible={formVisible}>
         <BlogForm onClose={() => setVisible(false)} />

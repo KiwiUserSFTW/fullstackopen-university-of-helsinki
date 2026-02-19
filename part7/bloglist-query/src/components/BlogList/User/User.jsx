@@ -1,8 +1,8 @@
 // hooks
-import { useShowNotification } from "../../../../hooks/useNotification";
-import { useLogoutUser } from "../../../../hooks/useUser";
+import { useShowNotification } from "../../../hooks/useNotification";
+import { useLogoutUser } from "../../../hooks/useUser";
 
-import { messageTypes } from "../../../../reducers/notificationReducer";
+import { messageTypes } from "../../../reducers/notificationReducer";
 
 const User = () => {
   const setNotification = useShowNotification();

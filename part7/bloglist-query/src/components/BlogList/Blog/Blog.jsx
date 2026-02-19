@@ -1,16 +1,16 @@
 import { useState } from "react";
 
 // components
-import Togglable from "../../../general/Togglable.jsx/Togglable";
+import Togglable from "../../general/Togglable.jsx/Togglable";
 
 // style
 import "./Blog.css";
 
 // hooks
-import { useShowNotification } from "../../../../hooks/useNotification";
-import { useDeleteBlog, useLikeBlog } from "../../../../hooks/useBlogs";
+import { useShowNotification } from "../../../hooks/useNotification";
+import { useDeleteBlog, useLikeBlog } from "../../../hooks/useBlogs";
 
-import { messageTypes } from "../../../../reducers/notificationReducer";
+import { messageTypes } from "../../../reducers/notificationReducer";
 
 const Blog = ({ blog, user }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
