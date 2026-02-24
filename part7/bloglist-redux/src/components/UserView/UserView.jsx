@@ -1,3 +1,6 @@
+// styles
+import { ListGroup, ListGroupItem } from "react-bootstrap";
+
 // react router
 import { Link, useParams } from "react-router-dom";
 
@@ -23,13 +26,13 @@ const UserView = () => {
       {blogsEmpty ? (
         <> No added blogs</>
       ) : (
-        <ul>
+        <ListGroup>
           {user.blogs.map((blog) => (
-            <li key={blog.id}>
-              <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-            </li>
+            <ListGroupItem key={blog.id} action href={`/blogs/${blog.id}`}>
+              {blog.title}
+            </ListGroupItem>
           ))}
-        </ul>
+        </ListGroup>
       )}
     </div>
   );

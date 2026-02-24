@@ -1,3 +1,12 @@
+// styles
+import {
+  Button,
+  Form,
+  FormGroup,
+  FormLabel,
+  FormControl,
+} from "react-bootstrap";
+
 // react
 import { useState } from "react";
 
@@ -39,18 +48,17 @@ const CommentForm = ({ id }) => {
   };
   return (
     <div>
-      <form style={{ display: "flex", gap: "5px" }} onSubmit={handleSubmit}>
-        <div>
-          <label>
-            <input
-              type="text"
-              value={comment}
-              onChange={({ target }) => setComment(target.value)}
-            />
-          </label>
-        </div>
-        <button type="submit"> add comment </button>
-      </form>
+      <Form className="d-flex gap-2 flex-row" onSubmit={handleSubmit}>
+        <FormGroup>
+          <FormControl
+            type="text"
+            value={comment}
+            onChange={({ target }) => setComment(target.value)}
+            placeholder="Enter comment"
+          />
+        </FormGroup>
+        <Button variant="success" type="submit"> add comment </Button>
+      </Form>
     </div>
   );
 };

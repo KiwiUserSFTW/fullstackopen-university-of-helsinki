@@ -1,15 +1,12 @@
-// components
-import { Link } from "react-router-dom";
-
-// style
+// styles
 import "./Blog.css";
+import { ListGroupItem } from "react-bootstrap";
 
 const Blog = ({ blog }) => {
-
   return (
-    <div className="blog">
-      <Link to={`/blogs/${blog.id}`}> {blog.title}</Link>
-    </div>
+    <ListGroupItem action href={`/blogs/${blog.id}`}>
+      <div className="blog">{blog.title}</div>
+    </ListGroupItem>
   );
 };
 

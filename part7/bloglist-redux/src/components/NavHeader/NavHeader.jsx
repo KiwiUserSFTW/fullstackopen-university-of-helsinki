@@ -1,22 +1,23 @@
+// styles
+import { Nav, Navbar, NavItem } from "react-bootstrap";
+
 // components
-import UserStatus from "./UserStatus";
 import NavTabs from "./NavTabs";
+import UserStatus from "./UserStatus";
 
 const NavHeader = () => {
   return (
-    <div
-      style={{
-        height: "20px",
-        display: "flex",
-        gap: "5px",
-        backgroundColor: "#D3D3D3",
-        padding: "5px",
-        borderRadius: "10px"
-      }}
-    >
-      <NavTabs />
-      <UserStatus />
-    </div>
+    <Navbar expand="xxl" className="justify-content-center ">
+      <Nav
+        variant="tabs"
+        className="d-flex justify-content-center flex-row gap-3 fs-3"
+      >
+        <NavTabs />
+        <NavItem className="d-flex align-items-center">
+          <UserStatus />
+        </NavItem>
+      </Nav>
+    </Navbar>
   );
 };
 

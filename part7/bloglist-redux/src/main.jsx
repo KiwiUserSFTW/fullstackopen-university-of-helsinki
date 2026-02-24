@@ -14,7 +14,9 @@ import App from "./App";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <div className="container">
+        <App />
+      </div>
     </Provider>
   </BrowserRouter>,
 );

@@ -1,3 +1,6 @@
+// styles
+import { ListGroup, Button } from "react-bootstrap";
+
 // react & redux
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -22,9 +25,9 @@ const BlogList = () => {
   const createButtonRender = () => {
     if (formVisible) return null;
     return (
-      <button className="labelButton" onClick={() => setVisible(true)}>
+      <Button variant="secondary" onClick={() => setVisible(true)}>
         create new blog
-      </button>
+      </Button>
     );
   };
 
@@ -34,12 +37,14 @@ const BlogList = () => {
       <Togglable visible={formVisible}>
         <BlogForm onClose={() => setVisible(false)} />
       </Togglable>
-      {blogs
-        .slice()
-        .sort((a, b) => b.likes - a.likes)
-        .map((blog) => (
-          <Blog key={blog.id} blog={blog} user={user} />
-        ))}
+      <ListGroup bordered striped className="my-3">
+        {blogs
+          .slice()
+          .sort((a, b) => b.likes - a.likes)
+          .map((blog) => (
+            <Blog key={blog.id} blog={blog} user={user} />
+          ))}
+      </ListGroup>
     </div>
   );
 };

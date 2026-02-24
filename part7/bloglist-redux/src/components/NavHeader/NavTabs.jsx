@@ -1,7 +1,12 @@
-// react-router
-import { Link } from "react-router-dom";
+// styles
+import { NavItem, NavLink } from "react-bootstrap";
+
+// react
+import { useLocation } from "react-router-dom";
 
 const NavTabs = () => {
+  const location = useLocation();
+
   const tabs = {
     blogs: {
       name: "blogs",
@@ -14,13 +19,20 @@ const NavTabs = () => {
   };
 
   return (
-    <div style={{ gap: "5px", display: "flex" }}>
-      {Object.values(tabs).map(({ name, link }) => (
-        <Link key={name} to={link}>
-          {name}
-        </Link>
-      ))}
-    </div>
+    <NavItem>
+      <div style={{ gap: "5px", display: "flex" }}>
+        {Object.values(tabs).map(({ name, link }) => (
+          <NavLink
+            key={name}
+            href={link}
+            active={location.pathname === link}
+            className={`${location.pathname === link ? "bg-secondary text-white px-3" : "text-red"}`}
+          >
+            {name}
+          </NavLink>
+        ))}
+      </div>
+    </NavItem>
   );
 };
 

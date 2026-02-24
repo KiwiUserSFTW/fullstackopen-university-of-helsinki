@@ -25,7 +25,9 @@ const App = () => {
   ) : (
     <div>
       <NavHeader />
-      <h2>blogs app</h2>
+      <div className="d-flex justify-content-center">
+        <h2>blogs app</h2>
+      </div>
       <Notifier />
       <Router />
     </div>

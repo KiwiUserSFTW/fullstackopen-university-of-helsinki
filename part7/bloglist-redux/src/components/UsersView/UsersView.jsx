@@ -1,3 +1,6 @@
+// styles
+import { Table } from "react-bootstrap";
+
 // react & router
 import { Link } from "react-router-dom";
 
@@ -12,10 +15,10 @@ const UsersView = () => {
   return (
     <div>
       <h2>Users</h2>
-      <table>
+      <Table striped className="fs-4">
         <thead>
           <tr>
-            <th> </th>
+            <th> user </th>
             <th>blogs created</th>
           </tr>
         </thead>
@@ -29,7 +32,7 @@ const UsersView = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };

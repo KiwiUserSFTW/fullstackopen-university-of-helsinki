@@ -1,3 +1,5 @@
+// styles
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 // hooks
 import { useGetBlogs } from "../../../hooks/useBlogs";
 
@@ -17,11 +19,11 @@ const CommentList = ({ id }) => {
       {commentsIsEmpty ? (
         <> No added comments</>
       ) : (
-        <ul>
+        <ListGroup numbered className="my-2">
           {comments.map(({ comment, id }) => (
-            <li key={id}> {comment} </li>
+            <ListGroupItem key={id}> {comment} </ListGroupItem>
           ))}
-        </ul>
+        </ListGroup>
       )}
     </div>
   );

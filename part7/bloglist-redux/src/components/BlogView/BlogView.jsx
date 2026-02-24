@@ -1,5 +1,6 @@
 // styles
 import "./BlogView.css";
+import { Button } from "react-bootstrap";
 
 // react
 import { useParams } from "react-router-dom";
@@ -48,9 +49,9 @@ const BlogView = () => {
 
       <div className="details">
         <a href={blog.url}>{blog.url}</a>
-        <div>
+        <div className="d-flex gap-2 align-items-center">
           <span>Likes: {blog.likes}</span>
-          <button onClick={handleLike}> like </button>
+          <Button onClick={handleLike}> like </Button>
         </div>
         <div>added by {blog.user.username}</div>
       </div>

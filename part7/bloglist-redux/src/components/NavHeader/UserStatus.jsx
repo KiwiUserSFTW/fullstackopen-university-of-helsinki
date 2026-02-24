@@ -1,3 +1,6 @@
+// styles
+import { Button } from "react-bootstrap";
+
 // hooks
 import { useSelector } from "react-redux";
 import { useShowNotification } from "../../hooks/useNotification";
@@ -19,9 +22,11 @@ const UserStatus = () => {
     });
   };
   return (
-    <div style={{ height: '100%', gap: "5px", display:"flex" }}>
+    <div className="d-flex align-items-center gap-2 text-success">
       <div> {user.name} logged in</div>
-      <button onClick={handleLogout}> log out </button>
+      <Button variant="secondary" onClick={handleLogout}>
+        log out
+      </Button>
     </div>
   );
 };

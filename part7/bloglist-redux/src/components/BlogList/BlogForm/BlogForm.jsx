@@ -1,3 +1,13 @@
+// styles
+import {
+  Button,
+  Form,
+  FormGroup,
+  FormLabel,
+  FormControl,
+} from "react-bootstrap";
+
+// react
 import { useState } from "react";
 
 // hooks
@@ -59,41 +69,45 @@ const BlogForm = ({ onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1> create new </h1>
-      <div>
-        <label>
-          title
-          <input
-            type="text"
-            value={title}
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </label>
+    <Form onSubmit={handleSubmit}>
+      <h3> create new </h3>
+      <FormGroup className="mb-3">
+        <FormLabel>Title</FormLabel>
+        <FormControl
+          type="text"
+          value={title}
+          onChange={({ target }) => setTitle(target.value)}
+          placeholder="Enter title"
+        />
+      </FormGroup>
+      <FormGroup className="mb-3">
+        <FormLabel>Author</FormLabel>
+        <FormControl
+          type="text"
+          value={author}
+          onChange={({ target }) => setAuthor(target.value)}
+          placeholder="Enter author"
+        />
+      </FormGroup>
+
+      <FormGroup className="mb-3">
+        <FormLabel>Url</FormLabel>
+        <FormControl
+          type="text"
+          value={url}
+          onChange={({ target }) => setUrl(target.value)}
+          placeholder="Enter url"
+        />
+      </FormGroup>
+      <div className="d-flex gap-2">
+        <Button variant="success" type="submit">
+          submit
+        </Button>
+        <Button variant="warning" onClick={handleClose}>
+          cancel
+        </Button>
       </div>
-      <div>
-        <label>
-          author
-          <input
-            type="text"
-            value={author}
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          url
-          <input
-            type="text"
-            value={url}
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </label>
-      </div>
-      <button type="submit"> submit </button>
-      <button onClick={handleClose}> cancel </button>
-    </form>
+    </Form>
   );
 };
 

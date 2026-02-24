@@ -1,5 +1,6 @@
 // styles
 import "./Notifier.css";
+import { Alert } from "react-bootstrap";
 
 // hooks
 import { useSelector } from "react-redux";
@@ -10,12 +11,18 @@ const Notifier = () => {
   const { message, type } = useSelector((state) => state.notification);
   if (message == "") return null;
 
-  const styles = () => {
-    const info = "info";
-    const error = "error";
+  const variant = () => {
+    const info = "success";
+    const error = "danger";
     return type === messageTypes.ERROR ? error : info;
   };
-  return <div className={`message ${styles()}`}>{message}</div>;
+
+  return (
+    <Alert className="fs-5" variant={variant()}>
+      {message}
+    </Alert>
+  );
 };
 
+// className={`message ${styles()}`}
 export default Notifier;
