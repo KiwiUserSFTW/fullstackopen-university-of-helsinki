@@ -53,7 +53,10 @@ blogsRouter.put("/:id", userExtractor, async (request, response, next) => {
       request.params.id,
       request.body,
       { new: true, runValidators: true }
-    );
+    ).populate("user", {
+      username: 1,
+      name: 1,
+    });
 
     response.json(updatedBlog);
   } catch (error) {
@@ -83,21 +86,25 @@ blogsRouter.delete("/:id", userExtractor, async (request, response, next) => {
   }
 });
 
-blogsRouter.post("/:id/like", userExtractor, async (request, response, next) => {
-  const updatedObjId = request.params.id || null;
+blogsRouter.post(
+  "/:id/like",
+  userExtractor,
+  async (request, response, next) => {
+    const updatedObjId = request.params.id || null;
 
-  try {
-    const blog = await Blog.findById(updatedObjId);
-    if (!blog) return response.status(404).json({ error: "blog not found" });
+    try {
+      const blog = await Blog.findById(updatedObjId);
+      if (!blog) return response.status(404).json({ error: "blog not found" });
 
-    blog.likes = blog.likes + 1;
-    blog.save();
+      blog.likes = blog.likes + 1;
+      await blog.save();
 
-    response.status(200).end();
-  } catch (error) {
-    next(error);
+      response.status(200).end();
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 blogsRouter.post("/:id/comments", async (request, response, next) => {
   const objId = request.params.id || null;
@@ -108,7 +115,11 @@ blogsRouter.post("/:id/comments", async (request, response, next) => {
     if (!blog) return response.status(404).json({ error: "blog not found" });
 
     blog.comments = blog.comments.concat({ comment });
-    const updatedBlog = await blog.save();
+    await blog.save();
+    const updatedBlog = await blog.populate("user", {
+      username: 1,
+      name: 1,
+    });
 
     response.status(200).json(updatedBlog);
   } catch (error) {
