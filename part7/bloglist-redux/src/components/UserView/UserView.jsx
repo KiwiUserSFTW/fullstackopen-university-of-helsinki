@@ -28,7 +28,12 @@ const UserView = () => {
       ) : (
         <ListGroup>
           {user.blogs.map((blog) => (
-            <ListGroupItem key={blog.id} action href={`/blogs/${blog.id}`}>
+            <ListGroupItem
+              key={blog.id}
+              action
+              as={Link}
+              to={`/blogs/${blog.id}`}
+            >
               {blog.title}
             </ListGroupItem>
           ))}

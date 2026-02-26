@@ -1,8 +1,8 @@
 // styles
 import { NavItem, NavLink } from "react-bootstrap";
 
-// react
-import { useLocation } from "react-router-dom";
+// react & router
+import { useLocation, Link } from "react-router-dom";
 
 const NavTabs = () => {
   const location = useLocation();
@@ -24,7 +24,8 @@ const NavTabs = () => {
         {Object.values(tabs).map(({ name, link }) => (
           <NavLink
             key={name}
-            href={link}
+            to={link}
+            as={Link}
             active={location.pathname === link}
             className={`${location.pathname === link ? "bg-secondary text-white px-3" : "text-red"}`}
           >
