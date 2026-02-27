@@ -60,39 +60,58 @@ const BlogForm = ({ onClose }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1> create new </h1>
-      <div>
-        <label>
+      <h1 className="title is-5"> create new blog </h1>
+      <div className="field">
+        <label className="label">
           title
-          <input
-            type="text"
-            value={title}
-            onChange={({ target }) => setTitle(target.value)}
-          />
+          <div className="control">
+            <input
+              className="input"
+              type="text"
+              value={title}
+              onChange={({ target }) => setTitle(target.value)}
+            />
+          </div>
         </label>
       </div>
-      <div>
-        <label>
+      <div className="field">
+        <label className="label">
           author
-          <input
-            type="text"
-            value={author}
-            onChange={({ target }) => setAuthor(target.value)}
-          />
+          <div className="control">
+            <input
+              className="input"
+              type="text"
+              value={author}
+              onChange={({ target }) => setAuthor(target.value)}
+            />
+          </div>
         </label>
       </div>
-      <div>
-        <label>
+      <div className="field">
+        <label className="label">
           url
-          <input
-            type="text"
-            value={url}
-            onChange={({ target }) => setUrl(target.value)}
-          />
+          <div className="control">
+            <input
+              className="input"
+              type="text"
+              value={url}
+              onChange={({ target }) => setUrl(target.value)}
+            />
+          </div>
         </label>
       </div>
-      <button type="submit"> submit </button>
-      <button onClick={handleClose}> cancel </button>
+      <div className="field is-grouped">
+        <div className="control">
+          <button className="button has-text-primary-30" type="submit">
+            submit
+          </button>
+        </div>
+        <div className="control">
+          <button className="button has-text-danger-80" onClick={handleClose}>
+            cancel
+          </button>
+        </div>
+      </div>
     </form>
   );
 };

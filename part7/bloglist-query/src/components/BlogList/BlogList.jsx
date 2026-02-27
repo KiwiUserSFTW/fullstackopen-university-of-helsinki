@@ -10,6 +10,9 @@ import Togglable from "../general/Togglable.jsx/Togglable";
 import { useGetBlogs } from "../../hooks/useBlogs";
 import { useGetUser } from "../../hooks/useUser";
 
+// router
+import { Link } from "react-router-dom";
+
 const BlogList = () => {
   const [formVisible, setVisible] = useState(false);
 
@@ -21,23 +24,38 @@ const BlogList = () => {
   const createButtonRender = () => {
     if (formVisible) return null;
     return (
-      <button className="labelButton" onClick={() => setVisible(true)}>
-        create new blog
-      </button>
+      <div className="control block">
+        <button
+          className="button has-text-primary-35"
+          onClick={() => setVisible(true)}
+        >
+          create new blog
+        </button>
+      </div>
     );
   };
 
   return (
     <div>
       {createButtonRender()}
-      <Togglable visible={formVisible}>
-        <BlogForm onClose={() => setVisible(false)} />
-      </Togglable>
+      <div className="block">
+        <Togglable visible={formVisible}>
+          <BlogForm onClose={() => setVisible(false)} />
+        </Togglable>
+      </div>
       {blogs ? (
         blogs
           .slice()
           .sort((a, b) => b.likes - a.likes)
-          .map((blog) => <Blog key={blog.id} blog={blog} user={user} />)
+          .map((blog) => (
+            <div key={blog.id} className="card">
+              <Link to={`/blogs/${blog.id}`}>
+                <div className="card-content">
+                  <Blog blog={blog} />
+                </div>
+              </Link>
+            </div>
+          ))
       ) : (
         <> loading... </>
       )}

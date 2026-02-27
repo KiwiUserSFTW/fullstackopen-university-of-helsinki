@@ -1,6 +1,3 @@
-// styles
-import "./BlogView.css";
-
 // react
 import { useParams } from "react-router-dom";
 
@@ -43,14 +40,18 @@ const BlogView = () => {
   };
 
   return (
-    <div>
-      <h1> {blog.title}</h1>
+    <div className="box is-size-4">
+      <h1 className="is-size-3"> {blog.title}</h1>
 
       <div className="details">
         <a href={blog.url}>{blog.url}</a>
-        <div>
+        <div className="is-flex">
           <span>Likes: {blog.likes}</span>
-          <button onClick={handleLike}> like </button>
+          <div className="control ml-3">
+            <button className="button has-text-danger-70" onClick={handleLike}>
+              like
+            </button>
+          </div>
         </div>
         <div>added by {blog.user.username}</div>
       </div>

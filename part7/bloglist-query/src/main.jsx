@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <NotificationContextProvider>
         <UserContextProvider>
-          <App />
+          <App/>
         </UserContextProvider>
       </NotificationContextProvider>
     </QueryClientProvider>

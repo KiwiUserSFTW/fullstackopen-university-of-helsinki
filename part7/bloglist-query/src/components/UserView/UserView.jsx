@@ -17,19 +17,23 @@ const UserView = () => {
 
   return (
     <div>
-      <h3> {user.username}</h3>
-      <h4> Added blogs </h4>
+      <h3 className="title"> {user.username}</h3>
+      <h4 className="is-size-5 block"> Added blogs </h4>
 
       {blogsEmpty ? (
         <> No added blogs</>
       ) : (
-        <ul>
+        <div>
           {user.blogs.map((blog) => (
-            <li key={blog.id}>
-              <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-            </li>
+            <div className="card">
+              <Link to={`/blogs/${blog.id}`}>
+                <div className="card-content" key={blog.id}>
+                  {blog.title}
+                </div>
+              </Link>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

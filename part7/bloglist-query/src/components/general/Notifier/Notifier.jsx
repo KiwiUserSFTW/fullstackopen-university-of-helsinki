@@ -1,6 +1,3 @@
-// styles
-import "./Notifier.css";
-
 // hooks
 import { messageTypes } from "../../../reducers/notificationReducer";
 import { useNotification } from "../../../hooks/useNotification";
@@ -11,11 +8,17 @@ const Notifier = () => {
   if (message == "") return null;
 
   const styles = () => {
-    const info = "info";
-    const error = "error";
+    const info = "has-text-primary-40";
+    const error = "has-text-danger-40";
     return type === messageTypes.ERROR ? error : info;
   };
-  return <div className={`message ${styles()}`}>{message}</div>;
+  return (
+    <div
+      className={`message ${styles()} notification p-4 m-5 is-size-4 has-text-centered`}
+    >
+      {message}
+    </div>
+  );
 };
 
 export default Notifier;

@@ -39,17 +39,20 @@ const CommentForm = ({ id }) => {
   };
   return (
     <div>
-      <form style={{ display: "flex", gap: "5px" }} onSubmit={handleSubmit}>
+      <form className="field is-grouped table" onSubmit={handleSubmit}>
         <div>
-          <label>
+          <label className="label">
             <input
+              className="input"
               type="text"
               value={comment}
               onChange={({ target }) => setComment(target.value)}
             />
           </label>
         </div>
-        <button type="submit"> add comment </button>
+        <button className="button has-text-primary-40" type="submit">
+          add comment
+        </button>
       </form>
     </div>
   );

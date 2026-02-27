@@ -10,12 +10,12 @@ const UsersView = () => {
   if (!users) return <> loading ...</>;
 
   return (
-    <div>
-      <h2>Users</h2>
-      <table>
+    <div className="box">
+      <h2 className="title is-4">Users</h2>
+      <table className="table is-fullwidth">
         <thead>
           <tr>
-            <th> </th>
+            <th>user</th>
             <th>blogs created</th>
           </tr>
         </thead>

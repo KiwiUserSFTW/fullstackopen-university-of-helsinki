@@ -1,7 +1,9 @@
 // react-router
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const NavTabs = () => {
+  const location = useLocation();
+
   const tabs = {
     blogs: {
       name: "blogs",
@@ -14,13 +16,18 @@ const NavTabs = () => {
   };
 
   return (
-    <div style={{ gap: "5px", display: "flex" }}>
+    <ul className="tabs " style={{ gap: "5px", display: "flex" }}>
       {Object.values(tabs).map(({ name, link }) => (
-        <Link key={name} to={link}>
-          {name}
-        </Link>
+        <li
+          key={name}
+          className={`${location.pathname === link && "is-active"}`}
+        >
+          <div className="my-1 field is-grouped">
+            <Link className ="mx-3"to={link}>{name}</Link>
+          </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 

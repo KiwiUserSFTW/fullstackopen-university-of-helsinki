@@ -11,17 +11,19 @@ const CommentList = ({ id }) => {
   const commentsIsEmpty = comments.length === 0;
 
   return (
-    <div>
-      <h3> comments </h3>
+    <div className="block content">
+      <h3 className="is-size-3"> comments </h3>
       <CommentForm id={id} />
       {commentsIsEmpty ? (
         <> No added comments</>
       ) : (
-        <ul>
-          {comments.map(({ comment, id }) => (
-            <li key={id}> {comment} </li>
-          ))}
-        </ul>
+        <div className="my-4">
+          <ul>
+            {comments.map(({ comment, id }) => (
+              <li key={id}> {comment} </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );

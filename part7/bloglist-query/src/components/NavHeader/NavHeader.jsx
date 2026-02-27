@@ -4,19 +4,19 @@ import NavTabs from "./NavTabs";
 
 const NavHeader = () => {
   return (
-    <div
-      style={{
-        height: "20px",
-        display: "flex",
-        gap: "5px",
-        backgroundColor: "#D3D3D3",
-        padding: "5px",
-        borderRadius: "10px"
-      }}
-    >
-      <NavTabs />
-      <UserStatus />
-    </div>
+    <nav className="navbar is-dark m-3">
+      <div className="navbar-brand">
+        <div className="navbar-item">
+          <NavTabs />
+        </div>
+      </div>
+
+      <div className="navbar-end">
+        <div className="navbar-item">
+          <UserStatus />
+        </div>
+      </div>
+    </nav>
   );
 };
 

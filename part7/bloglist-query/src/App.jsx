@@ -1,3 +1,6 @@
+// styles
+import "./App.css";
+
 // react & router
 import { useEffect } from "react";
 import Router from "./router";
@@ -24,9 +27,15 @@ const App = () => {
   ) : (
     <div>
       <NavHeader />
-      <h2>blogs app</h2>
+      <div className="is-flex is-justify-content-center">
+        <h2 className="title is-2 ">blogs app</h2>
+      </div>
       <Notifier />
-      <Router />
+      <div className="hero">
+        <div className="hero-body">
+          <Router />
+        </div>
+      </div>
     </div>
   );
 };

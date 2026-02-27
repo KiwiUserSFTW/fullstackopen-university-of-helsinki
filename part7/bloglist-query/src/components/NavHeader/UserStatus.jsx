@@ -7,7 +7,7 @@ import { messageTypes } from "../../reducers/notificationReducer";
 const UserStatus = () => {
   const setNotification = useShowNotification();
 
-  const user = useGetUser;
+  const user = useGetUser();
   const logout = useLogoutUser();
 
   const handleLogout = () => {
@@ -18,9 +18,19 @@ const UserStatus = () => {
     });
   };
   return (
-    <div style={{ height: "100%", gap: "5px", display: "flex" }}>
-      <div> {user.name} logged in</div>
-      <button onClick={handleLogout}> log out </button>
+    <div
+      style={{
+        gap: "5px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      <div className="title is-4" style={{ margin: 0 }}>
+        {user.name} logged in
+      </div>
+      <button className="button" onClick={handleLogout}>
+        log out
+      </button>
     </div>
   );
 };
