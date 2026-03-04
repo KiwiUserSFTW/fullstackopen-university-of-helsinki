@@ -34,7 +34,7 @@ const LoginForm = () => {
     }
 
     try {
-      login(username, password);
+      await login(username, password);
       setNotification({
         message: "loging succesfull",
         type: messageTypes.INFO,
