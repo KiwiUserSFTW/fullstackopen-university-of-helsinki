@@ -37,7 +37,7 @@ const BlogList = () => {
       <Togglable visible={formVisible}>
         <BlogForm onClose={() => setVisible(false)} />
       </Togglable>
-      <ListGroup bordered striped className="my-3">
+      <ListGroup className="my-3">
         {blogs
           .slice()
           .sort((a, b) => b.likes - a.likes)

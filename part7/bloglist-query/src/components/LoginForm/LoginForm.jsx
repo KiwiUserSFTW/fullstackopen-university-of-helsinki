@@ -14,7 +14,7 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const user  = useGetUser();
+  const user = useGetUser();
 
   const setNotification = useShowNotification();
   const login = useLoginUser();
@@ -48,30 +48,40 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <h1> log in to application</h1>
+    <form className="field"onSubmit={handleLogin}>
+      <h1 className="title is-2"> log in to application</h1>
       <Notifier />
       <div>
-        <label>
+        <label className="label">
           username
-          <input
-            type="text"
-            value={username}
-            onChange={({ target }) => setUsername(target.value)}
-          />
+          <div className="control">
+            <input
+              className="input"
+              type="text"
+              value={username}
+              onChange={({ target }) => setUsername(target.value)}
+            />
+          </div>
         </label>
       </div>
       <div>
-        <label>
+        <label className="label">
           password
-          <input
-            type="password"
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-          />
+          <div className="control">
+            <input
+              className="input"
+              type="password"
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+            />
+          </div>
         </label>
       </div>
-      <button type="submit">login</button>
+      <div className="control">
+        <button className="button has-text-primary-30" type="submit">
+          login
+        </button>
+      </div>
     </form>
   );
 };

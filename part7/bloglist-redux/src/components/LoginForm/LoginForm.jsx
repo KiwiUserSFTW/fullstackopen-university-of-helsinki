@@ -1,3 +1,12 @@
+// styles
+import {
+  Button,
+  Form,
+  FormGroup,
+  FormLabel,
+  FormControl,
+} from "react-bootstrap";
+
 // react
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -35,12 +44,13 @@ const LoginForm = () => {
     }
 
     try {
-      login(username, password);
+      await login(username, password);
       setNotification({
         message: "loging succesfull",
         type: messageTypes.INFO,
       });
-    } catch {
+    } catch (error) {
+      console.error(error);
       setNotification({
         message: "wrong credentials",
         type: messageTypes.ERROR,
@@ -49,31 +59,33 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
+    <div>
       <h1> log in to application</h1>
       <Notifier />
-      <div>
-        <label>
-          username
-          <input
+      <Form onSubmit={handleLogin}>
+        <div>
+          <FormLabel>username</FormLabel>
+          <FormControl
             type="text"
             value={username}
             onChange={({ target }) => setUsername(target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          password
-          <input
+        </div>
+        <div>
+          <FormLabel>password</FormLabel>
+          <FormControl
             type="password"
             value={password}
             onChange={({ target }) => setPassword(target.value)}
           />
-        </label>
-      </div>
-      <button type="submit">login</button>
-    </form>
+        </div>
+        <div className="my-2">
+          <Button variant="success" type="submit">
+            login
+          </Button>
+        </div>
+      </Form>
+    </div>
   );
 };
 
