@@ -1,5 +1,6 @@
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
+const { GraphQLError } = require("graphql");
 const { v1: uuid } = require("uuid");
 
 let authors = [
@@ -123,7 +124,9 @@ const typeDefs = /* GraphQL */ `
       author: String!
       published: Int!
       genres: [String!]!
-    ): Book
+    ): Book!
+
+    editAuthor(name: String!, setBornTo: Int!): Author
   }
 `;
 
@@ -179,6 +182,28 @@ const resolvers = {
 
       books = books.concat(newBook);
       return newBook;
+    },
+    editAuthor: (root, args) => {
+      const author = authors.find((author) => author.name === args.name);
+
+      if (!author) {
+        return null;
+        
+        // if Author!
+        // throw new GraphQLError(`Author must exist: ${args.name}`, {
+        //   extensions: {
+        //     code: "BAD_USER_INPUT",
+        //     invalidArgs: args.name,
+        //   },
+        // });
+      }
+
+      const editedAuthor = { ...author, born: args.setBornTo };
+      authors = authors.map((author) =>
+        author.name === args.name ? editedAuthor : author
+      );
+
+      return editedAuthor;
     },
   },
 };
