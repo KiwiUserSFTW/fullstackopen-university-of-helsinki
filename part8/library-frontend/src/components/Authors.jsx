@@ -7,6 +7,7 @@ const Authors = () => {
   const result = useQuery(ALL_AUTHORS);
   if (result.loading) return <> loading ...</>;
 
+  const authors = result.data.allAuthors;
   return (
     <div>
       <h2>authors</h2>
@@ -17,7 +18,7 @@ const Authors = () => {
             <th>born</th>
             <th>books</th>
           </tr>
-          {result.data.allAuthors.map((a) => (
+          {authors.map((a) => (
             <tr key={a.id}>
               <td>{a.name}</td>
               <td>{a.born}</td>
@@ -27,7 +28,7 @@ const Authors = () => {
         </tbody>
       </table>
 
-      <EditAuthor />
+      <EditAuthor authors={authors} />
     </div>
   );
 };
