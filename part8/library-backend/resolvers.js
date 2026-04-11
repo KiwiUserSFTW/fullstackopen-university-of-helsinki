@@ -30,7 +30,10 @@ editAuthor mutation
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
+    bookCount: async () => {
+      const books = await Book.find({});
+      return books.length;
+    },
     authorCount: () => authors.length,
     allBooks: (root, args) => {
       const filtersMap = [
