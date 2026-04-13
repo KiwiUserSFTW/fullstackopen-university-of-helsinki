@@ -3,39 +3,17 @@ const { GraphQLError } = require("graphql");
 const Book = require("./models/book");
 const Author = require("./models/author");
 
-let authors = [
-  {
-    name: "Robert Martin",
-    id: "afa51ab0-344d-11e9-a414-719c6709cf3e",
-    born: 1952,
-  },
-];
-
-let books = [
-  {
-    title: "Clean Code",
-    published: 2008,
-    author: "Robert Martin",
-    id: "afa5b6f4-344d-11e9-a414-719c6709cf3e",
-    genres: ["refactoring"],
-  },
-];
-
-/* do not have to work just yet:
-allBooks query with parameters
-bookCount field of an author object
-author field of a book
-editAuthor mutation
-*/
-
 const resolvers = {
   Query: {
     bookCount: async () => {
       const books = await Book.find({});
       return books.length;
     },
-    authorCount: () => authors.length,
-    allBooks: (root, args) => {
+    authorCount: async () => {
+      const authors = await Author.find({});
+      return authors.length;
+    },
+    allBooks: async (root, args) => {
       const filtersMap = [
         {
           name: "author",
@@ -49,6 +27,7 @@ const resolvers = {
         },
       ];
 
+      const books = await Book.find({});
       const activeFilters = filtersMap.filter((filter) => filter.value);
 
       const filteredBooks = (filters) =>
@@ -92,26 +71,25 @@ const resolvers = {
       const book = new Book({ ...args, author: author.id });
 
       try {
-        await book.save();
+        return await book.save();
       } catch (error) {
         throw new GraphQLError(`Adding book failed: ${error.message}`);
       }
-
-      return book;
     },
-    editAuthor: (root, args) => {
-      const author = authors.find((author) => author.name === args.name);
-
-      if (!author) {
-        return null;
+    editAuthor: async (root, args) => {
+      try {
+        return await Author.findByIdAndUpdate(
+          args.id,
+          {
+            born: args.setBornTo,
+          },
+          { new: true },
+        );
+      } catch (error) {
+        throw new GraphQLError(
+          `Editing born value has been failed: ${error.message}`,
+        );
       }
-
-      const editedAuthor = { ...author, born: args.setBornTo };
-      authors = authors.map((author) =>
-        author.name === args.name ? editedAuthor : author,
-      );
-
-      return editedAuthor;
     },
   },
 };

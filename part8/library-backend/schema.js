@@ -29,7 +29,7 @@ const typeDefs = /* GraphQL */ `
       genres: [String!]!
     ): Book!
 
-    editAuthor(name: String!, setBornTo: Int!): Author
+    editAuthor(id: String!, setBornTo: Int!): Author
   }
 `;
 
