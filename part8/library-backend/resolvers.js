@@ -11,6 +11,7 @@ const resolvers = {
     },
     authorCount: async () => {
       const authors = await Author.find({});
+
       return authors.length;
     },
     allBooks: async (root, args) => {
@@ -18,26 +19,31 @@ const resolvers = {
         {
           name: "author",
           value: args.author,
-          condition: (value, filterValue) => value === filterValue,
+          transform: (value) => value,
         },
         {
           name: "genres",
-          value: args.genre,
-          condition: (array, filterValue) => array.includes(filterValue),
+          value: args.genres,
+          transform: (array) => ({ $all: [...array] }),
         },
       ];
 
-      const books = await Book.find({});
+      const books = async (queries = {}) =>
+        await Book.find(queries).populate("author");
       const activeFilters = filtersMap.filter((filter) => filter.value);
 
-      const filteredBooks = (filters) =>
-        books.filter((book) =>
-          filters.every(({ name, value, condition }) =>
-            condition(book[name], value),
-          ),
-        );
+      if (activeFilters.length === 0) return books();
 
-      return activeFilters.length ? filteredBooks(activeFilters) : books;
+      const queries = {};
+
+      for (const filter of activeFilters) {
+        const value = await filter.transform(filter.value);
+        if (value) {
+          queries[filter.name] = value;
+        }
+      }
+
+      return books(queries);
     },
     allAuthors: async () => {
       const books = await Book.find({});
@@ -45,7 +51,7 @@ const resolvers = {
 
       return authors.map((author) => {
         const bookCount = books.filter(
-          (book) => String(book.author) === String(author._id),
+          (book) => String(book.author) === String(author._id)
         ).length;
 
         const { _id, ...args } = author.toObject();
@@ -71,7 +77,7 @@ const resolvers = {
       const book = new Book({ ...args, author: author.id });
 
       try {
-        return await book.save();
+        return (await book.save()).populate("author");
       } catch (error) {
         throw new GraphQLError(`Adding book failed: ${error.message}`);
       }
@@ -83,11 +89,11 @@ const resolvers = {
           {
             born: args.setBornTo,
           },
-          { new: true },
+          { returnDocument: "after" }
         );
       } catch (error) {
         throw new GraphQLError(
-          `Editing born value has been failed: ${error.message}`,
+          `Editing born value has been failed: ${error.message}`
         );
       }
     },
