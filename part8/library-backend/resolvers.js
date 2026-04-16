@@ -6,57 +6,108 @@ const Author = require("./models/author");
 const resolvers = {
   Query: {
     bookCount: async () => {
-      const books = await Book.find({});
-      return books.length;
+      try {
+        const books = await Book.find({});
+        return books.length;
+      } catch (error) {
+        throw new GraphQLError(`Counting books failed: ${error.message}`, {
+          extensions: {
+            code: "BOOK_COUNT_FAILED",
+          },
+        });
+      }
     },
     authorCount: async () => {
-      const authors = await Author.find({});
-
-      return authors.length;
+      try {
+        const authors = await Author.find({});
+        return authors.length;
+      } catch (error) {
+        throw new GraphQLError(`Counting authors failed: ${error.message}`, {
+          extensions: {
+            code: "AUTHORS_COUNT_FAILED",
+          },
+        });
+      }
     },
     allBooks: async (root, args) => {
       const filtersMap = [
         {
           name: "author",
           value: args.author,
-          transform: (value) => value,
+          transform: async (value) => {
+            const author = await Author.findOne({ name: value });
+
+            if (!author) {
+              throw new GraphQLError(`Author ${value} not exist`, {
+                extensions: {
+                  code: "BAD_USER_INPUT",
+                  invalidArgs: value,
+                },
+              });
+            }
+
+            return author._id;
+          },
         },
         {
           name: "genres",
-          value: args.genres,
-          transform: (array) => ({ $all: [...array] }),
+          value: args.genres || args.genre,
+          transform: (value) => {
+            if (Array.isArray(value)) {
+              return { $all: value };
+            }
+            return value;
+          },
         },
       ];
 
-      const books = async (queries = {}) =>
-        await Book.find(queries).populate("author");
-      const activeFilters = filtersMap.filter((filter) => filter.value);
+      try {
+        const books = async (queries = {}) =>
+          await Book.find(queries).populate("author");
+        const activeFilters = filtersMap.filter((filter) => filter.value);
 
-      if (activeFilters.length === 0) return books();
+        if (activeFilters.length === 0) return books();
 
-      const queries = {};
+        const queries = {};
 
-      for (const filter of activeFilters) {
-        const value = await filter.transform(filter.value);
-        if (value) {
-          queries[filter.name] = value;
+        for (const filter of activeFilters) {
+          const value = await filter.transform(filter.value);
+          if (value) {
+            queries[filter.name] = value;
+          }
         }
-      }
 
-      return books(queries);
+        return books(queries);
+      } catch (error) {
+        throw new GraphQLError(`Failed to fetch books ${error.message}`, {
+          extensions: {
+            code: "ALL_BOOKS_QUERY_FAILED",
+            error,
+          },
+        });
+      }
     },
     allAuthors: async () => {
-      const books = await Book.find({});
-      const authors = await Author.find({});
+      try {
+        const books = await Book.find({});
+        const authors = await Author.find({});
 
-      return authors.map((author) => {
-        const bookCount = books.filter(
-          (book) => String(book.author) === String(author._id)
-        ).length;
+        return authors.map((author) => {
+          const bookCount = books.filter(
+            (book) => String(book.author) === String(author._id),
+          ).length;
 
-        const { _id, ...args } = author.toObject();
-        return { ...args, bookCount, id: _id };
-      });
+          const { _id, ...args } = author.toObject();
+          return { ...args, bookCount, id: _id };
+        });
+      } catch (error) {
+        throw new GraphQLError(`Failed to fetch books ${error.message}`, {
+          extensions: {
+            code: "ALL_AUTHORS_QUERY_FAILED",
+            error,
+          },
+        });
+      }
     },
   },
   Mutation: {
@@ -68,7 +119,12 @@ const resolvers = {
         try {
           await newAuthor.save();
         } catch (error) {
-          throw new GraphQLError(`Adding user failed: ${error.message}`);
+          throw new GraphQLError(`Adding user failed: ${error.message}`, {
+            extensions: {
+              code: "BAD_USER_INPUT_",
+              invalidArgs: args.author,
+            },
+          });
         }
 
         author = newAuthor;
@@ -79,7 +135,12 @@ const resolvers = {
       try {
         return (await book.save()).populate("author");
       } catch (error) {
-        throw new GraphQLError(`Adding book failed: ${error.message}`);
+        throw new GraphQLError(`Adding book failed: ${error.message}`, {
+          extensions: {
+            code: "BAD_USER_INPUT",
+            invalidArgs: args,
+          },
+        });
       }
     },
     editAuthor: async (root, args) => {
@@ -89,12 +150,16 @@ const resolvers = {
           {
             born: args.setBornTo,
           },
-          { returnDocument: "after" }
+          { returnDocument: "after" },
         );
       } catch (error) {
-        throw new GraphQLError(
-          `Editing born value has been failed: ${error.message}`
-        );
+        throw new GraphQLError(`Adding user failed: ${error.message}`, {
+          extensions: {
+            code: "BAD_USER_INPUT_",
+            invalidArgs: args,
+            error,
+          },
+        });
       }
     },
   },
