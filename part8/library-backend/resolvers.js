@@ -1,10 +1,34 @@
 const { GraphQLError } = require("graphql");
+const jwt = require("jsonwebtoken");
 
 const Book = require("./models/book");
 const Author = require("./models/author");
+const User = require("./models/user");
+
+const userCheck = (user) => {
+  if (!user) {
+    throw new GraphQLError(`user not exist`, {
+      extensions: {
+        code: "BAD_USER_INPUT",
+      },
+    });
+  }
+};
 
 const resolvers = {
   Query: {
+    me: async (root, args, context) => {
+      const { currentUser } = context;
+      if (!currentUser) {
+        throw new GraphQLError(`user not exist: ${error.message}`, {
+          extensions: {
+            code: "BOOK_COUNT_FAILED",
+          },
+        });
+      }
+
+      return currentUser;
+    },
     bookCount: async () => {
       try {
         const books = await Book.find({});
@@ -111,9 +135,43 @@ const resolvers = {
     },
   },
   Mutation: {
-    addBook: async (root, args) => {
-      let author = await Author.findOne({ name: args.author });
+    createUser: async (root, args) => {
+      const user = new User({ ...args });
 
+      try {
+        return user.save();
+      } catch (error) {
+        throw new GraphQLError(`Creating the user failed: ${error.message}`, {
+          extensions: {
+            code: "BAD_USER_INPUT",
+            invalidArgs: args,
+          },
+        });
+      }
+    },
+    login: async (root, args) => {
+      const user = await User.findOne({ username: args.username });
+
+      if (!user || args.password !== "secret") {
+        throw new GraphQLError("wrong credentials", {
+          extensions: {
+            code: "BAD_USER_INPUT",
+            invalidArgs: args,
+          },
+        });
+      }
+
+      const userForToken = {
+        username: user.username,
+        id: user._id,
+      };
+
+      return { value: jwt.sign(userForToken, process.env.JWT_SECRET) };
+    },
+    addBook: async (root, args, { currentUser }) => {
+      userCheck(currentUser);
+
+      let author = await Author.findOne({ name: args.author });
       if (!author) {
         const newAuthor = new Author({ name: args.author });
         try {
@@ -143,15 +201,26 @@ const resolvers = {
         });
       }
     },
-    editAuthor: async (root, args) => {
+    editAuthor: async (root, args, { currentUser }) => {
+      userCheck(currentUser);
+
       try {
-        return await Author.findByIdAndUpdate(
-          args.id,
-          {
-            born: args.setBornTo,
-          },
+        const updatedAuthor = await Author.findOneAndUpdate(
+          { name: args.name },
+          { born: args.setBornTo },
           { returnDocument: "after" },
         );
+
+        if (!updatedAuthor) {
+          throw new GraphQLError(`Author "${args.name}" not exist`, {
+            extensions: {
+              code: "BAD_USER_INPUT",
+              invalidArgs: args.name,
+            },
+          });
+        }
+
+        return updatedAuthor;
       } catch (error) {
         throw new GraphQLError(`Adding user failed: ${error.message}`, {
           extensions: {
